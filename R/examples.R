@@ -26,12 +26,12 @@ example_stancode_gsir <- function() {
     vector[G] infection_rates;
     vector[G] recovery_rates;
     vector[G] lambda = rep_vector(0.0, G);
-    for(g in 1:G){
+    for(g in 1:G) {
       for(h in 1:G) {
         lambda[g] += contacts[g,h] * y[G+h]/pop_sizes[h];
       }
     }
-    for(g in 1:G){
+    for(g in 1:G) {
       dy_dt[g] = -  beta * lambda[g] * y[g];
       dy_dt[G+g] =  beta * lambda[g] * y[g] - gamma[g] * y[G+g];
     }
@@ -60,10 +60,10 @@ example_stancode_gsir <- function() {
   middle_blocks <- "
 transformed data {
   vector[2*G] x0;
-  for(g in 1:G){
+  for(g in 1:G) {
     x0[g] = pop_sizes[g] - I0[g]; // initial number of S
   }
-  for(g in 1:G){
+  for(g in 1:G) {
     x0[G + g] = I0[g]; // initial number of I
   }
 }

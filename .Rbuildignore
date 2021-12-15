@@ -1,2 +1,13 @@
-^odetuner\.Rproj$
+
+^.*\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
+^\_config\.yml$
+^\.github$
+^CONTRIBUTING\.md$
+^NEWS\.md$
+^_pkgdown\.yml$
+pkgdown/
+dev/
+docs/
+tutorials/

@@ -198,7 +198,8 @@ log_importance_weights <- function(fit_high, fit_low) {
 # Compute importance weights and pareto k diagnostic
 use_psis <- function(fit_high, fit_low) {
   log_ratios <- log_importance_weights(fit_high, fit_low)
-  chain_id <- rep(1:ncol(log_ratios), each = nrow(log_ratios))
+  ncol <- ncol(log_ratios)
+  chain_id <- rep(seq_len(ncol), each = nrow(log_ratios))
   x <- as.vector(exp(-log_ratios))
   r_eff <- loo::relative_eff(x, chain_id)
   loo::psis(x, r_eff = r_eff)
@@ -316,7 +317,8 @@ plot_timing <- function(tols, times, mns = NULL, unit = "seconds",
   }
   plt <- ggplot(df, aes(x = inv_tol, y = time, group = inv_tol)) +
     geom_boxplot(fill = "firebrick2", col = "firebrick")
-  plt <- plt + scale_x_log10(breaks = unique(df$inv_tol)) + xlab(expression(tol^"-1")) +
+  plt <- plt + scale_x_log10(breaks = unique(df$inv_tol)) +
+    xlab(expression(tol^"-1")) +
     ylab(ylabel) + ggtitle("Timing plot") +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   if (!is.null(mns)) {
@@ -345,7 +347,8 @@ plot_timing <- function(tols, times, mns = NULL, unit = "seconds",
 # Plot any metric
 plot_metric <- function(values, mns = NULL) {
   df <- create_useful_plot_df(NULL, values, mns = mns)
-  plt <- ggplot(df, aes(x = inv_tol, y = value, group = rep, col = max_num_steps)) +
+  mapping <- aes(x = inv_tol, y = value, group = rep, col = max_num_steps)
+  plt <- ggplot(df, mapping) +
     geom_line(alpha = 0.7) +
     scale_x_log10(breaks = unique(df$inv_tol)) +
     geom_point(pch = 20, alpha = 0.7)

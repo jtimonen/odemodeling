@@ -58,7 +58,8 @@ generate_stancode <- function(odefun_add_args,
 #' @export
 #' @return a string
 stan_template <- function() {
-  read_file_lines("inst/template.stan")
+  filepath <- system.file("template.stan", package = "odetuner")
+  read_file_lines(filepath)
 }
 
 # Helper function

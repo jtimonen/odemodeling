@@ -10,5 +10,7 @@
 #'
 #' @import R6
 #' @import ggplot2
+#' @importFrom methods is
+#' @importFrom utils capture.output
 #'
 NULL

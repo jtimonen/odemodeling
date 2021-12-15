@@ -1,15 +1,16 @@
-#' Run example
+#' Create example model
 #'
 #' @export
-#' @param verbose Should this print more information.
-#' @return Define return value.
-example <- function(verbose = FALSE) {
+#' @param verbose Should this print more information?
+#' @param compile Should the 'Stan' model be compiled?
+#' @return A `CmdStanModel` object.
+example_model <- function(verbose = FALSE, compile = TRUE) {
   sc <- example_stancode_gsir()
   if (verbose) {
     cat(sc$code)
     message(paste("Stan model saved to", sc$file))
   }
-  model <- cmdstanr::cmdstan_model(stan_file = sc$file)
+  model <- cmdstanr::cmdstan_model(stan_file = sc$file, compile = compile)
   return(model)
 }
 

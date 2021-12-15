@@ -10,24 +10,24 @@ Authors@R:
 Description: Efficient tuning and validation of solver tolerances in Bayesian
     ODE models using Pareto-smoothed importance sampling (PSIS) and
     its diagnostics.
-License: BSD_3_clause
+License: BSD_3_clause + file LICENCE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Imports: 
+    methods,
     cmdstanr (>= 0.4.0),
     checkmate (>= 2.0.0),
     posterior (>= 1.1.0),
     R6 (>= 2.4.0),
     loo (>= 2.4.1),
     bayesplot (>= 1.8.0),
+    ggplot2 (>= 3.3.5),
     ggpubr (>= 0.4.0)
-Suggests: 
-    bayesplot,
+Suggests:
     knitr,
-    loo (>= 2.0.0),
     rlang (>= 0.4.7),
     rmarkdown,
     testthat (>= 2.1.0)

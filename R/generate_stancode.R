@@ -1,5 +1,6 @@
 #' Generate full 'Stan' code given missing parts
 #'
+#' @export
 #' @param odefun_add_args ODE function additional arguments (vector of
 #' Stan code strings).
 #' @param odefun_body ODE function body (Stan code string).
@@ -15,6 +16,7 @@
 #' @param ... Additional arguments to `cmdstanr::write_stan_file()`.
 #' @return Model code as a string and path to file where the model
 #' is saved.
+#' @family setup functions
 generate_stancode <- function(odefun_add_args,
                               odefun_body,
                               loglik_add_args,
@@ -53,7 +55,7 @@ generate_stancode <- function(odefun_add_args,
   )
 }
 
-#' Load template 'Stan' code
+#' Template 'Stan' model code
 #'
 #' @export
 #' @return a string

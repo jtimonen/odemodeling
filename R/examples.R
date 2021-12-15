@@ -1,21 +1,15 @@
-#' Create example model
+#' Create an example ODE model
 #'
 #' @export
-#' @param verbose Should this print more information?
-#' @param compile Should the 'Stan' model be compiled?
+#' @param ... Additional arguments to \code{\link{create_odemodel}}.
 #' @return A `CmdStanModel` object.
-example_model <- function(verbose = FALSE, compile = TRUE) {
-  sc <- example_stancode_gsir()
-  if (verbose) {
-    cat(sc$code)
-    message(paste("Stan model saved to", sc$file))
-  }
-  model <- cmdstanr::cmdstan_model(stan_file = sc$file, compile = compile)
-  return(model)
+#' @family setup functions
+example_odemodel <- function(...) {
+  example_odemodel_gsir(...)
 }
 
 # Example
-example_stancode_gsir <- function() {
+example_odemodel_gsir <- function(...) {
   odefun_add_args <- c(
     "real beta", "vector gamma", "data matrix contacts",
     "data vector pop_sizes"
@@ -91,8 +85,9 @@ transformed parameters {
       }
     }
   "
-  generate_stancode(
+  create_odemodel(
     odefun_add_args, odefun_body, loglik_add_args,
-    loglik_body, data, middle_blocks, prior, genquant_decl, genquant
+    loglik_body, data, middle_blocks, prior, genquant_decl, genquant,
+    ...
   )
 }

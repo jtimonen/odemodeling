@@ -13,7 +13,6 @@
 #' @param prior Code that defines the prior for parameters (Stan code string).
 #' @param genquant_decl Declarations of generated quantities (Stan code string).
 #' @param genquant Code that computes generated quantities (Stan code string).
-#' @param ... Additional arguments to `cmdstanr::write_stan_file()`.
 #' @return Model code as a string and path to file where the model
 #' is saved.
 #' @family setup functions
@@ -26,7 +25,7 @@ generate_stancode <- function(odefun_add_args,
                               prior = "",
                               genquant_decl = "",
                               genquant = "",
-                              ...) {
+                              autoformat = TRUE) {
   odefun_args <- parse_add_args(odefun_add_args)
   loglik_args <- parse_add_args(loglik_add_args)
   odefun_signature <- paste(odefun_add_args, collapse = ", ")
@@ -45,14 +44,11 @@ generate_stancode <- function(odefun_add_args,
   code <- fill_stancode_part(code, genquant, "__GENQUANT__")
   code <- paste(code, "\n")
 
-  # Write to temp file
-  file <- cmdstanr::write_stan_file(code, ...)
-
-  # Return
-  list(
-    code = code,
-    file = file
-  )
+  # Automatic formatting using stanc
+  if (autoformat) {
+    code <- autoformat_stancode(code)
+  }
+  return(code)
 }
 
 #' Template 'Stan' model code

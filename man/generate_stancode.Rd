@@ -14,7 +14,7 @@ generate_stancode(
   prior = "",
   genquant_decl = "",
   genquant = "",
-  ...
+  autoformat = TRUE
 )
 }
 \arguments{
@@ -38,8 +38,6 @@ Stan code strings).}
 \item{genquant_decl}{Declarations of generated quantities (Stan code string).}
 
 \item{genquant}{Code that computes generated quantities (Stan code string).}
-
-\item{...}{Additional arguments to \code{cmdstanr::write_stan_file()}.}
 }
 \value{
 Model code as a string and path to file where the model

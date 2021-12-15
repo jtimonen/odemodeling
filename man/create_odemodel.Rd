@@ -15,6 +15,7 @@ create_odemodel(
   genquant_decl = "",
   genquant = "",
   verbose = FALSE,
+  compile = TRUE,
   ...
 )
 }
@@ -41,6 +42,8 @@ Stan code strings).}
 \item{genquant}{Code that computes generated quantities (Stan code string).}
 
 \item{verbose}{Should this print more information?}
+
+\item{compile}{Should the model be compiled?}
 
 \item{...}{Additional arguments to \code{cmdstanr::write_stan_file()}.}
 }

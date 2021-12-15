@@ -10,7 +10,7 @@ example_odemodel(...)
 \item{...}{Additional arguments to \code{\link{create_odemodel}}.}
 }
 \value{
-A \code{CmdStanModel} object.
+An object of class \code{OdeModel}.
 }
 \description{
 Create an example ODE model

@@ -1,42 +1,65 @@
 #' An ODE model.
 #'
-#' @param name Name of model.
-#' @param posterior An object of class `CmdStanModel`.
-#' @param prior An object of class `CmdStanModel`.
-#' @param simulator An object of class `CmdStanModel`.
+#' @export
+#' @field name Name of model.
+#' @field stanmodel An object of class `CmdStanModel`.
+#' @field datasim Can the model simulate data?
+#' @field stancode Full 'Stan' code as a string.
 OdeModel <- R6::R6Class("OdeModel", list(
   name = NULL,
-  posterior = NULL,
-  prior = NULL,
-  simulator = NULL,
-  stan_opts = NULL,
-  initialize = function(name, posterior, prior, simulator) {
-    self$name <- name
-    self$posterior <- posterior
-    self$prior <- prior
-    self$simulator <- simulator
+  stanmodel = NULL,
+  datasim = NULL,
+  stancode = NULL,
+
+  #' @description
+  #' Create an `OdeModel` object.
+  #'
+  #' @param stanmodel An object of class `CmdStanModel`.
+  #' @param ... Arguments passed to `$sample()`.
+  initialize = function(stanmodel, datasim) {
+    self$name <- stanmodel$model_name()
+    self$stanmodel <- stanmodel
+    self$datasim <- datasim
+    self$stancode <- paste0(stanmodel$code(), collapse = "\n")
   },
-  print = function(...) {
-    cat("OdeModel: ", self$name, "\n", sep = "")
+
+  #' @description
+  #' Print information about the model
+  print = function() {
+    cat("An object of class OdeModel. See ?OdeModel for help. \n", sep = "")
+    cat(" - name: ", self$name, "\n", sep = "")
+    cat(" - can simulate data: ", self$datasim, "\n", sep = "")
     invisible(self)
   },
+
+  #' @description
+  #' Sample from parameter prior (no ODE solving)
+  #' @param ... Arguments passed to `$sample()`.
   sample_prior = function(...) {
     stan_opts <- self$stan_opts
-    self$prior$sample(
+    self$stanmodel$sample(
       data = self$data,
       sig_figs = stan_opts$sig_figs,
       seed = stan_opts$seed,
       ...
     )
   },
+
+  #' @description
+  #' Sample from parameter posterior
+  #' @param ... Arguments passed to `$sample()`.
   sample_posterior = function(solver_args, ...) {
     stan_opts <- self$stan_opts
     data <- self$data
     init <- self$init
-    sample_posterior(self$stanmodels$posterior, data, solver_args, stan_opts,
+    sample_posterior(self$stanmodel, data, solver_args, stan_opts,
       init = init, ...
     )
   },
+
+  #' @description
+  #' Sample from parameter posterior using several different ODE tolereances
+  #' @param ... Arguments passed to `$sample()`.
   sample_posterior_many = function(res_dir, idx,
                                    tols, max_num_steps, chains = 4, ...) {
     L <- length(tols)

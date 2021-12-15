@@ -8,6 +8,19 @@ An ODE model.
 
 An ODE model.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Name of model.}
+
+\item{\code{stanmodel}}{An object of class \code{CmdStanModel}.}
+
+\item{\code{datasim}}{Can the model simulate data?}
+
+\item{\code{stancode}}{Full 'Stan' code as a string.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -27,20 +40,17 @@ An ODE model.
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(name, posterior, prior, simulator)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(stanmodel, datasim)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{Name of model.}
+\item{\code{stanmodel}}{An object of class \code{CmdStanModel}.}
 
-\item{\code{posterior}}{An object of class \code{CmdStanModel}.}
-
-\item{\code{prior}}{An object of class \code{CmdStanModel}.}
-
-\item{\code{simulator}}{An object of class \code{CmdStanModel}.}
+\item{\code{...}}{Arguments passed to \verb{$sample()}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -49,8 +59,9 @@ An ODE model.
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
+Print information about the model
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$print(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$print()}\if{html}{\out{</div>}}
 }
 
 }
@@ -58,24 +69,41 @@ An ODE model.
 \if{html}{\out{<a id="method-sample_prior"></a>}}
 \if{latex}{\out{\hypertarget{method-sample_prior}{}}}
 \subsection{Method \code{sample_prior()}}{
+Sample from parameter prior (no ODE solving)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-sample_posterior"></a>}}
 \if{latex}{\out{\hypertarget{method-sample_posterior}{}}}
 \subsection{Method \code{sample_posterior()}}{
+Sample from parameter posterior
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior(solver_args, ...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-sample_posterior_many"></a>}}
 \if{latex}{\out{\hypertarget{method-sample_posterior_many}{}}}
 \subsection{Method \code{sample_posterior_many()}}{
+Sample from parameter posterior using several different ODE tolereances
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior_many(
   res_dir,
@@ -87,6 +115,13 @@ An ODE model.
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}

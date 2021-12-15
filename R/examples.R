@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @param ... Additional arguments to \code{\link{create_odemodel}}.
-#' @return A `CmdStanModel` object.
+#' @return An object of class `OdeModel`.
 #' @family setup functions
 example_odemodel <- function(...) {
   example_odemodel_gsir(...)

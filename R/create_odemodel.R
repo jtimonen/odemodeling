@@ -3,9 +3,8 @@
 #' @export
 #' @inheritParams generate_stancode
 #' @param verbose Should this print more information?
-#' @param compile Should the 'Stan' model be compiled?
 #' @param ... Additional arguments to `cmdstanr::write_stan_file()`.
-#' @return An object of class `OdeModelSetup`.
+#' @return An object of class `OdeModel`.
 #' @family setup functions
 create_odemodel <- function(odefun_add_args,
                             odefun_body,
@@ -17,7 +16,6 @@ create_odemodel <- function(odefun_add_args,
                             genquant_decl = "",
                             genquant = "",
                             verbose = FALSE,
-                            compile = TRUE,
                             ...) {
   sc <- generate_stancode(
     odefun_add_args, odefun_body,
@@ -29,6 +27,7 @@ create_odemodel <- function(odefun_add_args,
     cat(sc$code)
     message(paste("Stan model saved to", sc$file))
   }
-  model <- cmdstanr::cmdstan_model(stan_file = sc$file, compile = compile)
-  return(model)
+  model <- cmdstanr::cmdstan_model(stan_file = sc$file, compile = TRUE)
+  datasim <- nchar(genquant) > 0
+  OdeModel$new(stanmodel = model, datasim = datasim)
 }

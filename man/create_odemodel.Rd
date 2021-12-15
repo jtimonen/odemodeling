@@ -15,7 +15,6 @@ create_odemodel(
   genquant_decl = "",
   genquant = "",
   verbose = FALSE,
-  compile = TRUE,
   ...
 )
 }
@@ -43,12 +42,10 @@ Stan code strings).}
 
 \item{verbose}{Should this print more information?}
 
-\item{compile}{Should the 'Stan' model be compiled?}
-
 \item{...}{Additional arguments to \code{cmdstanr::write_stan_file()}.}
 }
 \value{
-An object of class \code{OdeModelSetup}.
+An object of class \code{OdeModel}.
 }
 \description{
 Create an ODE model from parts of 'Stan' code

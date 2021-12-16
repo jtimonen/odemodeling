@@ -7,20 +7,24 @@
 #' @field stancode Full 'Stan' code as a string.
 OdeModel <- R6::R6Class("OdeModel", list(
   name = NULL,
-  stanmodel = NULL,
   datasim = NULL,
   stancode = NULL,
+  stanmodel = NULL,
 
   #' @description
   #' Create an `OdeModel` object.
   #'
-  #' @param stanmodel An object of class `CmdStanModel`.
-  #' @param ... Arguments passed to `$sample()`.
-  initialize = function(stanmodel, datasim) {
-    self$name <- stanmodel$model_name()
-    self$stanmodel <- stanmodel
+  #' @param stancode Full 'Stan' code as a string.
+  #' @param datasim Can the model simulate data?
+  #' @param compile Should the model be compiled?
+  #' @param ... Arguments passed to `cmdstanr::write_stan_file()`.
+  initialize = function(stancode, datasim, compile, ...) {
     self$datasim <- datasim
-    self$stancode <- paste0(stanmodel$code(), collapse = "\n")
+    self$stancode <- stancode
+    file <- cmdstanr::write_stan_file(stancode, ...)
+    model <- cmdstanr::cmdstan_model(stan_file = file, compile = compile)
+    self$name <- model$model_name()
+    self$stanmodel <- model
   },
 
   #' @description
@@ -98,17 +102,5 @@ OdeModel <- R6::R6Class("OdeModel", list(
       files = FN, tols = tols
     )
     return(out)
-  },
-  plot = function(fit) {
-    eval(call(paste0("plot_", self$name), fit, self$data))
-  },
-  set_data = function(data) {
-    self$data <- data
-  },
-  set_init = function(init) {
-    self$init <- init
-  },
-  set_hmc_initial_step_size = function(step_size) {
-    self$hmc_initial_step_size <- step_size
   }
 ))

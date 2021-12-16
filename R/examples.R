@@ -49,7 +49,7 @@ example_odemodel_gsir <- function(...) {
   vector[G] pop_sizes;            // population sizes in each group
   vector[G] I0;                   // initial number of infected in each group
   matrix[G, G] contacts;          // contact matrix
-  real<lower=0> delta;                  // Small positive number
+  real<lower=0> delta;            // Small positive number
   "
   middle_blocks <- "
 transformed data {

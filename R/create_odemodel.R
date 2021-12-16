@@ -30,8 +30,6 @@ create_odemodel <- function(odefun_add_args,
   if (verbose) cat(code)
 
   # Write code to temp file and create model
-  file <- cmdstanr::write_stan_file(code, ...)
-  model <- cmdstanr::cmdstan_model(stan_file = file, compile = compile)
   datasim <- nchar(genquant) > 0
-  OdeModel$new(stanmodel = model, datasim = datasim)
+  OdeModel$new(stancode = code, datasim = datasim, compile = compile, ...)
 }

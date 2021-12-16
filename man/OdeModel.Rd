@@ -29,10 +29,6 @@ An ODE model.
 \item \href{#method-sample_prior}{\code{OdeModel$sample_prior()}}
 \item \href{#method-sample_posterior}{\code{OdeModel$sample_posterior()}}
 \item \href{#method-sample_posterior_many}{\code{OdeModel$sample_posterior_many()}}
-\item \href{#method-plot}{\code{OdeModel$plot()}}
-\item \href{#method-set_data}{\code{OdeModel$set_data()}}
-\item \href{#method-set_init}{\code{OdeModel$set_init()}}
-\item \href{#method-set_hmc_initial_step_size}{\code{OdeModel$set_hmc_initial_step_size()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
 }
@@ -42,15 +38,19 @@ An ODE model.
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(stanmodel, datasim)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(stancode, datasim, compile, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{stanmodel}}{An object of class \code{CmdStanModel}.}
+\item{\code{stancode}}{Full 'Stan' code as a string.}
 
-\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+\item{\code{datasim}}{Can the model simulate data?}
+
+\item{\code{compile}}{Should the model be compiled?}
+
+\item{\code{...}}{Arguments passed to \code{cmdstanr::write_stan_file()}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -122,42 +122,6 @@ Sample from parameter posterior using several different ODE tolereances
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot"></a>}}
-\if{latex}{\out{\hypertarget{method-plot}{}}}
-\subsection{Method \code{plot()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$plot(fit)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_data"></a>}}
-\if{latex}{\out{\hypertarget{method-set_data}{}}}
-\subsection{Method \code{set_data()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$set_data(data)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_init"></a>}}
-\if{latex}{\out{\hypertarget{method-set_init}{}}}
-\subsection{Method \code{set_init()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$set_init(init)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_hmc_initial_step_size"></a>}}
-\if{latex}{\out{\hypertarget{method-set_hmc_initial_step_size}{}}}
-\subsection{Method \code{set_hmc_initial_step_size()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$set_hmc_initial_step_size(step_size)}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

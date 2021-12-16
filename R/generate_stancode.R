@@ -7,7 +7,7 @@
 #' @param loglik_add_args Log-likelihood function additional arguments
 #' (vector of Stan code strings).
 #' @param loglik_body Log-likelihood function bod (Stan code string).
-#' @param data Code to declare data (Stan code string).
+#' @param add_data Code to declare additional data (Stan code string).
 #' @param middle_blocks The `transformed data`, `parameters`, and
 #' `transformed parameters` blocks (Stan code string).
 #' @param prior Code that defines the prior for parameters (Stan code string).
@@ -20,7 +20,7 @@ generate_stancode <- function(odefun_add_args,
                               odefun_body,
                               loglik_add_args,
                               loglik_body,
-                              data = "",
+                              add_data = "",
                               middle_blocks = "",
                               prior = "",
                               genquant_decl = "",
@@ -37,7 +37,7 @@ generate_stancode <- function(odefun_add_args,
   code <- fill_stancode_part(code, loglik_signature, "__LOGLIK_SIGNATURE__")
   code <- fill_stancode_part(code, loglik_args, "__LOGLIK_ARGS__")
   code <- fill_stancode_part(code, loglik_body, "__LOGLIK_BODY__")
-  code <- fill_stancode_part(code, data, "__DATA__")
+  code <- fill_stancode_part(code, add_data, "__ADD_DATA__")
   code <- fill_stancode_part(code, middle_blocks, "__MIDDLE_BLOCKS__")
   code <- fill_stancode_part(code, prior, "__PRIOR__")
   code <- fill_stancode_part(code, genquant_decl, "__GENQUANT_DECL__")

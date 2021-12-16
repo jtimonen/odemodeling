@@ -11,21 +11,22 @@ create_odemodel <- function(odefun_add_args,
                             odefun_body,
                             loglik_add_args,
                             loglik_body,
-                            data = "",
+                            add_data = "",
                             middle_blocks = "",
                             prior = "",
                             genquant_decl = "",
                             genquant = "",
                             verbose = FALSE,
                             compile = TRUE,
+                            autoformat = TRUE,
                             ...) {
 
   # Generate full Stan model code
   code <- generate_stancode(
     odefun_add_args, odefun_body,
     loglik_add_args, loglik_body,
-    data, middle_blocks, prior, genquant_decl,
-    genquant, TRUE
+    add_data, middle_blocks, prior, genquant_decl,
+    genquant, autoformat
   )
   if (verbose) cat(code)
 

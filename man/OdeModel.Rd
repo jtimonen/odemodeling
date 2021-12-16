@@ -103,7 +103,7 @@ Sample from parameter posterior
 \if{html}{\out{<a id="method-sample_posterior_many"></a>}}
 \if{latex}{\out{\hypertarget{method-sample_posterior_many}{}}}
 \subsection{Method \code{sample_posterior_many()}}{
-Sample from parameter posterior using several different ODE tolereances
+Sample from parameter posterior using several different ODE tolerances
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior_many(
   res_dir,

@@ -9,7 +9,7 @@ generate_stancode(
   odefun_body,
   loglik_add_args,
   loglik_body,
-  data = "",
+  add_data = "",
   middle_blocks = "",
   prior = "",
   genquant_decl = "",
@@ -28,7 +28,7 @@ Stan code strings).}
 
 \item{loglik_body}{Log-likelihood function bod (Stan code string).}
 
-\item{data}{Code to declare data (Stan code string).}
+\item{add_data}{Code to declare additional data (Stan code string).}
 
 \item{middle_blocks}{The \verb{transformed data}, \code{parameters}, and
 \verb{transformed parameters} blocks (Stan code string).}

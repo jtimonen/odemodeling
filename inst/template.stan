@@ -62,7 +62,7 @@ data {
   // Define other needed data here, for example
   //  * initial state of ODE system at t0
   //  * observations at timepoints t
-  __DATA__
+  __ADD_DATA__
 
   // ODE data
   int<lower=1> solver;  // 1 = rk45, 2 = bdf, 3 = rk4

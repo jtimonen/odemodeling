@@ -62,7 +62,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   },
 
   #' @description
-  #' Sample from parameter posterior using several different ODE tolereances
+  #' Sample from parameter posterior using several different ODE tolerances
   #' @param ... Arguments passed to `$sample()`.
   sample_posterior_many = function(res_dir, idx,
                                    tols, max_num_steps, chains = 4, ...) {

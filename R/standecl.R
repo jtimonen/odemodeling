@@ -132,3 +132,27 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
 stan_param <- function(var, prior_code = "") {
   StanParameter$new(var = var, prior_code = prior_code)
 }
+
+#' Create a `StanGeneratedQuantity` object
+#'
+#' @param var The Stan variable declaration for the quantity.
+#'  Must be an object that inherits from `StanDeclaration`.
+#' @param code A string of Stan code that defines how the quantity is
+#' computed. The default is empty string (no definition).
+#' @family Stan variable declaration functions
+#' @export
+#' @examples
+#' N <- stan_dim("N")
+#' D <- stan_dim("D")
+#' var <- stan_array("y", dims = list(N, D), type = "int")
+#' code <- "
+#' for(n in 1:N){
+#'   for(d in 1:D) {
+#'     y[n, d] ~ poisson_rng(0.2);
+#'   }
+#' }"
+#' y <- stan_gq(arr, code)
+#' print(y)
+stan_gq <- function(var, code = "") {
+  StanGeneratedQuantity$new(var = var, code = code)
+}

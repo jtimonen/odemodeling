@@ -21,6 +21,12 @@ stan_vector_array(name, dims, length, lower = NULL, upper = NULL)
 \description{
 Create a \code{StanVectorArray} object.
 }
+\examples{
+N <- stan_dim("N")
+D <- stan_dim("D")
+vec_arr <- stan_vector_array("y", dims = list(N), length = D)
+print(vec_arr)
+}
 \seealso{
 Other Stan variable declaration functions: 
 \code{\link{stan_array}()},

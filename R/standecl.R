@@ -40,7 +40,7 @@ stan_var <- function(name, type = "real", lower = NULL, upper = NULL) {
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
-#' x <- stan_vector("x", length = stan_dim("N", lower=1), lower = 0)
+#' x <- stan_vector("x", length = stan_dim("N", lower = 1), lower = 0)
 #' print(x)
 stan_vector <- function(name, length, lower = NULL, upper = NULL) {
   StanVector$new(name = name, length = length, lower = lower, upper = upper)
@@ -55,6 +55,11 @@ stan_vector <- function(name, length, lower = NULL, upper = NULL) {
 #' @param ncol number of columns, must be a `StanDimension` object
 #' @family Stan variable declaration functions
 #' @export
+#' @examples
+#' N <- stan_dim("N")
+#' M <- stan_dim("M", lower = 1, upper = 100)
+#' my_mat <- stan_matrix("A", nrow = N, ncol = M, lower = 0, upper = 3.2)
+#' print(my_mat)
 stan_matrix <- function(name, nrow, ncol, lower = NULL, upper = NULL) {
   StanMatrix$new(
     name = name, nrow = nrow, ncol = ncol,
@@ -72,6 +77,11 @@ stan_matrix <- function(name, nrow, ncol, lower = NULL, upper = NULL) {
 #' @param type base type of the array
 #' @family Stan variable declaration functions
 #' @export
+#' @examples
+#' N <- stan_dim("N")
+#' M <- stan_dim("M")
+#' my_arr <- stan_array("A", dims = list(N, N, M), lower = 0, type = "int")
+#' print(my_arr)
 stan_array <- function(name, dims, type = "real", lower = NULL, upper = NULL) {
   StanArray$new(
     name = name, dims = dims, type = type,
@@ -89,6 +99,11 @@ stan_array <- function(name, dims, type = "real", lower = NULL, upper = NULL) {
 #' @param length length of the vector, must be a `StanDimension` object
 #' @family Stan variable declaration functions
 #' @export
+#' @examples
+#' N <- stan_dim("N")
+#' D <- stan_dim("D")
+#' vec_arr <- stan_vector_array("y", dims = list(N), length = D)
+#' print(vec_arr)
 stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
   StanVectorArray$new(
     name = name, dims = dims, length = length,

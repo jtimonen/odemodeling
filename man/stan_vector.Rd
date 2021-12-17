@@ -19,7 +19,7 @@ stan_vector(name, length, lower = NULL, upper = NULL)
 Create a \code{StanVector} object.
 }
 \examples{
-x <- stan_vector("x", length = stan_dim("N", lower=1), lower = 0)
+x <- stan_vector("x", length = stan_dim("N", lower = 1), lower = 0)
 print(x)
 }
 \seealso{

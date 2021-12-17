@@ -20,6 +20,12 @@ stan_matrix(name, nrow, ncol, lower = NULL, upper = NULL)
 \description{
 Create a \code{StanMatrix} object.
 }
+\examples{
+N <- stan_dim("N")
+M <- stan_dim("M", lower = 1, upper = 100)
+my_mat <- stan_matrix("A", nrow = N, ncol = M, lower = 0, upper = 3.2)
+print(my_mat)
+}
 \seealso{
 Other Stan variable declaration functions: 
 \code{\link{stan_array}()},

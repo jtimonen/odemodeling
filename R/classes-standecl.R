@@ -40,6 +40,7 @@ StanDimension <- R6::R6Class("StanDimension", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))
 
@@ -94,6 +95,7 @@ StanVariable <- R6::R6Class("StanVariable", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))
 
@@ -149,6 +151,7 @@ StanVector <- R6::R6Class("StanVector", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))
 
@@ -201,7 +204,7 @@ StanMatrix <- R6::R6Class("StanMatrix", list(
   declaration = function() {
     decl <- "matrix"
     decl <- add_bounds(decl, self$lower, self$upper)
-    decl <- paste0(decl, "[", self$nrow$name, ",", self$ncol$name, "]")
+    decl <- paste0(decl, "[", self$nrow$name, ", ", self$ncol$name, "]")
     paste0(decl, " ", self$name, ";")
   },
 
@@ -209,6 +212,7 @@ StanMatrix <- R6::R6Class("StanMatrix", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))
 
@@ -279,6 +283,7 @@ StanArray <- R6::R6Class("StanArray", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))
 
@@ -351,5 +356,6 @@ StanVectorArray <- R6::R6Class("StanVectorArray", list(
   #' Print
   print = function() {
     cat(self$declaration(), "\n")
+    invisible(self)
   }
 ))

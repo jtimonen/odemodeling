@@ -21,6 +21,12 @@ stan_array(name, dims, type = "real", lower = NULL, upper = NULL)
 \description{
 Create a \code{StanArray} object.
 }
+\examples{
+N <- stan_dim("N")
+M <- stan_dim("M")
+my_arr <- stan_array("A", dims = list(N, N, M), lower = 0, type = "int")
+print(my_arr)
+}
 \seealso{
 Other Stan variable declaration functions: 
 \code{\link{stan_dim}()},

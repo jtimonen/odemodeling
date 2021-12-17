@@ -5,42 +5,53 @@
 \title{Create an ODE model from parts of 'Stan' code}
 \usage{
 create_odemodel(
-  odefun_add_args,
-  odefun_body,
-  loglik_add_args,
-  loglik_body,
-  add_data = "",
-  middle_blocks = "",
-  prior = "",
-  genquant_decl = "",
-  genquant = "",
+  odefun_data = character(0),
+  odefun_pars = character(0),
+  odefun_code = "",
+  odefun_tdata = character(0),
+  tdata_code = "",
+  obsmodel_data = character(0),
+  obsmodel_pars = character(0),
+  priors = character(0),
+  loglik_code = "",
+  genquant = character(0),
+  genquant_code = "",
   verbose = FALSE,
   compile = TRUE,
-  autoformat = TRUE,
   ...
 )
 }
 \arguments{
-\item{odefun_add_args}{ODE function additional arguments (vector of
-Stan code strings).}
+\item{odefun_data}{Additional data needed by the ODE function
+(character vector of 'Stan' variable declarations).}
 
-\item{odefun_body}{ODE function body (Stan code string).}
+\item{odefun_pars}{Parameters of the ODE function (character vector of
+'Stan' parameter declarations).}
 
-\item{loglik_add_args}{Log-likelihood function additional arguments
-(vector of Stan code strings).}
+\item{odefun_code}{Body of the ODE function (string of 'Stan' code). Must
+end in a line that returns the time derivative of the system as a vector.}
 
-\item{loglik_body}{Log-likelihood function bod (Stan code string).}
+\item{odefun_tdata}{Additional transformed data needed by the ODE function
+(character vector of 'Stan' variable declarations).}
 
-\item{add_data}{Code to declare additional data (Stan code string).}
+\item{tdata_code}{String of 'Stan' code that computes the declared
+transformed data.}
 
-\item{middle_blocks}{The \verb{transformed data}, \code{parameters}, and
-\verb{transformed parameters} blocks (Stan code string).}
+\item{obsmodel_data}{Additional data needed by the likelihood function
+(character vector of 'Stan' variable declarations).}
 
-\item{prior}{Code that defines the prior for parameters (Stan code string).}
+\item{obsmodel_pars}{Parameters of the likelihood function
+(character vector of 'Stan' parameter declarations).}
 
-\item{genquant_decl}{Declarations of generated quantities (Stan code string).}
+\item{loglik_code}{Body of the log likelihood function
+(string of 'Stan' code). Must end in a line that returns a real number,
+that is (proportional to) the likelihood.}
 
-\item{genquant}{Code that computes generated quantities (Stan code string).}
+\item{genquant}{Additional generated quantities
+(character vector of 'Stan' variable declarations).}
+
+\item{genquant_code}{String of 'Stan' code that computes the declared
+generated quantities.}
 
 \item{verbose}{Should this print more information?}
 

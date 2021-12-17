@@ -1,4 +1,4 @@
-#' An ODE model.
+#' An ODE model (R6 class)
 #'
 #' @export
 #' @field name Name of model.
@@ -38,13 +38,24 @@ OdeModel <- R6::R6Class("OdeModel", list(
 
   #' @description
   #' Sample from parameter prior (no ODE solving)
+  #' @param t0 initial time point
+  #' @param t data time points
+  #' @param D ODE system dimension
+  #' @param add data list of additional data needed to run the model
   #' @param ... Arguments passed to `$sample()`.
-  sample_prior = function(...) {
-    stan_opts <- self$stan_opts
+  sample_prior = function(t0 = 0.0, t = c(1, 2, 3), D = 1, add_data = list(),
+                          ...) {
+    data <- list(
+      do_likelihood = FALSE,
+      do_genquant = FALSE,
+      t0 = t0,
+      t = t,
+      D = D,
+      solver = 10,
+    )
+
     self$stanmodel$sample(
-      data = self$data,
-      sig_figs = stan_opts$sig_figs,
-      seed = stan_opts$seed,
+      data = data,
       ...
     )
   },

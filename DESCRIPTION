@@ -25,7 +25,8 @@ Imports:
     loo (>= 2.4.1),
     bayesplot (>= 1.8.0),
     ggplot2 (>= 3.3.5),
-    ggpubr (>= 0.4.0)
+    ggpubr (>= 0.4.0),
+    processx (>= 3.5.2)
 Suggests:
     knitr,
     rlang (>= 0.4.7),

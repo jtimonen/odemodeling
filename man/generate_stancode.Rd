@@ -9,12 +9,12 @@ generate_stancode(
   odefun_body,
   loglik_add_args,
   loglik_body,
-  data = "",
+  add_data = "",
   middle_blocks = "",
   prior = "",
   genquant_decl = "",
   genquant = "",
-  ...
+  autoformat = TRUE
 )
 }
 \arguments{
@@ -28,7 +28,7 @@ Stan code strings).}
 
 \item{loglik_body}{Log-likelihood function bod (Stan code string).}
 
-\item{data}{Code to declare data (Stan code string).}
+\item{add_data}{Code to declare additional data (Stan code string).}
 
 \item{middle_blocks}{The \verb{transformed data}, \code{parameters}, and
 \verb{transformed parameters} blocks (Stan code string).}
@@ -38,8 +38,6 @@ Stan code strings).}
 \item{genquant_decl}{Declarations of generated quantities (Stan code string).}
 
 \item{genquant}{Code that computes generated quantities (Stan code string).}
-
-\item{...}{Additional arguments to \code{cmdstanr::write_stan_file()}.}
 }
 \value{
 Model code as a string and path to file where the model
@@ -48,3 +46,9 @@ is saved.
 \description{
 Generate full 'Stan' code given missing parts
 }
+\seealso{
+Other setup functions: 
+\code{\link{create_odemodel}()},
+\code{\link{example_odemodel}()}
+}
+\concept{setup functions}

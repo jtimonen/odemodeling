@@ -9,3 +9,49 @@ file_name_to_model_name <- function(file) {
   bn <- basename(file)
   strsplit(bn, split = "[.]")[[1]][1]
 }
+
+# Autoformat a 'Stan' code string
+autoformat_stancode <- function(code) {
+  file <- cmdstanr::write_stan_file(code)
+  model <- cmdstanr::cmdstan_model(file, compile = FALSE)
+  res <- processx::run(
+    file.path(cmdstanr::cmdstan_path(), "bin", "stanc"),
+    args = c(model$stan_file(), "--auto-format")
+  )
+  res$stdout
+}
+
+# Add boundaries to variable declaration string
+add_bounds <- function(decl, lower, upper) {
+  if (!is.null(lower) && !is.null(upper)) {
+    add <- paste0("<lower=", lower, ", upper=", upper, ">")
+  } else if (!is.null(lower) && is.null(upper)) {
+    add <- paste0("<lower=", lower, ">")
+  } else if (is.null(lower) && !is.null(upper)) {
+    add <- paste0("<upper=", upper, ">")
+  } else {
+    add <- ""
+  }
+  paste0(decl, add)
+}
+
+# Beginning of array declaration or signature
+declare_array <- function(name, dims, signature) {
+  decl <- "array["
+  j <- 0
+  for (dim in dims) {
+    if (signature) {
+      dimname <- ""
+    } else {
+      dimname <- dim$name
+    }
+    j <- j + 1
+    if (j == 1) {
+      decl <- paste0(decl, dimname)
+    } else {
+      decl <- paste0(decl, ", ", dimname)
+    }
+  }
+  decl <- paste0(decl, "]")
+  return(decl)
+}

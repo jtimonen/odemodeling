@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_stancode.R
 \name{stan_template}
 \alias{stan_template}
-\title{Load template 'Stan' code}
+\title{Template 'Stan' model code}
 \usage{
 stan_template()
 }
@@ -10,5 +10,5 @@ stan_template()
 a string
 }
 \description{
-Load template 'Stan' code
+Template 'Stan' model code
 }

@@ -278,7 +278,8 @@ StanArray <- R6::R6Class("StanArray",
     #' @param dims list of array dimensions, must be a list of
     #'  `StanDimension` objects
     #' @param type base type of the array
-    initialize = function(name, dims, type = "real", lower = NULL, upper = NULL) {
+    initialize = function(name, dims, type = "real",
+                          lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_list(dims, types = "StanDimension", min.len = 1)
       if (!is.null(lower)) {

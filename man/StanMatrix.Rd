@@ -42,6 +42,7 @@ A Stan matrix
 \itemize{
 \item \href{#method-new}{\code{StanMatrix$new()}}
 \item \href{#method-declaration}{\code{StanMatrix$declaration()}}
+\item \href{#method-signature}{\code{StanMatrix$signature()}}
 \item \href{#method-clone}{\code{StanMatrix$clone()}}
 }
 }
@@ -89,6 +90,16 @@ Create a declaration for the matrix
 \subsection{Returns}{
 a string
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanMatrix$signature()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

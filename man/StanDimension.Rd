@@ -38,6 +38,7 @@ A dimension for a Stan vector or array
 \itemize{
 \item \href{#method-new}{\code{StanDimension$new()}}
 \item \href{#method-declaration}{\code{StanDimension$declaration()}}
+\item \href{#method-signature}{\code{StanDimension$signature()}}
 \item \href{#method-clone}{\code{StanDimension$clone()}}
 }
 }
@@ -76,6 +77,16 @@ Create a \code{StanDimension} object
 Create a data block declaration for the dimension.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDimension$declaration()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDimension$signature()}\if{html}{\out{</div>}}
 }
 
 }

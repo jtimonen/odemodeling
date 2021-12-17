@@ -34,3 +34,24 @@ add_bounds <- function(decl, lower, upper) {
   }
   paste0(decl, add)
 }
+
+# Beginning of array declaration or signature
+declare_array <- function(name, dims, signature) {
+  decl <- "array["
+  j <- 0
+  for (dim in dims) {
+    if (signature) {
+      dimname <- ""
+    } else {
+      dimname <- dim$name
+    }
+    j <- j + 1
+    if (j == 1) {
+      decl <- paste0(decl, dimname)
+    } else {
+      decl <- paste0(decl, ", ", dimname)
+    }
+  }
+  decl <- paste0(decl, "]")
+  return(decl)
+}

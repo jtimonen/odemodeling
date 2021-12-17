@@ -42,6 +42,7 @@ A Stan array
 \itemize{
 \item \href{#method-new}{\code{StanArray$new()}}
 \item \href{#method-declaration}{\code{StanArray$declaration()}}
+\item \href{#method-signature}{\code{StanArray$signature()}}
 \item \href{#method-clone}{\code{StanArray$clone()}}
 }
 }
@@ -90,6 +91,16 @@ Create a declaration for the array
 \subsection{Returns}{
 a string
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanArray$signature()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

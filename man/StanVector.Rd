@@ -40,6 +40,7 @@ A Stan vector
 \itemize{
 \item \href{#method-new}{\code{StanVector$new()}}
 \item \href{#method-declaration}{\code{StanVector$declaration()}}
+\item \href{#method-signature}{\code{StanVector$signature()}}
 \item \href{#method-clone}{\code{StanVector$clone()}}
 }
 }
@@ -85,6 +86,16 @@ Create a declaration for the vector
 \subsection{Returns}{
 a string
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanVector$signature()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

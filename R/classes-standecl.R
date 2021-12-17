@@ -16,9 +16,18 @@ StanDeclaration <- R6::R6Class("StanDeclaration", list(
   },
 
   #' @description
+  #' The variable when used in function signature
+  signature = function() {
+    return("UNDEFINED")
+  },
+
+  #' @description
   #' Print
   print = function() {
-    cat(self$declaration(), "\n")
+    cat("A Stan variable: \n")
+    cat(" - name:", self$name, "\n")
+    cat(" - declaration:", self$declaration(), "\n")
+    cat(" - signature:", self$signature(), "\n")
     invisible(self)
   }
 ))
@@ -56,7 +65,13 @@ StanDimension <- R6::R6Class("StanDimension",
     declaration = function() {
       decl <- "int"
       decl <- add_bounds(decl, self$lower, self$upper)
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      paste0("int ", self$name)
     }
   )
 )
@@ -104,7 +119,13 @@ StanVariable <- R6::R6Class("StanVariable",
     declaration = function() {
       decl <- self$type
       decl <- add_bounds(decl, self$lower, self$upper)
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      paste0(self$type, " ", self$name)
     }
   )
 )
@@ -153,7 +174,13 @@ StanVector <- R6::R6Class("StanVector",
       decl <- paste0("vector")
       decl <- add_bounds(decl, self$lower, self$upper)
       decl <- paste0(decl, "[", self$length$name, "]")
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      paste0("vector ", self$name)
     }
   )
 )
@@ -207,7 +234,13 @@ StanMatrix <- R6::R6Class("StanMatrix",
       decl <- "matrix"
       decl <- add_bounds(decl, self$lower, self$upper)
       decl <- paste0(decl, "[", self$nrow$name, ", ", self$ncol$name, "]")
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      paste0("matrix ", self$name)
     }
   )
 )
@@ -259,19 +292,18 @@ StanArray <- R6::R6Class("StanArray",
     #'
     #' @return a string
     declaration = function() {
-      decl <- "array["
-      j <- 0
-      for (dim in self$dims) {
-        j <- j + 1
-        if (j == 1) {
-          decl <- paste0(decl, dim$name)
-        } else {
-          decl <- paste0(decl, ", ", dim$name)
-        }
-      }
-      decl <- paste0(decl, "] ", self$type)
+      decl <- declare_array(self$name, self$dims, signature = FALSE)
+      decl <- paste0(decl, " ", self$type)
       decl <- add_bounds(decl, self$lower, self$upper)
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      decl <- declare_array(self$name, self$dims, signature = TRUE)
+      decl <- paste0(decl, " ", self$type)
+      paste0(decl, " ", self$name)
     }
   )
 )
@@ -324,20 +356,19 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
     #'
     #' @return a string
     declaration = function() {
-      decl <- "array["
-      j <- 0
-      for (dim in self$dims) {
-        j <- j + 1
-        if (j == 1) {
-          decl <- paste0(decl, dim$name)
-        } else {
-          decl <- paste0(decl, ", ", dim$name)
-        }
-      }
-      decl <- paste0(decl, "] vector")
+      decl <- declare_array(self$name, self$dims, signature = FALSE)
+      decl <- paste0(decl, " ", "vector")
       decl <- add_bounds(decl, self$lower, self$upper)
       decl <- paste0(decl, "[", self$length$name, "]")
-      paste0(decl, " ", self$name, ";")
+      paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      decl <- declare_array(self$name, self$dims, signature = TRUE)
+      decl <- paste0(decl, " ", "vector")
+      paste0(decl, " ", self$name)
     }
   )
 )

@@ -23,6 +23,7 @@ A Stan variable declaration (base class)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-declaration}{\code{StanDeclaration$declaration()}}
+\item \href{#method-signature}{\code{StanDeclaration$signature()}}
 \item \href{#method-print}{\code{StanDeclaration$print()}}
 \item \href{#method-clone}{\code{StanDeclaration$clone()}}
 }
@@ -34,6 +35,16 @@ A Stan variable declaration (base class)
 The variable declaration as a string.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$declaration()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$signature()}\if{html}{\out{</div>}}
 }
 
 }

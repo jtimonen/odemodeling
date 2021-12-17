@@ -42,6 +42,7 @@ A Stan array of vectors
 \itemize{
 \item \href{#method-new}{\code{StanVectorArray$new()}}
 \item \href{#method-declaration}{\code{StanVectorArray$declaration()}}
+\item \href{#method-signature}{\code{StanVectorArray$signature()}}
 \item \href{#method-clone}{\code{StanVectorArray$clone()}}
 }
 }
@@ -90,6 +91,16 @@ Create a declaration for the array of vectors
 \subsection{Returns}{
 a string
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+The variable when used in function signature
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanVectorArray$signature()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

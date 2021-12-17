@@ -23,6 +23,7 @@ A dimension for a Stan vector or array
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="can_be_made_parameter">}\href{../../odetuner/html/StanDeclaration.html#method-can_be_made_parameter}{\code{odetuner::StanDeclaration$can_be_made_parameter()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}

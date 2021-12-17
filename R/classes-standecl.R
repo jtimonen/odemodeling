@@ -4,33 +4,41 @@
 #' @field name name of the variable
 #' @field lower lower bound
 #' @field upper upper bound
-StanDeclaration <- R6::R6Class("StanDeclaration", list(
-  name = NULL,
-  lower = NULL,
-  upper = NULL,
+StanDeclaration <- R6::R6Class("StanDeclaration",
+  public = list(
+    name = NULL,
+    lower = NULL,
+    upper = NULL,
 
-  #' @description
-  #' The variable declaration as a string.
-  declaration = function() {
-    return("UNDEFINED")
-  },
+    #' @description
+    #' The variable declaration as a string.
+    declaration = function() {
+      return("UNDEFINED")
+    },
 
-  #' @description
-  #' The variable when used in function signature
-  signature = function() {
-    return("UNDEFINED")
-  },
+    #' @description
+    #' The variable when used in function signature
+    signature = function() {
+      return("UNDEFINED")
+    },
 
-  #' @description
-  #' Print
-  print = function() {
-    cat("A Stan variable: \n")
-    cat(" - name:", self$name, "\n")
-    cat(" - declaration:", self$declaration(), "\n")
-    cat(" - signature:", self$signature(), "\n")
-    invisible(self)
-  }
-))
+    #' @description
+    #' Print
+    print = function() {
+      cat("Variable: \n")
+      cat(" - name:", self$name, "\n")
+      cat(" - declaration:", self$declaration(), "\n")
+      cat(" - function signature:", self$signature(), "\n")
+      invisible(self)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      FALSE
+    }
+  )
+)
 
 #' A dimension for a Stan vector or array
 StanDimension <- R6::R6Class("StanDimension",
@@ -119,6 +127,12 @@ StanVariable <- R6::R6Class("StanVariable",
     #' The variable when used in function signature
     signature = function() {
       paste0(self$type, " ", self$name)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      self$type == "real"
     }
   )
 )
@@ -171,6 +185,12 @@ StanVector <- R6::R6Class("StanVector",
     #' The variable when used in function signature
     signature = function() {
       paste0("vector ", self$name)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      TRUE
     }
   )
 )
@@ -228,6 +248,12 @@ StanMatrix <- R6::R6Class("StanMatrix",
     #' The variable when used in function signature
     signature = function() {
       paste0("matrix ", self$name)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      TRUE
     }
   )
 )
@@ -288,6 +314,12 @@ StanArray <- R6::R6Class("StanArray",
       decl <- declare_array(self$name, self$dims, signature = TRUE)
       decl <- paste0(decl, " ", self$type)
       paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      self$type == "real"
     }
   )
 )
@@ -350,6 +382,52 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
       decl <- declare_array(self$name, self$dims, signature = TRUE)
       decl <- paste0(decl, " ", "vector")
       paste0(decl, " ", self$name)
+    },
+
+    #' @description
+    #' Can the object be made into a parameter?
+    can_be_made_parameter = function() {
+      FALSE # not sure should this be TRUE
+    }
+  )
+)
+
+
+#' A Stan parameter
+#'
+#' @field var The variable declaration.
+#' @field prior_code The prior declaration.
+StanParameter <- R6::R6Class("StanParameter",
+  public = list(
+    var = NULL,
+    prior_code = NULL,
+
+    #' @description
+    #' Create a `StanParameter` object.
+    #'
+    #' @param var The underlying variable.
+    #' @param prior_code Code that defines prior for the parameter.
+    initialize = function(var, prior_code = "") {
+      checkmate::assert_class(var, "StanDeclaration")
+      checkmate::assert_true(var$can_be_made_parameter())
+      checkmate::assert_string(prior_code, min.chars = 0)
+      self$var <- var
+      self$prior_code <- prior_code
+    },
+
+    #' @description
+    #' Print
+    print = function() {
+      cat("Parameter: ")
+      self$var$print()
+      if (nchar(self$prior_code) > 0) {
+        cat("\nPrior code:\n")
+        cat(self$prior_code)
+        cat("\n")
+      } else {
+        cat("\nNo prior set.\n")
+      }
+      invisible(self)
     }
   )
 )

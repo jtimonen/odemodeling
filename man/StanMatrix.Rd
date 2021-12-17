@@ -26,6 +26,7 @@ A Stan matrix
 \item \href{#method-new}{\code{StanMatrix$new()}}
 \item \href{#method-declaration}{\code{StanMatrix$declaration()}}
 \item \href{#method-signature}{\code{StanMatrix$signature()}}
+\item \href{#method-can_be_made_parameter}{\code{StanMatrix$can_be_made_parameter()}}
 \item \href{#method-clone}{\code{StanMatrix$clone()}}
 }
 }
@@ -81,6 +82,16 @@ a string
 The variable when used in function signature
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanMatrix$signature()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-can_be_made_parameter"></a>}}
+\if{latex}{\out{\hypertarget{method-can_be_made_parameter}{}}}
+\subsection{Method \code{can_be_made_parameter()}}{
+Can the object be made into a parameter?
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanMatrix$can_be_made_parameter()}\if{html}{\out{</div>}}
 }
 
 }

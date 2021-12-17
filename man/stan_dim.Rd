@@ -26,6 +26,7 @@ print(M)
 Other Stan variable declaration functions: 
 \code{\link{stan_array}()},
 \code{\link{stan_matrix}()},
+\code{\link{stan_param}()},
 \code{\link{stan_var}()},
 \code{\link{stan_vector_array}()},
 \code{\link{stan_vector}()}

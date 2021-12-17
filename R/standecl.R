@@ -110,3 +110,25 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
     lower = lower, upper = upper
   )
 }
+
+#' Create a `StanParameter` object
+#'
+#' @param var The Stan variable declaration from which the parameter is
+#' created. Must be an object that inherits from `StanDeclaration` and
+#' has a real or vector base type.
+#' @param prior_code A string of Stan code that defines the prior for the
+#' parameter. The default is empty string (no prior).
+#' @family Stan variable declaration functions
+#' @export
+#' @examples
+#' # Scalar parameter
+#' my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1)")
+#' print(my_par)
+#'
+#' # Vector parameter
+#' my_vec <- stan_vector("alpha", stan_dim("D"), lower = 0)
+#' my_par <- stan_param(my_vec)
+#' print(my_par)
+stan_param <- function(var, prior_code = "") {
+  StanParameter$new(var = var, prior_code = prior_code)
+}

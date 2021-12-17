@@ -24,6 +24,7 @@ A Stan vector
 \item \href{#method-new}{\code{StanVector$new()}}
 \item \href{#method-declaration}{\code{StanVector$declaration()}}
 \item \href{#method-signature}{\code{StanVector$signature()}}
+\item \href{#method-can_be_made_parameter}{\code{StanVector$can_be_made_parameter()}}
 \item \href{#method-clone}{\code{StanVector$clone()}}
 }
 }
@@ -77,6 +78,16 @@ a string
 The variable when used in function signature
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanVector$signature()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-can_be_made_parameter"></a>}}
+\if{latex}{\out{\hypertarget{method-can_be_made_parameter}{}}}
+\subsection{Method \code{can_be_made_parameter()}}{
+Can the object be made into a parameter?
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanVector$can_be_made_parameter()}\if{html}{\out{</div>}}
 }
 
 }

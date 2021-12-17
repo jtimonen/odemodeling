@@ -433,20 +433,20 @@ StanParameter <- R6::R6Class("StanParameter",
 )
 
 
-#' A Stan generated quantity
+#' A Stan transformation
 #'
 #' @field var The variable declaration.
-#' @field code The code that computes the quantity.
-StanGeneratedQuantity <- R6::R6Class("StanGeneratedQuantity",
+#' @field code The code that assigns to the declared variable.
+StanTransformation <- R6::R6Class("StanTransformation",
   public = list(
     var = NULL,
     code = NULL,
 
     #' @description
-    #' Create a `StanGeneratedQuantity` object.
+    #' Create a `StanTransformation` object.
     #'
     #' @param var The underlying variable.
-    #' @param code The code that computes the quantity.
+    #' @param code The code that assigns to the declared variable.
     initialize = function(var, code = "") {
       checkmate::assert_class(var, "StanDeclaration")
       checkmate::assert_string(code, min.chars = 0)
@@ -457,7 +457,7 @@ StanGeneratedQuantity <- R6::R6Class("StanGeneratedQuantity",
     #' @description
     #' Print
     print = function() {
-      cat("Generated quantity: ")
+      cat("Transformation: ")
       self$var$print()
       if (nchar(self$code) > 0) {
         cat("\nCode:\n")

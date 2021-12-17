@@ -133,12 +133,14 @@ stan_param <- function(var, prior_code = "") {
   StanParameter$new(var = var, prior_code = prior_code)
 }
 
-#' Create a `StanGeneratedQuantity` object
+
+#' Create a `StanTransformation` object
 #'
 #' @param var The Stan variable declaration for the quantity.
 #'  Must be an object that inherits from `StanDeclaration`.
 #' @param code A string of Stan code that defines how the quantity is
-#' computed. The default is empty string (no definition).
+#' computed from other variables/parameters.
+#' The default is empty string (no definition).
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
@@ -151,8 +153,8 @@ stan_param <- function(var, prior_code = "") {
 #'     y[n, d] ~ poisson_rng(0.2);
 #'   }
 #' }"
-#' y <- stan_gq(arr, code)
+#' y <- stan_transform(arr, code)
 #' print(y)
-stan_gq <- function(var, code = "") {
-  StanGeneratedQuantity$new(var = var, code = code)
+stan_transform <- function(var, code = "") {
+  StanTransformation$new(var = var, code = code)
 }

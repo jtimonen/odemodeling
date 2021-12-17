@@ -33,10 +33,6 @@ StanDeclaration <- R6::R6Class("StanDeclaration", list(
 ))
 
 #' A dimension for a Stan vector or array
-#'
-#' @field name name of the dimension variable
-#' @field lower lower bound
-#' @field upper upper bound
 StanDimension <- R6::R6Class("StanDimension",
   inherit = StanDeclaration,
   public = list(
@@ -79,9 +75,6 @@ StanDimension <- R6::R6Class("StanDimension",
 
 #' A Stan variable
 #'
-#' @field name name of the variable
-#' @field lower lower bound
-#' @field upper upper bound
 #' @field type type of the variable
 StanVariable <- R6::R6Class("StanVariable",
   inherit = StanDeclaration,
@@ -133,9 +126,6 @@ StanVariable <- R6::R6Class("StanVariable",
 
 #' A Stan vector
 #'
-#' @field name name of the vector
-#' @field lower lower bound
-#' @field upper upper bound
 #' @field length length of the vector
 StanVector <- R6::R6Class("StanVector",
   inherit = StanDeclaration,
@@ -188,9 +178,6 @@ StanVector <- R6::R6Class("StanVector",
 
 #' A Stan matrix
 #'
-#' @field name name of the matrix
-#' @field lower lower bound
-#' @field upper upper bound
 #' @field nrow number of rows
 #' @field ncol number of columns
 StanMatrix <- R6::R6Class("StanMatrix",
@@ -248,9 +235,6 @@ StanMatrix <- R6::R6Class("StanMatrix",
 
 #' A Stan array
 #'
-#' @field name name of the array
-#' @field lower lower bound
-#' @field upper upper bound
 #' @field dims list of array dimensions
 #' @field type base type of the array
 StanArray <- R6::R6Class("StanArray",
@@ -312,9 +296,6 @@ StanArray <- R6::R6Class("StanArray",
 
 #' A Stan array of vectors
 #'
-#' @field name name of the array
-#' @field lower lower bound
-#' @field upper upper bound
 #' @field dims list of array dimensions
 #' @field length length of the vector
 StanVectorArray <- R6::R6Class("StanVectorArray",

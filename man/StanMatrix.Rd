@@ -14,26 +14,9 @@ A Stan matrix
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{name of the matrix}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
-
 \item{\code{nrow}}{number of rows}
 
 \item{\code{ncol}}{number of columns}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{name of the matrix}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
 }
 \if{html}{\out{</div>}}
 }

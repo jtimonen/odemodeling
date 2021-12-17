@@ -14,24 +14,7 @@ A Stan variable
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{name of the variable}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
-
 \item{\code{type}}{type of the variable}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{name of the variable}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
 }
 \if{html}{\out{</div>}}
 }

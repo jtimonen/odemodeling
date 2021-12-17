@@ -14,26 +14,9 @@ A Stan array of vectors
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{name of the array}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
-
 \item{\code{dims}}{list of array dimensions}
 
 \item{\code{length}}{length of the vector}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{name of the array}
-
-\item{\code{lower}}{lower bound}
-
-\item{\code{upper}}{upper bound}
 }
 \if{html}{\out{</div>}}
 }

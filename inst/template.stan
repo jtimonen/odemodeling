@@ -1,13 +1,12 @@
 data {
-  int<lower=1> N;                 // number of time points
-  array[N] real t;                // time points
-  int<lower=1> D;                 // ODE-system dimension
-  real t0;                        // initial time point
+  // Dimensions
+  __DIMENSIONS__
 
-  // Define other needed data here, for example
-  //  * initial state of ODE system at t0
-  //  * observations at timepoints t
-  __ADD_DATA__
+  // Other needed for the ODE function
+  __ODEFUN_DATA__
+
+  // Other needed for computing the likelihood
+  __OBSMODEL_DATA__
 
   // ODE data
   int<lower=1> solver;          // 1 = rk45, 2 = bdf, 11 = rk4
@@ -21,7 +20,17 @@ data {
   int<lower=0,upper=1> do_genquant;
 }
 
-__MIDDLE_BLOCKS__
+transformed data {
+  __TRANSFORMED_DATA__
+}
+
+parameters {
+  __PARAMETERS__
+}
+
+transformed parameters {
+  __TRANSFORMED_PARAMETERS__
+}
 
 model {
   array[do_likelihood, N] vector[D] x_ode;

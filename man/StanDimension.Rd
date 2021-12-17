@@ -8,8 +8,22 @@ A dimension for a Stan vector or array
 
 A dimension for a Stan vector or array
 }
+\section{Super class}{
+\code{\link[odetuner:StanDeclaration]{odetuner::StanDeclaration}} -> \code{StanDimension}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{name of the dimension variable}
+
+\item{\code{lower}}{lower bound}
+
+\item{\code{upper}}{upper bound}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{name}}{name of the dimension variable}
 
@@ -24,9 +38,15 @@ A dimension for a Stan vector or array
 \itemize{
 \item \href{#method-new}{\code{StanDimension$new()}}
 \item \href{#method-declaration}{\code{StanDimension$declaration()}}
-\item \href{#method-print}{\code{StanDimension$print()}}
 \item \href{#method-clone}{\code{StanDimension$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -56,16 +76,6 @@ Create a \code{StanDimension} object
 Create a data block declaration for the dimension.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDimension$declaration()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanDimension$print()}\if{html}{\out{</div>}}
 }
 
 }

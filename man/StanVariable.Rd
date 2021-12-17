@@ -8,6 +8,9 @@ A Stan variable
 
 A Stan variable
 }
+\section{Super class}{
+\code{\link[odetuner:StanDeclaration]{odetuner::StanDeclaration}} -> \code{StanVariable}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -21,14 +24,31 @@ A Stan variable
 }
 \if{html}{\out{</div>}}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{name of the variable}
+
+\item{\code{lower}}{lower bound}
+
+\item{\code{upper}}{upper bound}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{StanVariable$new()}}
 \item \href{#method-declaration}{\code{StanVariable$declaration()}}
-\item \href{#method-print}{\code{StanVariable$print()}}
 \item \href{#method-clone}{\code{StanVariable$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -65,16 +85,6 @@ Create a declaration for the variable
 \subsection{Returns}{
 a string
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanVariable$print()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -2,49 +2,62 @@
 % Please edit documentation in R/generate_stancode.R
 \name{generate_stancode}
 \alias{generate_stancode}
-\title{Generate full 'Stan' code given missing parts}
+\title{Generate 'Stan' model code}
 \usage{
 generate_stancode(
-  odefun_add_args,
-  odefun_body,
-  loglik_add_args,
-  loglik_body,
-  add_data = "",
-  middle_blocks = "",
-  prior = "",
-  genquant_decl = "",
-  genquant = "",
-  autoformat = TRUE
+  timepoints,
+  odefun_data = list(),
+  odefun_tdata = list(),
+  odefun_params = list(),
+  odefun_tparams = list(),
+  odefun_body = "",
+  loglik_data = list(),
+  loglik_tdata = list(),
+  loglik_params = list(),
+  loglik_tparams = list(),
+  loglik_body = "",
+  gqs = list()
 )
 }
 \arguments{
-\item{odefun_add_args}{ODE function additional arguments (vector of
-Stan code strings).}
+\item{timepoints}{A \code{StanVector} object defining the vector of time points.}
+
+\item{odefun_data}{Data needed by the ODE function. List of
+\code{StanDeclaration} objects.}
+
+\item{odefun_tdata}{Transformed data needed by the ODE function.
+A list of \code{StanTransformation} objects.}
+
+\item{odefun_params}{Parameters of the ODE function. A list of
+\code{StanParameter} objects.}
+
+\item{odefun_tparams}{Transformations for parameters of the ODE
+function. A list of \code{StanTransformation} objects.}
 
 \item{odefun_body}{ODE function body (Stan code string).}
 
-\item{loglik_add_args}{Log-likelihood function additional arguments
-(vector of Stan code strings).}
+\item{loglik_data}{Data needed by the log likelihood function. List of
+\code{StanDeclaration} objects.}
 
-\item{loglik_body}{Log-likelihood function bod (Stan code string).}
+\item{loglik_tdata}{Transformed data needed by the log likelihood function.
+A list of \code{StanTransformation} objects.}
 
-\item{add_data}{Code to declare additional data (Stan code string).}
+\item{loglik_params}{Parameters of the log likelihood function. A list of
+\code{StanParameter} objects.}
 
-\item{middle_blocks}{The \verb{transformed data}, \code{parameters}, and
-\verb{transformed parameters} blocks (Stan code string).}
+\item{loglik_tparams}{Transformations for parameters of the log likelihood
+function. A list of \code{StanTransformation} objects.}
 
-\item{prior}{Code that defines the prior for parameters (Stan code string).}
+\item{loglik_body}{Log likelihood function body (Stan code string).}
 
-\item{genquant_decl}{Declarations of generated quantities (Stan code string).}
-
-\item{genquant}{Code that computes generated quantities (Stan code string).}
+\item{gqs}{Generated quantities. A list of \code{StanTransformation} objects.}
 }
 \value{
-Model code as a string and path to file where the model
-is saved.
+Model code as a string.
 }
 \description{
-Generate full 'Stan' code given missing parts
+Generate 'Stan' model code given the declarations of variables,
+parameters, functions etc.
 }
 \seealso{
 Other setup functions: 

@@ -1,3 +1,102 @@
+#' Generate 'Stan' code for prior model
+#'
+#' @param data A list of `StanDeclaration` objects.
+#' @param tdata A list of `StanTransformation` objects.
+#' @param params A list of `StanParameter` objects.
+#' @param tparams A list of `StanTransformation` objects.
+#' @return A string defining a complete 'Stan' model.
+generate_stancode_prior <- function(data = list(),
+                                    tdata = list(),
+                                    params = list(),
+                                    tparams = list()) {
+  checkmate::assert_list(data, "StanDeclaration")
+  checkmate::assert_list(tdata, "StanTransformation")
+  checkmate::assert_list(params, "StanParameter")
+  get_var <- function(x) x$var
+  all_vars <- c(
+    data,
+    lapply(tdata, get_var),
+    lapply(params, get_var),
+    lapply(tparams, get_var)
+  )
+  data_b <- create_data_block(all_vars, data)
+  tdata_b <- create_transform_block("transformed data", tdata)
+  pars_b <- create_params_block(params)
+  tpars_b <- create_transform_block("transformed parameters", tparams)
+  model_b <- create_model_block(params, params_only = TRUE)
+  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, "\n")
+  autoformat_stancode(code)
+}
+
+# Create the data block
+create_data_block <- function(all_vars, data) {
+  dims_code <- generate_dim_declarations(all_vars)
+  dvars_code <- generate_var_declarations(data)
+  generate_block("data", c(dims_code, dvars_code))
+}
+
+# Create a transform block (transformed data, transformed params, or gq)
+create_transform_block <- function(name, transforms) {
+  if (length(transforms) == 0) {
+    return("")
+  }
+  get_var <- function(x) x$var
+  get_code <- function(x) x$code
+  vars <- lapply(transforms, get_var)
+  codes <- paste(lapply(transforms, get_code), collapse = "\n")
+  decls <- generate_var_declarations(vars)
+  generate_block(name, c(decls, codes))
+}
+
+# Create the parameters block
+create_params_block <- function(params) {
+  get_var <- function(x) x$var
+  vars <- lapply(params, get_var)
+  dvars_code <- generate_var_declarations(vars)
+  generate_block("parameters", c(dvars_code))
+}
+
+# Create the parameters block
+create_model_block <- function(params, params_only) {
+  get_code <- function(x) x$prior_code
+  codes <- paste(lapply(params, get_code), collapse = "\n")
+  if (!params_only) {
+    stop("not implemented!")
+  }
+  generate_block("model", c(codes))
+}
+
+# Create a block of Stan code
+generate_block <- function(name, parts) {
+  code <- paste0(name, " {\n")
+  for (p in parts) {
+    code <- paste0(code, "\n", p)
+  }
+  code <- paste0(code, "\n}\n")
+  return(code)
+}
+
+# Dimensions declaration code
+generate_dim_declarations <- function(vars) {
+  checkmate::assert_list(vars, "StanDeclaration")
+  dim_vars <- list()
+  for (var in vars) {
+    dim_vars <- c(dim_vars, var$get_dims())
+  }
+  generate_var_declarations(dim_vars)
+}
+
+# Variables declaration code
+generate_var_declarations <- function(vars) {
+  checkmate::assert_list(vars, "StanDeclaration")
+  get_decl <- function(x) {
+    x$declaration()
+  }
+  lines <- sapply(vars, get_decl)
+  lines <- unique(lines)
+  paste(lines, ";", sep = "", collapse = "\n")
+}
+
 #' Generate full 'Stan' code given missing parts
 #'
 #' @export

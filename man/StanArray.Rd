@@ -27,6 +27,7 @@ A Stan array
 \item \href{#method-declaration}{\code{StanArray$declaration()}}
 \item \href{#method-signature}{\code{StanArray$signature()}}
 \item \href{#method-can_be_made_parameter}{\code{StanArray$can_be_made_parameter()}}
+\item \href{#method-get_dims}{\code{StanArray$get_dims()}}
 \item \href{#method-clone}{\code{StanArray$clone()}}
 }
 }
@@ -95,6 +96,19 @@ Can the object be made into a parameter?
 \if{html}{\out{<div class="r">}}\preformatted{StanArray$can_be_made_parameter()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_dims"></a>}}
+\if{latex}{\out{\hypertarget{method-get_dims}{}}}
+\subsection{Method \code{get_dims()}}{
+Get all declared dimensions related to the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanArray$get_dims()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

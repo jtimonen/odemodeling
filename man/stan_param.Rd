@@ -19,7 +19,7 @@ Create a \code{StanParameter} object
 }
 \examples{
 # Scalar parameter
-my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1)")
+my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1);")
 print(my_par)
 
 # Vector parameter

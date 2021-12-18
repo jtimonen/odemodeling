@@ -25,10 +25,7 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     #' @description
     #' Print
     print = function() {
-      cat("Variable: \n")
-      cat(" - name:", self$name, "\n")
-      cat(" - declaration:", self$declaration(), "\n")
-      cat(" - function signature:", self$signature(), "\n")
+      cat(self$declaration(), ";\n", sep = "")
       invisible(self)
     },
 
@@ -36,6 +33,13 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     #' Can the object be made into a parameter?
     can_be_made_parameter = function() {
       FALSE
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      list()
     }
   )
 )
@@ -76,6 +80,13 @@ StanDimension <- R6::R6Class("StanDimension",
     #' The variable when used in function signature
     signature = function() {
       paste0("int ", self$name)
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      list(self)
     }
   )
 )
@@ -191,6 +202,13 @@ StanVector <- R6::R6Class("StanVector",
     #' Can the object be made into a parameter?
     can_be_made_parameter = function() {
       TRUE
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      list(self$length)
     }
   )
 )
@@ -254,6 +272,13 @@ StanMatrix <- R6::R6Class("StanMatrix",
     #' Can the object be made into a parameter?
     can_be_made_parameter = function() {
       TRUE
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      list(self$nrow, self$ncol)
     }
   )
 )
@@ -321,6 +346,13 @@ StanArray <- R6::R6Class("StanArray",
     #' Can the object be made into a parameter?
     can_be_made_parameter = function() {
       self$type == "real"
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      self$dims
     }
   )
 )
@@ -389,6 +421,13 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
     #' Can the object be made into a parameter?
     can_be_made_parameter = function() {
       FALSE # not sure should this be TRUE
+    },
+
+    #' @description
+    #' Get all declared dimensions related to the object.
+    #' @return A list.
+    get_dims = function() {
+      c(self$dims, list(self$length))
     }
   )
 )
@@ -422,11 +461,11 @@ StanParameter <- R6::R6Class("StanParameter",
       cat("Parameter: ")
       self$var$print()
       if (nchar(self$prior_code) > 0) {
-        cat("\nPrior code:\n")
+        cat("Prior code: ")
         cat(self$prior_code)
         cat("\n")
       } else {
-        cat("\nNo prior set.\n")
+        cat("No prior set.\n")
       }
       invisible(self)
     }
@@ -458,10 +497,10 @@ StanTransformation <- R6::R6Class("StanTransformation",
     #' @description
     #' Print
     print = function() {
-      cat("Transformation: ")
+      cat("Transformed quantity: ")
       self$var$print()
       if (nchar(self$code) > 0) {
-        cat("\nCode:\n")
+        cat("Code:\n")
         cat(self$code)
         cat("\n")
       } else {

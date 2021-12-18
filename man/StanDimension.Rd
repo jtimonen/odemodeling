@@ -17,6 +17,7 @@ A dimension for a Stan vector or array
 \item \href{#method-new}{\code{StanDimension$new()}}
 \item \href{#method-declaration}{\code{StanDimension$declaration()}}
 \item \href{#method-signature}{\code{StanDimension$signature()}}
+\item \href{#method-get_dims}{\code{StanDimension$get_dims()}}
 \item \href{#method-clone}{\code{StanDimension$clone()}}
 }
 }
@@ -68,6 +69,19 @@ The variable when used in function signature
 \if{html}{\out{<div class="r">}}\preformatted{StanDimension$signature()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_dims"></a>}}
+\if{latex}{\out{\hypertarget{method-get_dims}{}}}
+\subsection{Method \code{get_dims()}}{
+Get all declared dimensions related to the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDimension$get_dims()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

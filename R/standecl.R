@@ -122,7 +122,7 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
 #' @export
 #' @examples
 #' # Scalar parameter
-#' my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1)")
+#' my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1);")
 #' print(my_par)
 #'
 #' # Vector parameter

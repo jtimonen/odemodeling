@@ -27,6 +27,7 @@ A Stan matrix
 \item \href{#method-declaration}{\code{StanMatrix$declaration()}}
 \item \href{#method-signature}{\code{StanMatrix$signature()}}
 \item \href{#method-can_be_made_parameter}{\code{StanMatrix$can_be_made_parameter()}}
+\item \href{#method-get_dims}{\code{StanMatrix$get_dims()}}
 \item \href{#method-clone}{\code{StanMatrix$clone()}}
 }
 }
@@ -94,6 +95,19 @@ Can the object be made into a parameter?
 \if{html}{\out{<div class="r">}}\preformatted{StanMatrix$can_be_made_parameter()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_dims"></a>}}
+\if{latex}{\out{\hypertarget{method-get_dims}{}}}
+\subsection{Method \code{get_dims()}}{
+Get all declared dimensions related to the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanMatrix$get_dims()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -10,17 +10,28 @@ example_odemodel <- function(...) {
 
 # Example
 example_odemodel_gsir <- function(...) {
-  odefun_data <- c(
-    "int<lower=1> G", # number of groups
-    "vector[G] pop_sizes", # population sizes in each group
-    "vector[G] I0", # initial number of infected in each group
-    "matrix[G, G] contacts", # contact matrix
-  )
 
-  odefun_pars <- c(
-    "real<lower=0> beta", # infection rate
-    "vector<lower=0>[G] gamma" # group-specific recovery rates
-  )
+  # Data
+  G <- stan_dim("G", lower = 1) # number of groups
+  pop_sizes <- stan_vector("pop_sizes", G) # population sizes in each group
+  I0 <- stan_vector("I0", G, lower = 0) # initial num of infected in each group
+  contacts <- stan_matrix("contacts", G, G) # contact matrix
+  dat <- list(pop_sizes, I0, contacts)
+
+  # Ode function parameters beta and gamma
+  beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
+  gvar <- stan_vector("gamma", lower = 0, length = G)
+  gamma <- stan_param(gvar, "gamma ~ normal(0.3, 0.3);")
+  odefun_pars <- list(beta, gamma)
+
+  # Observation model parameters phi_inv
+  pivar <- stan_vector("phi_inv", lower = 0, length = G)
+  phi_inv <- stan_param(pivar, "phi_inv ~ exponential(5);")
+
+  # Works
+  a <- generate_stancode_prior(data = dat, params = odefun_pars)
+
+
 
   odefun_code <- "
     vector[2*G] dy_dt; // first G are susceptible, next G are infected
@@ -52,14 +63,6 @@ example_odemodel_gsir <- function(...) {
   obsmodel_data <- c(
     "int<lower=0> y[N,G]", # observations of infected
     "real<lower=0> delta" # small positive number
-  )
-
-  obsmodel_pars <- c("vector<lower=0>[G] phi_inv") # noise params
-
-  priors <- c(
-    "beta ~ normal(2, 1)",
-    "gamma ~ normal(0.3, 0.3)",
-    "phi_inv ~ exponential(5)"
   )
 
   loglik_code <- "

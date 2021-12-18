@@ -12,7 +12,7 @@ example_odemodel <- function(...) {
 example_odemodel_gsir <- function(...) {
 
   # Time points
-  N <- stan_dim("N", lower = 1) # number of timepoints
+  N <- stan_dim("N", lower = 0) # number of timepoints
 
   # Data needed by ODE function
   G <- stan_dim("G", lower = 1) # number of groups
@@ -21,6 +21,20 @@ example_odemodel_gsir <- function(...) {
   contacts <- stan_matrix("contacts", G, G) # contact matrix
   odefun_data <- list(pop_sizes, I0, contacts)
 
+  # Initial value
+  D <- stan_dim("D", lower = 0) # number of ODE dimensions
+  x0_var <- stan_vector("x0", length = D)
+  x0_code <-
+    "
+    for(g in 1:G) {
+      x0[g] = pop_sizes[g] - I0[g]; // initial number of S
+    }
+    for(g in 1:G) {
+      x0[G + g] = I0[g]; // initial number of I
+    }
+  "
+  x0 <- stan_transform(x0_var, x0_code)
+
   # ODE function parameters beta and gamma
   beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
   gvar <- stan_vector("gamma", lower = 0, length = G)
@@ -28,7 +42,7 @@ example_odemodel_gsir <- function(...) {
 
   # Observation model data
   delta <- stan_var("delta", lower = 0)
-  I_data <- stan_array("I_data", type = "int", dims = list(N, G))
+  I_data <- stan_array("I_data", type = "int", dims = list(N, G), lower = 0)
 
   # Observation model parameters phi_inv
   phi_inv_var <- stan_vector("phi_inv", lower = 0, length = G)
@@ -70,25 +84,11 @@ example_odemodel_gsir <- function(...) {
     odefun_data = odefun_data,
     odefun_params = list(beta, gamma),
     odefun_body = odefun_body,
+    odefun_init = x0,
     loglik_data = list(delta, I_data),
     loglik_params = list(phi_inv),
     loglik_tparams = list(phi),
     loglik_body = loglik_body
-  )
-
-  odefun_tdata <- c("vector[2*G] x0")
-  tdata_code <- "
-    for(g in 1:G) {
-      x0[g] = pop_sizes[g] - I0[g]; // initial number of S
-    }
-    for(g in 1:G) {
-      x0[G + g] = I0[g]; // initial number of I
-    }
-  "
-
-  obsmodel_data <- c(
-    "int<lower=0> y[N,G]", # observations of infected
-    "real<lower=0> delta" # small positive number
   )
 
   genquant <- "array[N, G] int y_gen"

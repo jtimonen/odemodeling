@@ -7,12 +7,11 @@
 generate_stancode(
   N,
   odefun_data = list(),
-  odefun_tdata = list(),
   odefun_params = list(),
   odefun_tparams = list(),
   odefun_body = "",
+  odefun_init = NULL,
   loglik_data = list(),
-  loglik_tdata = list(),
   loglik_params = list(),
   loglik_tparams = list(),
   loglik_body = "",
@@ -25,9 +24,6 @@ generate_stancode(
 \item{odefun_data}{Data needed by the ODE function. List of
 \code{StanDeclaration} objects.}
 
-\item{odefun_tdata}{Transformed data needed by the ODE function.
-A list of \code{StanTransformation} objects.}
-
 \item{odefun_params}{Parameters of the ODE function. A list of
 \code{StanParameter} objects.}
 
@@ -36,11 +32,11 @@ function. A list of \code{StanTransformation} objects.}
 
 \item{odefun_body}{ODE function body (Stan code string).}
 
+\item{odefun_init}{Initial value for ODE system at t0.
+Has to be either \code{StanVector}, \code{StanParameter} or a \code{StanTransformation}.}
+
 \item{loglik_data}{Data needed by the log likelihood function. List of
 \code{StanDeclaration} objects.}
-
-\item{loglik_tdata}{Transformed data needed by the log likelihood function.
-A list of \code{StanTransformation} objects.}
 
 \item{loglik_params}{Parameters of the log likelihood function. A list of
 \code{StanParameter} objects.}

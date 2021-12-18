@@ -6,17 +6,15 @@
 #' @param N A dimension.
 #' @param odefun_data Data needed by the ODE function. List of
 #' `StanDeclaration` objects.
-#' @param odefun_tdata Transformed data needed by the ODE function.
-#' A list of `StanTransformation` objects.
 #' @param odefun_params Parameters of the ODE function. A list of
 #' `StanParameter` objects.
 #' @param odefun_tparams Transformations for parameters of the ODE
 #' function. A list of `StanTransformation` objects.
 #' @param odefun_body ODE function body (Stan code string).
+#' @param odefun_init Initial value for ODE system at t0.
+#' Has to be either `StanVector`, `StanParameter` or a `StanTransformation`.
 #' @param loglik_data Data needed by the log likelihood function. List of
 #' `StanDeclaration` objects.
-#' @param loglik_tdata Transformed data needed by the log likelihood function.
-#' A list of `StanTransformation` objects.
 #' @param loglik_params Parameters of the log likelihood function. A list of
 #' `StanParameter` objects.
 #' @param loglik_tparams Transformations for parameters of the log likelihood
@@ -27,12 +25,11 @@
 #' @family setup functions
 generate_stancode <- function(N,
                               odefun_data = list(),
-                              odefun_tdata = list(),
                               odefun_params = list(),
                               odefun_tparams = list(),
                               odefun_body = "",
+                              odefun_init = NULL,
                               loglik_data = list(),
-                              loglik_tdata = list(),
                               loglik_params = list(),
                               loglik_tparams = list(),
                               loglik_body = "",
@@ -40,12 +37,13 @@ generate_stancode <- function(N,
   # Argument checks
   checkmate::assert_class(N, "StanDimension")
   checkmate::assert_list(odefun_data, "StanDeclaration")
-  checkmate::assert_list(odefun_tdata, "StanTransformation")
   checkmate::assert_list(odefun_params, "StanParameter")
   checkmate::assert_list(odefun_tparams, "StanTransformation")
   checkmate::assert_string(odefun_body, min.chars = 0)
+  choices <- c("StanVector", "StanParameter", "StanTransformation")
+  checkmate::assert_multi_class(odefun_init, choices)
+
   checkmate::assert_list(loglik_data, "StanDeclaration")
-  checkmate::assert_list(loglik_tdata, "StanTransformation")
   checkmate::assert_list(loglik_params, "StanParameter")
   checkmate::assert_list(loglik_tparams, "StanTransformation")
   checkmate::assert_string(loglik_body, min.chars = 0)
@@ -53,63 +51,51 @@ generate_stancode <- function(N,
 
   # Prior
   prior <- generate_stancode_prior(
-    c(odefun_data, loglik_data),
-    c(odefun_tdata, loglik_tdata),
     c(odefun_params, loglik_params),
     c(odefun_tparams, loglik_tparams)
   )
 
   # Simulator
-  simulator <- generate_stancode_simulator(
+  posterior <- generate_stancode_posterior(
     N,
     odefun_data,
-    odefun_tdata,
     odefun_params,
     odefun_tparams,
     odefun_body,
+    odefun_init,
     loglik_data,
-    loglik_tdata,
     loglik_params,
     loglik_tparams,
     loglik_body,
     gqs
   )
 
-  # Posterior
-  posterior <- ""
 
   # Return
-  list(prior = prior, simulator = simulator, posterior = posterior)
+  list(prior = prior, posterior = posterior)
 }
 
 
 # Generate 'Stan' code for prior model
-generate_stancode_prior <- function(data, tdata, params, tparams) {
-  all_vars <- c(
-    data,
-    lapply(tdata, get_var),
-    lapply(params, get_var),
-    lapply(tparams, get_var)
-  )
-  data_b <- create_data_block(all_vars, data)
-  tdata_b <- create_transform_block("transformed data", tdata)
+generate_stancode_prior <- function(params, tparams) {
+  all_vars <- c(lapply(params, get_var), lapply(tparams, get_var))
+  data_b <- create_data_block(all_vars, list())
   pars_b <- create_params_block(params)
   tpars_b <- create_transform_block("transformed parameters", tparams)
   model_b <- create_model_block(params, params_only = TRUE)
-  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, "\n")
+  code <- paste(data_b, pars_b, tpars_b, model_b, "\n")
   autoformat_stancode(code)
 }
 
 
-# Generate 'Stan' code for simulator model
-generate_stancode_simulator <- function(N,
+# Generate 'Stan' code for posterior model
+generate_stancode_posterior <- function(N,
                                         odefun_data,
-                                        odefun_tdata,
                                         odefun_params,
                                         odefun_tparams,
                                         odefun_body,
+                                        odefun_init,
                                         loglik_data,
-                                        loglik_tdata,
                                         loglik_params,
                                         loglik_tparams,
                                         loglik_body,
@@ -117,9 +103,11 @@ generate_stancode_simulator <- function(N,
 
   # Get all vars
   data_vars <- c(odefun_data, loglik_data)
-  tdata_vars <- c(lapply(odefun_tdata, get_var), lapply(loglik_tdata, get_var))
-  pars_vars <- c(lapply(odefun_params, get_var), lapply(loglik_params, get_var))
-  tpars_vars <- c(lapply(odefun_tparams, get_var), lapply(loglik_tparams, get_var))
+  tdata_vars <- get_var(odefun_init)
+  pars <- c(odefun_params, loglik_params)
+  tpars <- c(odefun_tparams, loglik_tparams)
+  pars_vars <- lapply(pars, get_var)
+  tpars_vars <- lapply(tpars, get_var)
   time_vars <- list(stan_var("t0"), stan_array("t", dims = list(N)))
   solver_vars <- list(
     stan_var("abs_tol", lower = 0),
@@ -128,6 +116,7 @@ generate_stancode_simulator <- function(N,
     stan_var("num_steps", lower = 0, type = "int"),
     stan_var("solver", lower = 0, type = "int")
   )
+
   all_vars <- c(
     time_vars,
     solver_vars,
@@ -137,34 +126,33 @@ generate_stancode_simulator <- function(N,
     tpars_vars
   )
 
-  # Data block
+  # Easy blocks
   data_b <- create_data_block(all_vars, c(data_vars, time_vars, solver_vars))
+  pars_b <- create_params_block(pars)
+  tpars_b <- create_transform_block("transformed parameters", tpars)
+  model_b <- create_model_block(pars, params_only = TRUE)
 
   # Function signatures
   odefun_add_signature <- create_add_signature(
     odefun_data,
-    odefun_tdata,
     odefun_params,
     odefun_tparams,
     FALSE
   )
   odefun_add_args <- create_add_signature(
     odefun_data,
-    odefun_tdata,
     odefun_params,
     odefun_tparams,
     TRUE
   )
   loglik_add_signature <- create_add_signature(
     loglik_data,
-    loglik_tdata,
     loglik_params,
     loglik_tparams,
     FALSE
   )
   loglik_add_args <- create_add_signature(
     loglik_data,
-    loglik_tdata,
     loglik_params,
     loglik_tparams,
     TRUE
@@ -180,7 +168,7 @@ generate_stancode_simulator <- function(N,
     loglik_add_args,
     loglik_body
   )
-  code <- paste(funs_b, data_b, sep = "\n")
+  code <- paste(funs_b, data_b, pars_b, tpars_b, model_b, sep = "\n")
   autoformat_stancode(code)
 }
 
@@ -201,8 +189,8 @@ create_functions_block <- function(odefun_add_sign,
 }
 
 # Create additional signature for function
-create_add_signature <- function(data, tdata, params, tparams, argmode) {
-  data_vars <- c(data, lapply(tdata, get_var))
+create_add_signature <- function(data, params, tparams, argmode) {
+  data_vars <- data
   par_vars <- c(lapply(params, get_var), lapply(tparams, get_var))
   dim_sign <- generate_dim_signatures(c(data_vars, par_vars), argmode)
   data_sign <- generate_var_signatures(data_vars, TRUE, argmode)

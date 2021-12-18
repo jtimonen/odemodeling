@@ -18,11 +18,11 @@ example_odemodel_gsir <- function(...) {
   # Data
   G <- stan_dim("G", lower = 1) # number of groups
   pop_sizes <- stan_vector("pop_sizes", G) # population sizes in each group
-  I0 <- stan_vector("I0", G, lower = 0) # initial num of infected in each group
+  I0 <- stan_vector("I0", G, lower = 0) # initial no. infected in each group
   contacts <- stan_matrix("contacts", G, G) # contact matrix
   odefun_data <- list(pop_sizes, I0, contacts)
 
-  # Ode function parameters beta and gamma
+  # ODE function parameters beta and gamma
   beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
   gvar <- stan_vector("gamma", lower = 0, length = G)
   gamma <- stan_param(gvar, "gamma ~ normal(0.3, 0.3);")
@@ -31,13 +31,7 @@ example_odemodel_gsir <- function(...) {
   pivar <- stan_vector("phi_inv", lower = 0, length = G)
   phi_inv <- stan_param(pivar, "phi_inv ~ exponential(5);")
 
-  # Works
-  a <- generate_stancode(
-    timepoints = t, odefun_data = odefun_data,
-    odefun_params = list(beta, gamma)
-  )
-
-  odefun_code <- "
+  odefun_body <- "
     vector[2*G] dy_dt; // first G are susceptible, next G are infected
     vector[G] infection_rates;
     vector[G] recovery_rates;
@@ -53,6 +47,15 @@ example_odemodel_gsir <- function(...) {
     }
     return dy_dt;
   "
+
+  # Works
+  a <- generate_stancode(
+    timepoints = t,
+    odefun_data = odefun_data,
+    odefun_params = list(beta, gamma),
+    odefun_body = odefun_body,
+    loglik_params = list(phi_inv),
+  )
 
   odefun_tdata <- c("vector[2*G] x0")
   tdata_code <- "

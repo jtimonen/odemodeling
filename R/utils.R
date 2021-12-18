@@ -55,3 +55,18 @@ declare_array <- function(name, dims, signature) {
   decl <- paste0(decl, "]")
   return(decl)
 }
+
+# Get var
+get_var <- function(x) {
+  x$var
+}
+
+# Get prior code
+get_prior_code <- function(x) {
+  x$prior_code
+}
+
+# Get code
+get_code <- function(x) {
+  x$code
+}

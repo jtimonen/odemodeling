@@ -1,36 +1,3 @@
-data {
-  // Dimensions
-  __DIMENSIONS__
-
-  // Other needed for the ODE function
-  __ODEFUN_DATA__
-
-  // Other needed for computing the likelihood
-  __OBSMODEL_DATA__
-
-  // ODE data
-  int<lower=1> solver;          // 1 = rk45, 2 = bdf, 11 = rk4
-  real<lower=0> rel_tol;        // ODE solver relative tolerance
-  real<lower=0> abs_tol;        // ODE solver absolute tolerance
-  int<lower=0> max_num_steps;   // ODE solver max num of steps
-  int<lower=1> num_steps;       // For non-adaptive solver
-
-  // Binary option switches
-  int<lower=0,upper=1> do_likelihood;
-  int<lower=0,upper=1> do_genquant;
-}
-
-transformed data {
-  __TRANSFORMED_DATA__
-}
-
-parameters {
-  __PARAMETERS__
-}
-
-transformed parameters {
-  __TRANSFORMED_PARAMETERS__
-}
 
 model {
   array[do_likelihood, N] vector[D] x_ode;

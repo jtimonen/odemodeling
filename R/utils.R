@@ -12,13 +12,22 @@ file_name_to_model_name <- function(file) {
 
 # Autoformat a 'Stan' code string
 autoformat_stancode <- function(code) {
-  file <- cmdstanr::write_stan_file(code)
-  model <- cmdstanr::cmdstan_model(file, compile = FALSE)
-  res <- processx::run(
-    file.path(cmdstanr::cmdstan_path(), "bin", "stanc"),
-    args = c(model$stan_file(), "--auto-format")
+  tryCatch(
+    {
+      file <- cmdstanr::write_stan_file(code)
+      model <- cmdstanr::cmdstan_model(file, compile = FALSE)
+      res <- processx::run(
+        file.path(cmdstanr::cmdstan_path(), "bin", "stanc"),
+        args = c(model$stan_file(), "--auto-format")
+      )
+      return(res$stdout)
+    },
+    error = function(e) {
+      cat("\nTried to format following Stan code:\n\n")
+      cat(code)
+      stop(e)
+    }
   )
-  res$stdout
 }
 
 # Add boundaries to variable declaration string
@@ -54,6 +63,17 @@ declare_array <- function(name, dims, signature) {
   }
   decl <- paste0(decl, "]")
   return(decl)
+}
+
+# Append to comma separated list
+append_to_signature <- function(code, add) {
+  if (nchar(add) > 0) {
+    if (nchar(code) > 0) {
+      code <- paste0(code, ", ", add)
+    } else {
+      code <- add
+    }
+  }
 }
 
 # Get var

@@ -5,7 +5,7 @@
 \title{Generate 'Stan' model code}
 \usage{
 generate_stancode(
-  timepoints,
+  N,
   odefun_data = list(),
   odefun_tdata = list(),
   odefun_params = list(),
@@ -20,7 +20,7 @@ generate_stancode(
 )
 }
 \arguments{
-\item{timepoints}{A \code{StanVector} object defining the vector of time points.}
+\item{N}{A dimension.}
 
 \item{odefun_data}{Data needed by the ODE function. List of
 \code{StanDeclaration} objects.}

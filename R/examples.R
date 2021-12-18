@@ -13,9 +13,8 @@ example_odemodel_gsir <- function(...) {
 
   # Time points
   N <- stan_dim("N", lower = 1) # number of timepoints
-  t <- stan_vector("t", length = N) # vector of time points
 
-  # Data
+  # Data needed by ODE function
   G <- stan_dim("G", lower = 1) # number of groups
   pop_sizes <- stan_vector("pop_sizes", G) # population sizes in each group
   I0 <- stan_vector("I0", G, lower = 0) # initial no. infected in each group
@@ -27,9 +26,15 @@ example_odemodel_gsir <- function(...) {
   gvar <- stan_vector("gamma", lower = 0, length = G)
   gamma <- stan_param(gvar, "gamma ~ normal(0.3, 0.3);")
 
+  # Observation model data
+  delta <- stan_var("delta", lower = 0)
+  I_data <- stan_array("I_data", type = "int", dims = list(N, G))
+
   # Observation model parameters phi_inv
-  pivar <- stan_vector("phi_inv", lower = 0, length = G)
-  phi_inv <- stan_param(pivar, "phi_inv ~ exponential(5);")
+  phi_inv_var <- stan_vector("phi_inv", lower = 0, length = G)
+  phi_var <- stan_vector("phi", lower = 0, length = G)
+  phi_inv <- stan_param(phi_inv_var, "phi_inv ~ exponential(5);")
+  phi <- stan_transform(phi_var, "phi = inv(phi_inv);")
 
   odefun_body <- "
     vector[2*G] dy_dt; // first G are susceptible, next G are infected
@@ -48,13 +53,27 @@ example_odemodel_gsir <- function(...) {
     return dy_dt;
   "
 
+  loglik_body <- "
+    real log_lik = 0.0;
+    for(n in 1:N) {
+      for(g in 1:G) {
+        log_lik += neg_binomial_2_lpmf(I_data[n,g] | x_ode[n][G+g] + delta,
+          phi[g]);
+      }
+    }
+    return(log_lik);
+  "
+
   # Works
   a <- generate_stancode(
-    timepoints = t,
+    N = N,
     odefun_data = odefun_data,
     odefun_params = list(beta, gamma),
     odefun_body = odefun_body,
+    loglik_data = list(delta, I_data),
     loglik_params = list(phi_inv),
+    loglik_tparams = list(phi),
+    loglik_body = loglik_body
   )
 
   odefun_tdata <- c("vector[2*G] x0")
@@ -71,18 +90,6 @@ example_odemodel_gsir <- function(...) {
     "int<lower=0> y[N,G]", # observations of infected
     "real<lower=0> delta" # small positive number
   )
-
-  loglik_code <- "
-    real log_lik = 0.0;
-    int G = size(y[1]);
-    for(n in 1:size(y)) {
-      for(g in 1:G) {
-        log_lik += neg_binomial_2_lpmf(y[n,g] | x_ode[n][G+g] + delta,
-          phi[g]);
-      }
-    }
-    return(log_lik);
-  "
 
   genquant <- "array[N, G] int y_gen"
   genquant_code <- "

@@ -72,7 +72,6 @@ generate_stancode <- function(N,
     other_vars
   )
 
-
   # Return
   list(prior = prior, posterior = posterior)
 }

@@ -453,7 +453,6 @@ StanParameter <- R6::R6Class("StanParameter",
       checkmate::assert_true(decl$can_be_made_parameter())
       checkmate::assert_string(prior_code, min.chars = 0)
       code <- trimws(prior_code, which = "right")
-      code <- trimws(code, which = "left", whitespace = "[\n]")
       self$decl <- decl
       self$prior_code <- code
     },
@@ -498,7 +497,6 @@ StanTransformation <- R6::R6Class("StanTransformation",
       checkmate::assert_choice(origin, c("data", "param", "model"))
       checkmate::assert_string(code, min.chars = 0)
       code <- trimws(code, which = "right")
-      code <- trimws(code, which = "left", whitespace = "[\n]")
       self$decl <- decl
       self$origin <- origin
       self$code <- code
@@ -517,7 +515,7 @@ StanTransformation <- R6::R6Class("StanTransformation",
       cat(type_desc, ": ", sep = "")
       self$decl$print()
       if (nchar(self$code) > 0) {
-        cat("Code:\n")
+        cat("Code: ")
         cat_stancode(self$code)
         cat("\n")
       } else {

@@ -2,72 +2,73 @@
 % Please edit documentation in R/create_odemodel.R
 \name{create_odemodel}
 \alias{create_odemodel}
-\title{Create an ODE model from parts of 'Stan' code}
+\title{Create an ODE model}
 \usage{
 create_odemodel(
-  odefun_data = character(0),
-  odefun_pars = character(0),
-  odefun_code = "",
-  odefun_tdata = character(0),
-  tdata_code = "",
-  obsmodel_data = character(0),
-  obsmodel_pars = character(0),
-  priors = character(0),
-  loglik_code = "",
-  genquant = character(0),
-  genquant_code = "",
+  N,
+  odefun_vars = list(),
+  odefun_body = "",
+  odefun_init = NULL,
+  loglik_vars = list(),
+  loglik_body = "",
+  other_vars = list(),
   verbose = FALSE,
-  compile = TRUE,
-  ...
+  compile = TRUE
 )
 }
 \arguments{
-\item{odefun_data}{Additional data needed by the ODE function
-(character vector of 'Stan' variable declarations).}
+\item{N}{A \code{StanDimension} variable describing the number of time points.}
 
-\item{odefun_pars}{Parameters of the ODE function (character vector of
-'Stan' parameter declarations).}
+\item{odefun_vars}{Data and parameters needed by the ODE function. Must be a
+list of \code{StanDeclaration}, \code{StanParameter}, or \code{StanTransformation} objects.
+These will be defined in Stan model code blocks}
 
-\item{odefun_code}{Body of the ODE function (string of 'Stan' code). Must
-end in a line that returns the time derivative of the system as a vector.}
+\item{odefun_body}{ODE function body (Stan code string).}
 
-\item{odefun_tdata}{Additional transformed data needed by the ODE function
-(character vector of 'Stan' variable declarations).}
+\item{odefun_init}{Initial value for ODE system at t0.
+Has to be a \code{StanVector}, or alternatively a \code{StanParameter} or a
+\code{StanTransformation} with \code{StanVector} base declaration.}
 
-\item{tdata_code}{String of 'Stan' code that computes the declared
-transformed data.}
+\item{loglik_vars}{Data and parameters needed by the log likelihood
+function.}
 
-\item{obsmodel_data}{Additional data needed by the likelihood function
-(character vector of 'Stan' variable declarations).}
+\item{loglik_body}{Log likelihood function body (Stan code string).}
 
-\item{obsmodel_pars}{Parameters of the likelihood function
-(character vector of 'Stan' parameter declarations).}
-
-\item{loglik_code}{Body of the log likelihood function
-(string of 'Stan' code). Must end in a line that returns a real number,
-that is (proportional to) the likelihood.}
-
-\item{genquant}{Additional generated quantities
-(character vector of 'Stan' variable declarations).}
-
-\item{genquant_code}{String of 'Stan' code that computes the declared
-generated quantities.}
+\item{other_vars}{Other variables.}
 
 \item{verbose}{Should this print more information?}
 
 \item{compile}{Should the model be compiled?}
-
-\item{...}{Additional arguments to \code{cmdstanr::write_stan_file()}.}
 }
 \value{
 An object of class \code{OdeModel}.
 }
 \description{
-Create an ODE model from parts of 'Stan' code
+Generate model given the declarations of variables,
+parameters, functions etc. The arguments \code{odefun_vars},
+\code{loglik_vars} and \code{other_vars} must be lists whose elements must have one
+of the following three types:
+\itemize{
+\item \code{StanDeclaration} - can be created using \code{stan_var()},
+\code{stan_vector()}, \code{stan_array()} etc.
+\item \code{StanParameter} - can be created using \code{stan_param()}
+\item \code{StanTransformation} - can be created using \code{stan_transform()}
+}
+
+These will go to different blocks of the 'Stan' model code so that
+\itemize{
+\item \code{StanDeclaration}s go to \code{data}
+\item \code{StanParameter}s go to \code{parameters}
+\item \code{StanTransformation}s with origin \code{"data"} go to
+\verb{transformed data}
+\item \code{StanTransformation}s with origin \code{"param"} go to
+\verb{transformed parameters}
+\item \code{StanTransformation}s with origin \code{"model"} go to
+\verb{generated quantities}
+}
 }
 \seealso{
 Other setup functions: 
-\code{\link{example_odemodel}()},
-\code{\link{generate_stancode}()}
+\code{\link{example_odemodel}()}
 }
 \concept{setup functions}

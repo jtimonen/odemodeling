@@ -11,12 +11,17 @@ An ODE model (R6 class)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{Name of model.}
+\item{\code{code_prior}}{Stan code for prior model.}
 
-\item{\code{stanmodel}}{An object of class \code{CmdStanModel}.}
+\item{\code{code_posterior}}{Stan code for posterior model.}
 
-\item{\code{datasim}}{Can the model simulate data?}
-
+\item{\code{stancode}}{Full 'Stan' code as a string.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
 \item{\code{stancode}}{Full 'Stan' code as a string.}
 }
 \if{html}{\out{</div>}}
@@ -38,19 +43,15 @@ An ODE model (R6 class)
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(stancode, datasim, compile, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(code_prior, code_posterior)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{stancode}}{Full 'Stan' code as a string.}
+\item{\code{code_prior}}{Stan code for prior model.}
 
-\item{\code{datasim}}{Can the model simulate data?}
-
-\item{\code{compile}}{Should the model be compiled?}
-
-\item{\code{...}}{Arguments passed to \code{cmdstanr::write_stan_file()}.}
+\item{\code{code_posterior}}{Stan code for posterior model.}
 }
 \if{html}{\out{</div>}}
 }

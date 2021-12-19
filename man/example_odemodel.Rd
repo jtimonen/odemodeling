@@ -17,7 +17,6 @@ Create an example ODE model
 }
 \seealso{
 Other setup functions: 
-\code{\link{create_odemodel}()},
-\code{\link{generate_stancode}()}
+\code{\link{create_odemodel}()}
 }
 \concept{setup functions}

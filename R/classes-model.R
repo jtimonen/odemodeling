@@ -1,38 +1,26 @@
 #' An ODE model (R6 class)
 #'
-#' @export
-#' @field name Name of model.
-#' @field stanmodel An object of class `CmdStanModel`.
-#' @field datasim Can the model simulate data?
+#' @field code_prior Stan code for prior model.
+#' @field code_posterior Stan code for posterior model.
 #' @field stancode Full 'Stan' code as a string.
 OdeModel <- R6::R6Class("OdeModel", list(
-  name = NULL,
-  datasim = NULL,
-  stancode = NULL,
-  stanmodel = NULL,
+  code_prior = NULL,
+  code_posterior = NULL,
 
   #' @description
   #' Create an `OdeModel` object.
   #'
-  #' @param stancode Full 'Stan' code as a string.
-  #' @param datasim Can the model simulate data?
-  #' @param compile Should the model be compiled?
-  #' @param ... Arguments passed to `cmdstanr::write_stan_file()`.
-  initialize = function(stancode, datasim, compile, ...) {
-    self$datasim <- datasim
-    self$stancode <- stancode
-    file <- cmdstanr::write_stan_file(stancode, ...)
-    model <- cmdstanr::cmdstan_model(stan_file = file, compile = compile)
-    self$name <- model$model_name()
-    self$stanmodel <- model
+  #' @param code_prior Stan code for prior model.
+  #' @param code_posterior Stan code for posterior model.
+  initialize = function(code_prior, code_posterior) {
+    self$code_prior <- code_prior
+    self$code_posterior <- code_posterior
   },
 
   #' @description
   #' Print information about the model
   print = function() {
     cat("An object of class OdeModel. See ?OdeModel for help. \n", sep = "")
-    cat(" - name: ", self$name, "\n", sep = "")
-    cat(" - can simulate data: ", self$datasim, "\n", sep = "")
     invisible(self)
   },
 

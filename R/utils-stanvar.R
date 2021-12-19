@@ -27,6 +27,11 @@ get_name <- function(x) {
   }
 }
 
+# Is data?
+is_data <- function(x) {
+  is(x, "StanDeclaration")
+}
+
 # Is parameter?
 is_param <- function(x) {
   is(x, "StanParameter")

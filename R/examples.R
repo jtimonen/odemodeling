@@ -84,27 +84,26 @@ example_odemodel_gsir <- function(...) {
     return(log_lik);
   "
 
+  # Generated quantity
+  I_gen_decl <- stan_array("I_gen", type = "int", dims = c(N, G))
+  I_gen_code <- "
+    for(n in 1:N) {
+      for(g in 1:G) {
+        I_gen[n,g] = neg_binomial_2_rng(x_ode[1,n][G+g] + delta, phi[g]);
+      }
+    }
+  "
+  I_gen <- stan_transform(I_gen_decl, "model", I_gen_code)
+
   # Works
-  a <- generate_stancode(
+  a <- create_odemodel(
     N = N,
     odefun_vars = odefun_vars,
     odefun_body = odefun_body,
     odefun_init = x0,
     loglik_vars = loglik_vars,
-    loglik_body = loglik_body
+    loglik_body = loglik_body,
+    other_vars = list(I_gen)
   )
-
-  genquant <- "array[N, G] int y_gen"
-  genquant_code <- "
-    for(n in 1:N) {
-      for(g in 1:G) {
-        y_gen[n,g] = neg_binomial_2_rng(x_ode[1,n][G+g] + delta, phi[g]);
-      }
-    }
-  "
-  create_odemodel(
-    odefun_data, odefun_pars, odefun_code, odefun_tdata, tdata_code,
-    obsmodel_data, obsmodel_pars, priors, loglik_code, genquant, genquant_code,
-    ...
-  )
+  return(a)
 }

@@ -27,8 +27,7 @@
 #' @param ... Additional arguments to `cmdstanr::write_stan_file()`.
 #' @return An object of class `OdeModel`.
 #' @family setup functions
-create_odemodel <- function(
-                            odefun_data = character(0),
+create_odemodel <- function(odefun_data = character(0),
                             odefun_pars = character(0),
                             odefun_code = "",
                             odefun_tdata = character(0),

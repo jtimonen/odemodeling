@@ -25,7 +25,8 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     #' @description
     #' Print
     print = function() {
-      cat(self$declaration(), ";\n", sep = "")
+      code <- paste0(self$declaration(), ";\n")
+      cat_stancode(code)
       invisible(self)
     },
 
@@ -464,7 +465,7 @@ StanParameter <- R6::R6Class("StanParameter",
       self$decl$print()
       if (nchar(self$prior_code) > 0) {
         cat("Prior code: ")
-        cat(self$prior_code)
+        cat_stancode(self$prior_code)
         cat("\n")
       } else {
         cat("No prior set.\n")
@@ -517,7 +518,7 @@ StanTransformation <- R6::R6Class("StanTransformation",
       self$decl$print()
       if (nchar(self$code) > 0) {
         cat("Code:\n")
-        cat(self$code)
+        cat_stancode(self$code)
         cat("\n")
       } else {
         cat("\nCode not defined.\n")

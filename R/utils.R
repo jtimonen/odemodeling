@@ -1,3 +1,15 @@
+# Print colored text
+cat_colored <- function(x, col = "\033[95m") {
+  x <- paste0(col, x, "\u001b[0m")
+  cat(x)
+}
+
+# Print Stan code
+cat_stancode <- function(x) {
+  col <- "\u001b[33m"
+  cat_colored(x, col = col)
+}
+
 # Read lines from file
 read_file_lines <- function(file) {
   a <- readLines(file)

@@ -75,18 +75,3 @@ append_to_signature <- function(code, add) {
     }
   }
 }
-
-# Get var
-get_var <- function(x) {
-  x$var
-}
-
-# Get prior code
-get_prior_code <- function(x) {
-  x$prior_code
-}
-
-# Get code
-get_code <- function(x) {
-  x$code
-}

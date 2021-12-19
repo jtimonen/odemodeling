@@ -19,7 +19,14 @@ example_odemodel_gsir <- function(...) {
   pop_sizes <- stan_vector("pop_sizes", G) # population sizes in each group
   I0 <- stan_vector("I0", G, lower = 0) # initial no. infected in each group
   contacts <- stan_matrix("contacts", G, G) # contact matrix
-  odefun_data <- list(pop_sizes, I0, contacts)
+
+  # ODE function parameters
+  beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
+  gamma_decl <- stan_vector("gamma", lower = 0, length = G)
+  gamma <- stan_param(gamma_decl, "gamma ~ normal(0.3, 0.3);")
+
+  # All odefun variables
+  odefun_vars <- list(pop_sizes, I0, contacts, beta, gamma)
 
   # Initial value
   D <- stan_dim("D", lower = 0) # number of ODE dimensions
@@ -33,12 +40,7 @@ example_odemodel_gsir <- function(...) {
       x0[G + g] = I0[g]; // initial number of I
     }
   "
-  x0 <- stan_transform(x0_var, x0_code)
-
-  # ODE function parameters beta and gamma
-  beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
-  gvar <- stan_vector("gamma", lower = 0, length = G)
-  gamma <- stan_param(gvar, "gamma ~ normal(0.3, 0.3);")
+  x0 <- stan_transform(x0_var, "data", x0_code)
 
   # Observation model data
   delta <- stan_var("delta", lower = 0)
@@ -48,8 +50,12 @@ example_odemodel_gsir <- function(...) {
   phi_inv_var <- stan_vector("phi_inv", lower = 0, length = G)
   phi_var <- stan_vector("phi", lower = 0, length = G)
   phi_inv <- stan_param(phi_inv_var, "phi_inv ~ exponential(5);")
-  phi <- stan_transform(phi_var, "phi = inv(phi_inv);")
+  phi <- stan_transform(phi_var, "param", "phi = inv(phi_inv);")
 
+  # All loglik variables
+  loglik_vars <- list(delta, I_data, phi_inv, phi)
+
+  # Function bodies
   odefun_body <- "
     vector[2*G] dy_dt; // first G are susceptible, next G are infected
     vector[G] infection_rates;
@@ -81,13 +87,10 @@ example_odemodel_gsir <- function(...) {
   # Works
   a <- generate_stancode(
     N = N,
-    odefun_data = odefun_data,
-    odefun_params = list(beta, gamma),
+    odefun_vars = odefun_vars,
     odefun_body = odefun_body,
     odefun_init = x0,
-    loglik_data = list(delta, I_data),
-    loglik_params = list(phi_inv),
-    loglik_tparams = list(phi),
+    loglik_vars = loglik_vars,
     loglik_body = loglik_body
   )
 

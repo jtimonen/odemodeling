@@ -435,23 +435,23 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
 
 #' A Stan parameter
 #'
-#' @field var The variable declaration.
+#' @field decl The variable declaration.
 #' @field prior_code The prior declaration.
 StanParameter <- R6::R6Class("StanParameter",
   public = list(
-    var = NULL,
+    decl = NULL,
     prior_code = NULL,
 
     #' @description
     #' Create a `StanParameter` object.
     #'
-    #' @param var The underlying variable.
+    #' @param decl The underlying variable.
     #' @param prior_code Code that defines prior for the parameter.
-    initialize = function(var, prior_code = "") {
-      checkmate::assert_class(var, "StanDeclaration")
-      checkmate::assert_true(var$can_be_made_parameter())
+    initialize = function(decl, prior_code = "") {
+      checkmate::assert_class(decl, "StanDeclaration")
+      checkmate::assert_true(decl$can_be_made_parameter())
       checkmate::assert_string(prior_code, min.chars = 0)
-      self$var <- var
+      self$decl <- decl
       self$prior_code <- prior_code
     },
 
@@ -459,7 +459,7 @@ StanParameter <- R6::R6Class("StanParameter",
     #' Print
     print = function() {
       cat("Parameter: ")
-      self$var$print()
+      self$decl$print()
       if (nchar(self$prior_code) > 0) {
         cat("Prior code: ")
         cat(self$prior_code)
@@ -475,30 +475,43 @@ StanParameter <- R6::R6Class("StanParameter",
 
 #' A Stan transformation
 #'
-#' @field var The variable declaration.
+#' @field decl The variable declaration.
 #' @field code The code that assigns to the declared variable.
+#' @field origin Either `"data"`, `"param"`, or `"model"`.
 StanTransformation <- R6::R6Class("StanTransformation",
   public = list(
-    var = NULL,
+    decl = NULL,
     code = NULL,
+    origin = NULL,
 
     #' @description
     #' Create a `StanTransformation` object.
     #'
-    #' @param var The underlying variable.
+    #' @param decl The underlying variable.
+    #' @param origin Must be either `"data"`, `"param"`, or `"model"`.
     #' @param code The code that assigns to the declared variable.
-    initialize = function(var, code = "") {
-      checkmate::assert_class(var, "StanDeclaration")
+    initialize = function(decl, origin = "model", code = "") {
+      checkmate::assert_class(decl, "StanDeclaration")
+      checkmate::assert_choice(origin, c("data", "param", "model"))
       checkmate::assert_string(code, min.chars = 0)
-      self$var <- var
+      code <- trimws(code)
+      self$decl <- decl
+      self$origin <- origin
       self$code <- code
     },
 
     #' @description
     #' Print
     print = function() {
-      cat("Transformed quantity: ")
-      self$var$print()
+      if (self$origin == "data") {
+        type_desc <- "Transformed data"
+      } else if (self$origin == "param") {
+        type_desc <- "Transformed parameter"
+      } else {
+        type_desc <- "Generated quantity"
+      }
+      cat(type_desc, ": ", sep = "")
+      self$decl$print()
       if (nchar(self$code) > 0) {
         cat("Code:\n")
         cat(self$code)

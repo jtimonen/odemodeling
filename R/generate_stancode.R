@@ -1,73 +1,75 @@
 #' Generate 'Stan' model code
 #'
 #' @description Generate 'Stan' model code given the declarations of variables,
-#' parameters, functions etc.
+#' parameters, functions etc. The arguments `odefun_vars`,
+#' `loglik_vars` and `other_vars` must be lists whose elements must have one
+#' of the following three types:
+#' \itemize{
+#'  \item `StanDeclaration` - can be created using `stan_var()`,
+#'  `stan_vector()`, `stan_array()` etc.
+#'  \item `StanParameter` - can be created using `stan_param()`
+#'  \item `StanTransformation` - can be created using `stan_transform()`
+#' }
+#'
+#' These will go to different blocks of the 'Stan' model code so that
+#' \itemize{
+#'   \item `StanDeclaration`s go to `data`
+#'   \item `StanParameter`s go to `parameters`
+#'   \item `StanTransformation`s with origin `"data"` go to
+#'   `transformed data`
+#'   \item `StanTransformation`s with origin `"param"` go to
+#'   `transformed parameters`
+#'   \item `StanTransformation`s with origin `"model"` go to
+#'   `generated quantities`
+#' }
 #' @export
-#' @param N A dimension.
-#' @param odefun_data Data needed by the ODE function. List of
-#' `StanDeclaration` objects.
-#' @param odefun_params Parameters of the ODE function. A list of
-#' `StanParameter` objects.
-#' @param odefun_tparams Transformations for parameters of the ODE
-#' function. A list of `StanTransformation` objects.
+#' @param N A `StanDimension` variable describing the number of time points.
+#' @param odefun_vars Data and parameters needed by the ODE function. Must be a
+#' list of `StanDeclaration`, `StanParameter`, or `StanTransformation` objects.
+#' These will be defined in Stan model code blocks
 #' @param odefun_body ODE function body (Stan code string).
 #' @param odefun_init Initial value for ODE system at t0.
-#' Has to be either `StanVector`, `StanParameter` or a `StanTransformation`.
-#' @param loglik_data Data needed by the log likelihood function. List of
-#' `StanDeclaration` objects.
-#' @param loglik_params Parameters of the log likelihood function. A list of
-#' `StanParameter` objects.
-#' @param loglik_tparams Transformations for parameters of the log likelihood
-#' function. A list of `StanTransformation` objects.
+#' Has to be a `StanVector`, or alternatively a `StanParameter` or a
+#' `StanTransformation` with `StanVector` base declaration.
+#' @param loglik_vars Data and parameters needed by the log likelihood
+#'  function.
 #' @param loglik_body Log likelihood function body (Stan code string).
-#' @param gqs Generated quantities. A list of `StanTransformation` objects.
+#' @param other_vars Other variables.
 #' @return Model code as a string.
 #' @family setup functions
 generate_stancode <- function(N,
-                              odefun_data = list(),
-                              odefun_params = list(),
-                              odefun_tparams = list(),
+                              odefun_vars = list(),
                               odefun_body = "",
                               odefun_init = NULL,
-                              loglik_data = list(),
-                              loglik_params = list(),
-                              loglik_tparams = list(),
+                              loglik_vars = list(),
                               loglik_body = "",
-                              gqs = list()) {
+                              other_vars = list()) {
   # Argument checks
+  choices_vars <- c("StanParameter", "StanTransformation", "StanDeclaration")
   checkmate::assert_class(N, "StanDimension")
-  checkmate::assert_list(odefun_data, "StanDeclaration")
-  checkmate::assert_list(odefun_params, "StanParameter")
-  checkmate::assert_list(odefun_tparams, "StanTransformation")
-  checkmate::assert_string(odefun_body, min.chars = 0)
-  choices <- c("StanVector", "StanParameter", "StanTransformation")
-  checkmate::assert_multi_class(odefun_init, choices)
+  checkmate::assert_list(odefun_vars, choices_vars)
+  checkmate::assert_list(loglik_vars, choices_vars)
+  checkmate::assert_list(other_vars, choices_vars)
+  checkmate::assert_string(odefun_body, min.chars = 1)
+  checkmate::assert_string(loglik_body, min.chars = 1)
 
-  checkmate::assert_list(loglik_data, "StanDeclaration")
-  checkmate::assert_list(loglik_params, "StanParameter")
-  checkmate::assert_list(loglik_tparams, "StanTransformation")
-  checkmate::assert_string(loglik_body, min.chars = 0)
-  checkmate::assert_list(gqs, "StanTransformation")
+  # Check init has correct type and name
+  choices_init <- c("StanVector", "StanParameter", "StanTransformation")
+  checkmate::assert_multi_class(odefun_init, choices_init)
+  checkmate::assert_true(get_name(odefun_init) == "x0")
 
   # Prior
-  prior <- generate_stancode_prior(
-    c(odefun_params, loglik_params),
-    c(odefun_tparams, loglik_tparams)
-  )
+  prior <- generate_stancode_prior(odefun_vars, loglik_vars, other_vars)
 
-  # Simulator
+  # Posterior
   posterior <- generate_stancode_posterior(
     N,
-    odefun_data,
-    odefun_params,
-    odefun_tparams,
+    odefun_vars,
     odefun_body,
     odefun_init,
-    loglik_data,
-    loglik_params,
-    loglik_tparams,
+    loglik_vars,
     loglik_body,
-    gqs
+    other_vars
   )
 
 
@@ -77,33 +79,39 @@ generate_stancode <- function(N,
 
 
 # Generate 'Stan' code for prior model
-generate_stancode_prior <- function(params, tparams) {
-  all_vars <- c(lapply(params, get_var), lapply(tparams, get_var))
-  data_b <- create_data_block(all_vars, list())
+generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars) {
+  all_vars <- c(odefun_vars, loglik_vars)
+  all_decls <- lapply(all_vars, get_decl)
+  data_b <- create_data_block(all_decls, list()) # just dimensions
+  tdata <- all_vars[sapply(all_vars, is_tdata)]
+  params <- all_vars[sapply(all_vars, is_param)]
+  tparams <- all_vars[sapply(all_vars, is_tparam)]
+  tdata_b <- create_transform_block("transformed data", tdata)
   pars_b <- create_params_block(params)
   tpars_b <- create_transform_block("transformed parameters", tparams)
   model_b <- create_model_block(params, params_only = TRUE)
-  code <- paste(data_b, pars_b, tpars_b, model_b, "\n")
+  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, "\n")
   autoformat_stancode(code)
 }
 
 
 # Generate 'Stan' code for posterior model
 generate_stancode_posterior <- function(N,
-                                        odefun_data,
-                                        odefun_params,
-                                        odefun_tparams,
+                                        odefun_vars,
                                         odefun_body,
                                         odefun_init,
-                                        loglik_data,
-                                        loglik_params,
-                                        loglik_tparams,
+                                        loglik_vars,
                                         loglik_body,
-                                        gqs) {
+                                        other_vars) {
 
+  # Deal with init
+  if (is(odefun_init, "StanVector")) {
+    # Need to make OdeInit class that tells whether init is data, td, or tp?
+  }
+
+  init_var <- get_var(odefun_init)
   # Get all vars
   data_vars <- c(odefun_data, loglik_data)
-  tdata_vars <- get_var(odefun_init)
   pars <- c(odefun_params, loglik_params)
   tpars <- c(odefun_tparams, loglik_tparams)
   pars_vars <- lapply(pars, get_var)
@@ -172,7 +180,7 @@ generate_stancode_posterior <- function(N,
   autoformat_stancode(code)
 }
 
-# Moi
+# Create the functions block
 create_functions_block <- function(odefun_add_sign,
                                    odefun_add_args,
                                    odefun_body,
@@ -226,24 +234,24 @@ generate_stancode_loglik <- function(add_signature, loglik_body) {
 }
 
 # Create the data block
-create_data_block <- function(all_vars, data) {
-  dims_code <- generate_dim_declarations(all_vars)
+create_data_block <- function(all_decls, data) {
+  dims_code <- generate_dim_declarations(all_decls)
   dvars_code <- generate_var_declarations(data)
   generate_block("data", c(dims_code, dvars_code))
 }
 
 # Create a transform block (transformed data, transformed params, or gq)
 create_transform_block <- function(name, transforms) {
-  vars <- lapply(transforms, get_var)
+  decls <- lapply(transforms, get_decl)
   codes <- paste(lapply(transforms, get_code), collapse = "\n")
-  decls <- generate_var_declarations(vars)
+  decls <- generate_var_declarations(decls)
   generate_block(name, c(decls, codes))
 }
 
 # Create the parameters block
 create_params_block <- function(params) {
-  vars <- lapply(params, get_var)
-  dvars_code <- generate_var_declarations(vars)
+  decls <- lapply(params, get_decl)
+  dvars_code <- generate_var_declarations(decls)
   generate_block("parameters", c(dvars_code))
 }
 

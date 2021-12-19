@@ -11,9 +11,11 @@ A Stan transformation
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{var}}{The variable declaration.}
+\item{\code{decl}}{The variable declaration.}
 
 \item{\code{code}}{The code that assigns to the declared variable.}
+
+\item{\code{origin}}{Either \code{"data"}, \code{"param"}, or \code{"model"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -31,13 +33,15 @@ A Stan transformation
 \subsection{Method \code{new()}}{
 Create a \code{StanTransformation} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanTransformation$new(var, code = "")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StanTransformation$new(decl, origin = "model", code = "")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{var}}{The underlying variable.}
+\item{\code{decl}}{The underlying variable.}
+
+\item{\code{origin}}{Must be either \code{"data"}, \code{"param"}, or \code{"model"}.}
 
 \item{\code{code}}{The code that assigns to the declared variable.}
 }

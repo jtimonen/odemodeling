@@ -4,11 +4,15 @@
 \alias{stan_transform}
 \title{Create a \code{StanTransformation} object}
 \usage{
-stan_transform(var, code = "")
+stan_transform(decl, origin = "model", code = "")
 }
 \arguments{
-\item{var}{The Stan variable declaration for the quantity.
+\item{decl}{The Stan variable declaration for the quantity.
 Must be an object that inherits from \code{StanDeclaration}.}
+
+\item{origin}{Must be either \code{"data"}, \code{"param"}, or \code{"model"}.
+These correspond to the \verb{transformed data}, \verb{transformed parameters}, and
+\verb{generated quantities} blocks, respectively.}
 
 \item{code}{A string of Stan code that defines how the quantity is
 computed from other variables/parameters.
@@ -20,14 +24,14 @@ Create a \code{StanTransformation} object
 \examples{
 N <- stan_dim("N")
 D <- stan_dim("D")
-var <- stan_array("y", dims = list(N, D), type = "int")
+decl <- stan_array("y", dims = list(N, D), type = "int")
 code <- "
 for(n in 1:N){
   for(d in 1:D) {
     y[n, d] ~ poisson_rng(0.2);
   }
 }"
-y <- stan_transform(arr, code)
+y <- stan_transform(decl, code = code)
 print(y)
 }
 \seealso{

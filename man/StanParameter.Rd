@@ -11,7 +11,7 @@ A Stan parameter
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{var}}{The variable declaration.}
+\item{\code{decl}}{The variable declaration.}
 
 \item{\code{prior_code}}{The prior declaration.}
 }
@@ -31,13 +31,13 @@ A Stan parameter
 \subsection{Method \code{new()}}{
 Create a \code{StanParameter} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanParameter$new(var, prior_code = "")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StanParameter$new(decl, prior_code = "")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{var}}{The underlying variable.}
+\item{\code{decl}}{The underlying variable.}
 
 \item{\code{prior_code}}{Code that defines prior for the parameter.}
 }

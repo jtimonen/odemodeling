@@ -6,54 +6,60 @@
 \usage{
 generate_stancode(
   N,
-  odefun_data = list(),
-  odefun_params = list(),
-  odefun_tparams = list(),
+  odefun_vars = list(),
   odefun_body = "",
   odefun_init = NULL,
-  loglik_data = list(),
-  loglik_params = list(),
-  loglik_tparams = list(),
+  loglik_vars = list(),
   loglik_body = "",
-  gqs = list()
+  other_vars = list()
 )
 }
 \arguments{
-\item{N}{A dimension.}
+\item{N}{A \code{StanDimension} variable describing the number of time points.}
 
-\item{odefun_data}{Data needed by the ODE function. List of
-\code{StanDeclaration} objects.}
-
-\item{odefun_params}{Parameters of the ODE function. A list of
-\code{StanParameter} objects.}
-
-\item{odefun_tparams}{Transformations for parameters of the ODE
-function. A list of \code{StanTransformation} objects.}
+\item{odefun_vars}{Data and parameters needed by the ODE function. Must be a
+list of \code{StanDeclaration}, \code{StanParameter}, or \code{StanTransformation} objects.
+These will be defined in Stan model code blocks}
 
 \item{odefun_body}{ODE function body (Stan code string).}
 
 \item{odefun_init}{Initial value for ODE system at t0.
-Has to be either \code{StanVector}, \code{StanParameter} or a \code{StanTransformation}.}
+Has to be a \code{StanVector}, or alternatively a \code{StanParameter} or a
+\code{StanTransformation} with \code{StanVector} base declaration.}
 
-\item{loglik_data}{Data needed by the log likelihood function. List of
-\code{StanDeclaration} objects.}
-
-\item{loglik_params}{Parameters of the log likelihood function. A list of
-\code{StanParameter} objects.}
-
-\item{loglik_tparams}{Transformations for parameters of the log likelihood
-function. A list of \code{StanTransformation} objects.}
+\item{loglik_vars}{Data and parameters needed by the log likelihood
+function.}
 
 \item{loglik_body}{Log likelihood function body (Stan code string).}
 
-\item{gqs}{Generated quantities. A list of \code{StanTransformation} objects.}
+\item{other_vars}{Other variables.}
 }
 \value{
 Model code as a string.
 }
 \description{
 Generate 'Stan' model code given the declarations of variables,
-parameters, functions etc.
+parameters, functions etc. The arguments \code{odefun_vars},
+\code{loglik_vars} and \code{other_vars} must be lists whose elements must have one
+of the following three types:
+\itemize{
+\item \code{StanDeclaration} - can be created using \code{stan_var()},
+\code{stan_vector()}, \code{stan_array()} etc.
+\item \code{StanParameter} - can be created using \code{stan_param()}
+\item \code{StanTransformation} - can be created using \code{stan_transform()}
+}
+
+These will go to different blocks of the 'Stan' model code so that
+\itemize{
+\item \code{StanDeclaration}s go to \code{data}
+\item \code{StanParameter}s go to \code{parameters}
+\item \code{StanTransformation}s with origin \code{"data"} go to
+\verb{transformed data}
+\item \code{StanTransformation}s with origin \code{"param"} go to
+\verb{transformed parameters}
+\item \code{StanTransformation}s with origin \code{"model"} go to
+\verb{generated quantities}
+}
 }
 \seealso{
 Other setup functions: 

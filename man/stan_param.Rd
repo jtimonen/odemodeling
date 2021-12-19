@@ -4,10 +4,10 @@
 \alias{stan_param}
 \title{Create a \code{StanParameter} object}
 \usage{
-stan_param(var, prior_code = "")
+stan_param(decl, prior_code = "")
 }
 \arguments{
-\item{var}{The Stan variable declaration from which the parameter is
+\item{decl}{The Stan variable declaration from which the parameter is
 created. Must be an object that inherits from \code{StanDeclaration} and
 has a real or vector base type.}
 

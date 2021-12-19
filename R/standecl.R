@@ -113,7 +113,7 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
 
 #' Create a `StanParameter` object
 #'
-#' @param var The Stan variable declaration from which the parameter is
+#' @param decl The Stan variable declaration from which the parameter is
 #' created. Must be an object that inherits from `StanDeclaration` and
 #' has a real or vector base type.
 #' @param prior_code A string of Stan code that defines the prior for the
@@ -129,15 +129,18 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
 #' my_vec <- stan_vector("alpha", stan_dim("D"), lower = 0)
 #' my_par <- stan_param(my_vec)
 #' print(my_par)
-stan_param <- function(var, prior_code = "") {
-  StanParameter$new(var = var, prior_code = prior_code)
+stan_param <- function(decl, prior_code = "") {
+  StanParameter$new(decl = decl, prior_code = prior_code)
 }
 
 
 #' Create a `StanTransformation` object
 #'
-#' @param var The Stan variable declaration for the quantity.
+#' @param decl The Stan variable declaration for the quantity.
 #'  Must be an object that inherits from `StanDeclaration`.
+#' @param origin Must be either `"data"`, `"param"`, or `"model"`.
+#' These correspond to the `transformed data`, `transformed parameters`, and
+#' `generated quantities` blocks, respectively.
 #' @param code A string of Stan code that defines how the quantity is
 #' computed from other variables/parameters.
 #' The default is empty string (no definition).
@@ -146,15 +149,15 @@ stan_param <- function(var, prior_code = "") {
 #' @examples
 #' N <- stan_dim("N")
 #' D <- stan_dim("D")
-#' var <- stan_array("y", dims = list(N, D), type = "int")
+#' decl <- stan_array("y", dims = list(N, D), type = "int")
 #' code <- "
 #' for(n in 1:N){
 #'   for(d in 1:D) {
 #'     y[n, d] ~ poisson_rng(0.2);
 #'   }
 #' }"
-#' y <- stan_transform(arr, code)
+#' y <- stan_transform(decl, code = code)
 #' print(y)
-stan_transform <- function(var, code = "") {
-  StanTransformation$new(var = var, code = code)
+stan_transform <- function(decl, origin = "model", code = "") {
+  StanTransformation$new(decl = decl, origin = origin, code = code)
 }

@@ -10,7 +10,7 @@ generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars) {
   pars_b <- generate_params_block(params)
   tpars_b <- generate_transform_block("transformed parameters", tparams)
   model_b <- generate_model_block(params, params_only = TRUE)
-  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, "\n")
+  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, sep = "\n")
   autoformat_stancode(code)
 }
 
@@ -26,8 +26,7 @@ generate_stancode_posterior <- function(N,
   # Function signatures
   odefun_add_signature <- generate_add_signature(odefun_vars, FALSE)
   odefun_add_args <- generate_add_signature(odefun_vars, TRUE)
-  so_args <- "solver, N, D, rel_tol, abs_tol, max_num_steps,
-      num_steps, x0, t0, t"
+  so_args <- "solver, rel_tol, abs_tol, max_num_steps, num_steps, x0, t0, t"
   solve_ode_args <- append_to_signature(so_args, odefun_add_args)
   loglik_add_signature <- generate_add_signature(loglik_vars, FALSE)
   loglik_add_args <- generate_add_signature(loglik_vars, TRUE)
@@ -36,8 +35,7 @@ generate_stancode_posterior <- function(N,
 
   # All vars and their declarations
   base_vars <- list(
-    stan_var("t0"), stan_array("t", dims = list(N)),
-    odefun_init
+    stan_var("t0"), stan_array("t", dims = list(N)), odefun_init
   )
   solver_vars <- list(
     stan_var("abs_tol", lower = 0),
@@ -50,12 +48,12 @@ generate_stancode_posterior <- function(N,
   x_ode <- stan_transform(
     decl = stan_vector_array("x_ode", dims = list(N), length = D),
     origin = "param",
-    code = paste0("x_ode = solve_ode(", solve_ode_args, ")")
+    code = paste0("x_ode = solve_ode(", solve_ode_args, ");")
   )
   log_lik <- stan_transform(
     decl = stan_var("log_lik", "real"),
     origin = "param",
-    code = paste0("log_lik = log_likelihood(", loglik_args, ")")
+    code = paste0("log_lik = log_likelihood(", loglik_args, ");")
   )
   other_vars <- c(other_vars, list(x_ode, log_lik))
   all_vars <- c(odefun_vars, loglik_vars, other_vars, base_vars, solver_vars)
@@ -86,7 +84,8 @@ generate_stancode_posterior <- function(N,
 
   # Merge the blocks
   code <- paste(
-    funs_b, data_b, tdata_b, pars_b, tpars_b, model_b, gq_b, "\n"
+    funs_b, data_b, tdata_b, pars_b, tpars_b, model_b, gq_b,
+    sep = "\n"
   )
   autoformat_stancode(code)
 }
@@ -140,7 +139,8 @@ generate_add_signature <- function(all_vars, argmode) {
 generate_odefun <- function(add_signature, odefun_body) {
   signature <- "real t, vector y"
   signature <- append_to_signature(signature, add_signature)
-  code <- paste0("vector odefun(", signature, ")")
+  comment <- "\n// ODE system right-hand side \n"
+  code <- paste0(comment, "vector odefun(", signature, ")")
   if (nchar(odefun_body) == 0) {
     warning("ODE function body is empty!")
   }
@@ -151,7 +151,8 @@ generate_odefun <- function(add_signature, odefun_body) {
 generate_loglik <- function(add_signature, loglik_body) {
   signature <- "array[] vector x_ode"
   signature <- append_to_signature(signature, add_signature)
-  code <- paste0("real log_likelihood(", signature, ")")
+  comment <- "\n// Compute log likelihood given ODE solution x_ode\n"
+  code <- paste0(comment, "real log_likelihood(", signature, ")")
   if (nchar(loglik_body) == 0) {
     warning("log likelihood function body is empty!")
   }
@@ -162,7 +163,8 @@ generate_loglik <- function(add_signature, loglik_body) {
 generate_data_block <- function(all_decls, data) {
   dims_code <- generate_dim_declarations(all_decls)
   dvars_code <- generate_var_declarations(data)
-  generate_block("data", c(dims_code, dvars_code))
+  code <- generate_block("data", c(dims_code, dvars_code))
+  autoformat_stancode(code)
 }
 
 # Create a transform block (transformed data, transformed params, or gq)

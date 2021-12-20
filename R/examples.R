@@ -89,7 +89,7 @@ example_odemodel_gsir <- function(...) {
   I_gen_code <- "
     for(n in 1:N) {
       for(g in 1:G) {
-        I_gen[n,g] = neg_binomial_2_rng(x_ode[1,n][G+g] + delta, phi[g]);
+        I_gen[n,g] = neg_binomial_2_rng(x_ode[n][G+g] + delta, phi[g]);
       }
     }
   "

@@ -1,7 +1,9 @@
 # Generate 'Stan' code for prior model
-generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars) {
+generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
+                                    compile) {
   all_vars <- c(odefun_vars, loglik_vars)
   all_decls <- lapply(all_vars, get_decl)
+  dims <- dims_of_decls(all_decls)
   tdata <- all_vars[sapply(all_vars, is_tdata)]
   params <- all_vars[sapply(all_vars, is_param)]
   tparams <- all_vars[sapply(all_vars, is_tparam)]
@@ -11,7 +13,12 @@ generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars) {
   tpars_b <- generate_transform_block("transformed parameters", tparams)
   model_b <- generate_model_block(params, params_only = TRUE)
   code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, sep = "\n")
-  autoformat_stancode(code)
+  code <- autoformat_stancode(code)
+
+  # Return
+  data <- NULL
+  gqs <- NULL
+  StanModelWithCode$new(code, dims, data, tdata, params, tparams, gqs, compile)
 }
 
 # Generate 'Stan' code for posterior model
@@ -21,7 +28,8 @@ generate_stancode_posterior <- function(N,
                                         odefun_init,
                                         loglik_vars,
                                         loglik_body,
-                                        other_vars) {
+                                        other_vars,
+                                        compile) {
 
   # Function signatures
   odefun_add_signature <- generate_add_signature(odefun_vars, FALSE)
@@ -31,7 +39,6 @@ generate_stancode_posterior <- function(N,
   loglik_add_signature <- generate_add_signature(loglik_vars, FALSE)
   loglik_add_args <- generate_add_signature(loglik_vars, TRUE)
   loglik_args <- append_to_signature("x_ode", loglik_add_args)
-
 
   # All vars and their declarations
   base_vars <- list(
@@ -57,7 +64,9 @@ generate_stancode_posterior <- function(N,
   )
   other_vars <- c(other_vars, list(x_ode, log_lik))
   all_vars <- c(odefun_vars, loglik_vars, other_vars, base_vars, solver_vars)
+  all_vars <- unique(all_vars)
   all_decls <- lapply(all_vars, get_decl)
+  dims <- dims_of_decls(all_decls)
 
   # Create most blocks
   data <- all_vars[sapply(all_vars, is_data)]
@@ -87,7 +96,10 @@ generate_stancode_posterior <- function(N,
     funs_b, data_b, tdata_b, pars_b, tpars_b, model_b, gq_b,
     sep = "\n"
   )
-  autoformat_stancode(code)
+  code <- autoformat_stancode(code)
+
+  # Return
+  StanModelWithCode$new(code, dims, data, tdata, params, tparams, gqs, compile)
 }
 
 # Create the functions block
@@ -114,6 +126,7 @@ generate_add_signature <- function(all_vars, argmode) {
     return(!is_noadd)
   }
   all_vars <- all_vars[sapply(all_vars, no_add_signature)]
+  all_vars <- unique(all_vars)
 
   data <- all_vars[sapply(all_vars, is_data)]
   tdata <- all_vars[sapply(all_vars, is_tdata)]
@@ -239,13 +252,19 @@ generate_var_signatures <- function(vars, data, argmode) {
   trimws(code)
 }
 
+# Get dimensions of each declaration
+dims_of_decls <- function(decls) {
+  checkmate::assert_list(decls, "StanDeclaration")
+  dim_decls <- list()
+  for (var in decls) {
+    dim_decls <- c(dim_decls, var$get_dims())
+  }
+  unique(dim_decls)
+}
+
 # Dimensions declaration code
 generate_dim_declarations <- function(vars) {
-  checkmate::assert_list(vars, "StanDeclaration")
-  dim_vars <- list()
-  for (var in vars) {
-    dim_vars <- c(dim_vars, var$get_dims())
-  }
+  dim_vars <- dims_of_decls(vars)
   generate_var_declarations(dim_vars)
 }
 

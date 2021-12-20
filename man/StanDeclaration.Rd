@@ -24,6 +24,8 @@ A Stan variable declaration (an abstract base class)
 \itemize{
 \item \href{#method-new}{\code{StanDeclaration$new()}}
 \item \href{#method-declaration}{\code{StanDeclaration$declaration()}}
+\item \href{#method-signature}{\code{StanDeclaration$signature()}}
+\item \href{#method-print}{\code{StanDeclaration$print()}}
 \item \href{#method-can_be_made_parameter}{\code{StanDeclaration$can_be_made_parameter()}}
 \item \href{#method-get_dims}{\code{StanDeclaration$get_dims()}}
 \item \href{#method-clone}{\code{StanDeclaration$clone()}}
@@ -43,8 +45,28 @@ A Stan variable declaration (an abstract base class)
 \if{latex}{\out{\hypertarget{method-declaration}{}}}
 \subsection{Method \code{declaration()}}{
 The variable declaration as a string.
+The variable when used in function signature
+Print
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$declaration()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-signature}{}}}
+\subsection{Method \code{signature()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$signature()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$print()}\if{html}{\out{</div>}}
 }
 
 }
@@ -52,12 +74,6 @@ The variable declaration as a string.
 \if{html}{\out{<a id="method-can_be_made_parameter"></a>}}
 \if{latex}{\out{\hypertarget{method-can_be_made_parameter}{}}}
 \subsection{Method \code{can_be_made_parameter()}}{
-The variable when used in function signature
-
-
-Print
-
-
 Can the object be made into a parameter?
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$can_be_made_parameter()}\if{html}{\out{</div>}}

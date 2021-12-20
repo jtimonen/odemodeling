@@ -1,8 +1,8 @@
 #' An ODE model (R6 class)
 #'
 #' @export
-#' @field prior Stan model and code for prior model.
-#' @field posterior Stan model and code for posterior model.
+#' @field prior An object of class `StanModelWithCode`.
+#' @field posterior An object of class `StanModelWithCode`.
 #' @field odetuner_version of the package used to create the model
 OdeModel <- R6::R6Class("OdeModel", list(
   prior = NULL,
@@ -12,12 +12,12 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @description
   #' Create an `OdeModel` object.
   #'
-  #' @param code_prior Stan code for prior model.
-  #' @param code_posterior Stan code for posterior model.
+  #' @param prior An object of class `StanModelWithCode`.
+  #' @param posterior An object of class `StanModelWithCode`.
   #' @param compile Should the models be compiled.
-  initialize = function(code_prior, code_posterior, compile) {
-    self$prior <- StanModelWithCode$new(code_prior, compile)
-    self$posterior <- StanModelWithCode$new(code_posterior, compile)
+  initialize = function(prior, posterior) {
+    self$prior <- prior
+    self$posterior <- posterior
     self$odetuner_version <- pkg_version("odetuner")
   },
 
@@ -135,7 +135,14 @@ OdeModel <- R6::R6Class("OdeModel", list(
 StanModelWithCode <- R6::R6Class("StanModelWithCode", list(
   model = NULL,
   code = "",
-  initialize = function(code, compile) {
+  dims = NULL,
+  data = NULL,
+  tdata = NULL,
+  params = NULL,
+  tparams = NULL,
+  gqs = NULL,
+  initialize = function(code, dims, data, tdata, params, tparams, gqs,
+                        compile) {
     if (!compile) {
       message(
         "Not compiling the models. You need to call $reinit() before",
@@ -143,6 +150,12 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode", list(
       )
     }
     self$code <- code
+    self$dims <- dims
+    self$data <- data
+    self$tdata <- tdata
+    self$params <- params
+    self$tparams <- tparams
+    self$gqs <- gqs
     if (compile) {
       self$model <- stan_model_from_code(code)
     }

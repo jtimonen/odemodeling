@@ -16,17 +16,18 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     #' @description
     #' The variable declaration as a string.
     declaration = function() {
-                             #' @description
-      #' The variable when used in function signature
-      signature <- function() {
-                              #' @description
-        #' Print
-        print <- function() {
-          code <- paste0(self$declaration(), ";\n")
-          cat_stancode(code)
-          invisible(self)
-        }
-      }
+
+    },
+
+    #' The variable when used in function signature
+    signature = function() {
+
+    },
+    #' Print
+    print = function() {
+      code <- paste0(self$declaration(), ";\n")
+      cat_stancode(code)
+      invisible(self)
     },
 
     #' @description

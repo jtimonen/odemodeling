@@ -6,7 +6,7 @@
 # Create package startup message
 create_startup_message <- function() {
   v_ot <- pkg_version("odetuner")
-  msg <- paste0("Attached odetuner", v_ot, ".")
+  msg <- paste0("Attached odetuner ", v_ot, ".")
   return(msg)
 }
 
@@ -17,7 +17,7 @@ pkg_version <- function(pkg_name) {
     utils::packageDescription(pkg_name, lib.loc = Lib)
   )
   if (length(pkgdesc) > 1) {
-    out <- paste0(" ", pkgdesc$Version)
+    out <- pkgdesc$Version
   } else {
     out <- ""
   }

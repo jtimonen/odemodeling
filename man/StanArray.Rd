@@ -34,6 +34,7 @@ A Stan array
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}
 }

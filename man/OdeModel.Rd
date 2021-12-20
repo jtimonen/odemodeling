@@ -11,9 +11,9 @@ An ODE model (R6 class)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{prior}}{Stan model and code for prior model.}
+\item{\code{prior}}{An object of class \code{StanModelWithCode}.}
 
-\item{\code{posterior}}{Stan model and code for posterior model.}
+\item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{odetuner_version}}{of the package used to create the model}
 }
@@ -38,15 +38,15 @@ An ODE model (R6 class)
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(code_prior, code_posterior, compile)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(prior, posterior)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{code_prior}}{Stan code for prior model.}
+\item{\code{prior}}{An object of class \code{StanModelWithCode}.}
 
-\item{\code{code_posterior}}{Stan code for posterior model.}
+\item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{compile}}{Should the models be compiled.}
 }

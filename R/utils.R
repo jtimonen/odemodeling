@@ -22,12 +22,6 @@ read_file_lines <- function(file) {
   paste(a, collapse = "\n")
 }
 
-# Create model name from Stan file path
-file_name_to_model_name <- function(file) {
-  bn <- basename(file)
-  strsplit(bn, split = "[.]")[[1]][1]
-}
-
 # Autoformat a 'Stan' code string
 autoformat_stancode <- function(code) {
   tryCatch(

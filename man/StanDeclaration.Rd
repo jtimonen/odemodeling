@@ -2,11 +2,11 @@
 % Please edit documentation in R/classes-standecl.R
 \name{StanDeclaration}
 \alias{StanDeclaration}
-\title{A Stan variable declaration (base class)}
+\title{A Stan variable declaration (an abstract base class)}
 \description{
-A Stan variable declaration (base class)
+A Stan variable declaration (an abstract base class)
 
-A Stan variable declaration (base class)
+A Stan variable declaration (an abstract base class)
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -22,13 +22,21 @@ A Stan variable declaration (base class)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{StanDeclaration$new()}}
 \item \href{#method-declaration}{\code{StanDeclaration$declaration()}}
-\item \href{#method-signature}{\code{StanDeclaration$signature()}}
-\item \href{#method-print}{\code{StanDeclaration$print()}}
 \item \href{#method-can_be_made_parameter}{\code{StanDeclaration$can_be_made_parameter()}}
 \item \href{#method-get_dims}{\code{StanDeclaration$get_dims()}}
 \item \href{#method-clone}{\code{StanDeclaration$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$new()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-declaration"></a>}}
@@ -41,29 +49,15 @@ The variable declaration as a string.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-signature"></a>}}
-\if{latex}{\out{\hypertarget{method-signature}{}}}
-\subsection{Method \code{signature()}}{
-The variable when used in function signature
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$signature()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$print()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-can_be_made_parameter"></a>}}
 \if{latex}{\out{\hypertarget{method-can_be_made_parameter}{}}}
 \subsection{Method \code{can_be_made_parameter()}}{
+The variable when used in function signature
+
+
+Print
+
+
 Can the object be made into a parameter?
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$can_be_made_parameter()}\if{html}{\out{</div>}}

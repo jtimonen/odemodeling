@@ -32,7 +32,6 @@ A Stan variable
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="get_dims">}\href{../../odetuner/html/StanDeclaration.html#method-get_dims}{\code{odetuner::StanDeclaration$get_dims()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}
 }

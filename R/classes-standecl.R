@@ -1,5 +1,5 @@
 
-#' A Stan variable declaration (base class)
+#' A Stan variable declaration (an abstract base class)
 #'
 #' @field name name of the variable
 #' @field lower lower bound
@@ -9,25 +9,24 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     name = NULL,
     lower = NULL,
     upper = NULL,
+    initialize = function() {
+      stop("StanDeclaration is an abstract class that can't be initialized.")
+    },
 
     #' @description
     #' The variable declaration as a string.
     declaration = function() {
-      return("UNDEFINED")
-    },
-
-    #' @description
-    #' The variable when used in function signature
-    signature = function() {
-      return("UNDEFINED")
-    },
-
-    #' @description
-    #' Print
-    print = function() {
-      code <- paste0(self$declaration(), ";\n")
-      cat_stancode(code)
-      invisible(self)
+                             #' @description
+      #' The variable when used in function signature
+      signature <- function() {
+                              #' @description
+        #' Print
+        print <- function() {
+          code <- paste0(self$declaration(), ";\n")
+          cat_stancode(code)
+          invisible(self)
+        }
+      }
     },
 
     #' @description

@@ -77,8 +77,11 @@ create_odemodel <- function(N,
     loglik_body,
     other_vars
   )
+
+  # Create the object
   OdeModel$new(
-    code_prior = code_prior, code_posterior = code_posterior,
+    code_prior = code_prior,
+    code_posterior = code_posterior,
     compile = compile
   )
 }

@@ -151,7 +151,7 @@ stan_param <- function(decl, prior_code = "") {
 #' D <- stan_dim("D")
 #' decl <- stan_array("y", dims = list(N, D), type = "int")
 #' code <- "
-#' for(n in 1:N){
+#' for(n in 1:N) {
 #'   for(d in 1:D) {
 #'     y[n, d] ~ poisson_rng(0.2);
 #'   }

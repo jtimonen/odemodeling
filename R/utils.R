@@ -1,3 +1,9 @@
+# Create Stan model from model code
+stan_model_from_code <- function(code) {
+  file <- cmdstanr::write_stan_file(code)
+  cmdstanr::cmdstan_model(file)
+}
+
 # Print colored text
 cat_colored <- function(x, col = "\033[95m") {
   x <- paste0(col, x, "\u001b[0m")

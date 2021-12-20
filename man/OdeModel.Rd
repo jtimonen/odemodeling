@@ -11,18 +11,9 @@ An ODE model (R6 class)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{code_prior}}{Stan code for prior model.}
+\item{\code{prior}}{Stan model and code for prior model.}
 
-\item{\code{code_posterior}}{Stan code for posterior model.}
-
-\item{\code{stancode}}{Full 'Stan' code as a string.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{stancode}}{Full 'Stan' code as a string.}
+\item{\code{posterior}}{Stan model and code for posterior model.}
 }
 \if{html}{\out{</div>}}
 }
@@ -30,6 +21,8 @@ An ODE model (R6 class)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OdeModel$new()}}
+\item \href{#method-is_compiled}{\code{OdeModel$is_compiled()}}
+\item \href{#method-compile}{\code{OdeModel$compile()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
 \item \href{#method-sample_prior}{\code{OdeModel$sample_prior()}}
 \item \href{#method-sample_posterior}{\code{OdeModel$sample_posterior()}}
@@ -55,6 +48,26 @@ Create an \code{OdeModel} object.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_compiled"></a>}}
+\if{latex}{\out{\hypertarget{method-is_compiled}{}}}
+\subsection{Method \code{is_compiled()}}{
+Have the Stan models been compiled?
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$is_compiled()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-compile"></a>}}
+\if{latex}{\out{\hypertarget{method-compile}{}}}
+\subsection{Method \code{compile()}}{
+(Re)compile the Stan models
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$compile()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

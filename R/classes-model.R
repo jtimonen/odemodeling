@@ -1,11 +1,10 @@
 #' An ODE model (R6 class)
 #'
-#' @field code_prior Stan code for prior model.
-#' @field code_posterior Stan code for posterior model.
-#' @field stancode Full 'Stan' code as a string.
+#' @field prior Stan model and code for prior model.
+#' @field posterior Stan model and code for posterior model.
 OdeModel <- R6::R6Class("OdeModel", list(
-  code_prior = NULL,
-  code_posterior = NULL,
+  prior = NULL,
+  posterior = NULL,
 
   #' @description
   #' Create an `OdeModel` object.
@@ -13,14 +12,31 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @param code_prior Stan code for prior model.
   #' @param code_posterior Stan code for posterior model.
   initialize = function(code_prior, code_posterior) {
-    self$code_prior <- code_prior
-    self$code_posterior <- code_posterior
+    self$prior <- StanModelWithCode$new(code_prior)
+    self$posterior <- StanModelWithCode$new(code_posterior)
+  },
+
+  #' @description
+  #' Have the Stan models been compiled?
+  is_compiled = function() {
+    TRUE
+  },
+
+  #' @description
+  #' (Re)compile the Stan models
+  compile = function() {
+    self$prior$compile()
+    self$posterior$compile()
   },
 
   #' @description
   #' Print information about the model
   print = function() {
     cat("An object of class OdeModel. See ?OdeModel for help. \n", sep = "")
+    cat("\nModel for sampling from prior:\n")
+    self$prior$print()
+    cat("\nModel for sampling from posterior:\n")
+    self$posterior$print()
     invisible(self)
   },
 
@@ -101,5 +117,23 @@ OdeModel <- R6::R6Class("OdeModel", list(
       files = FN, tols = tols
     )
     return(out)
+  }
+))
+
+
+# A model (R6 class)
+StanModelWithCode <- R6::R6Class("StanModelWithCode", list(
+  model = NULL,
+  code = "",
+  initialize = function(code) {
+    self$code <- code
+    self$model <- stan_model_from_code(code)
+  },
+  compile = function() {
+    self$model <- stan_model_from_code(self$code)
+  },
+  print = function() {
+    cat_stancode(self$code)
+    invisible(self)
   }
 ))

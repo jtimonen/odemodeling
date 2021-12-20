@@ -14,6 +14,8 @@ An ODE model (R6 class)
 \item{\code{prior}}{Stan model and code for prior model.}
 
 \item{\code{posterior}}{Stan model and code for posterior model.}
+
+\item{\code{odetuner_version}}{of the package used to create the model}
 }
 \if{html}{\out{</div>}}
 }
@@ -21,8 +23,8 @@ An ODE model (R6 class)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OdeModel$new()}}
-\item \href{#method-is_compiled}{\code{OdeModel$is_compiled()}}
-\item \href{#method-compile}{\code{OdeModel$compile()}}
+\item \href{#method-assert_files_exist}{\code{OdeModel$assert_files_exist()}}
+\item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
 \item \href{#method-sample_prior}{\code{OdeModel$sample_prior()}}
 \item \href{#method-sample_posterior}{\code{OdeModel$sample_posterior()}}
@@ -36,7 +38,7 @@ An ODE model (R6 class)
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(code_prior, code_posterior)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(code_prior, code_posterior, compile)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -45,27 +47,29 @@ Create an \code{OdeModel} object.
 \item{\code{code_prior}}{Stan code for prior model.}
 
 \item{\code{code_posterior}}{Stan code for posterior model.}
+
+\item{\code{compile}}{Should the models be compiled.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_compiled"></a>}}
-\if{latex}{\out{\hypertarget{method-is_compiled}{}}}
-\subsection{Method \code{is_compiled()}}{
-Have the Stan models been compiled?
+\if{html}{\out{<a id="method-assert_files_exist"></a>}}
+\if{latex}{\out{\hypertarget{method-assert_files_exist}{}}}
+\subsection{Method \code{assert_files_exist()}}{
+Check that the Stan models have been initialized correctly
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$is_compiled()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$assert_files_exist()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compile"></a>}}
-\if{latex}{\out{\hypertarget{method-compile}{}}}
-\subsection{Method \code{compile()}}{
-(Re)compile the Stan models
+\if{html}{\out{<a id="method-reinit"></a>}}
+\if{latex}{\out{\hypertarget{method-reinit}{}}}
+\subsection{Method \code{reinit()}}{
+(Re)initialize the Stan models
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$compile()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$reinit()}\if{html}{\out{</div>}}
 }
 
 }

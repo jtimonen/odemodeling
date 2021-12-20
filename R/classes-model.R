@@ -1,32 +1,42 @@
 #' An ODE model (R6 class)
 #'
+#' @export
 #' @field prior Stan model and code for prior model.
 #' @field posterior Stan model and code for posterior model.
+#' @field odetuner_version of the package used to create the model
 OdeModel <- R6::R6Class("OdeModel", list(
   prior = NULL,
   posterior = NULL,
+  odetuner_version = NULL,
 
   #' @description
   #' Create an `OdeModel` object.
   #'
   #' @param code_prior Stan code for prior model.
   #' @param code_posterior Stan code for posterior model.
-  initialize = function(code_prior, code_posterior) {
-    self$prior <- StanModelWithCode$new(code_prior)
-    self$posterior <- StanModelWithCode$new(code_posterior)
+  #' @param compile Should the models be compiled.
+  initialize = function(code_prior, code_posterior, compile) {
+    self$prior <- StanModelWithCode$new(code_prior, compile)
+    self$posterior <- StanModelWithCode$new(code_posterior, compile)
+    self$odetuner_version <- pkg_version("odetuner")
   },
 
   #' @description
-  #' Have the Stan models been compiled?
-  is_compiled = function() {
+  #' Check that the Stan models have been initialized correctly
+  assert_files_exist = function() {
+    e1 <- self$prior$stan_file_exists()
+    e2 <- self$prior$stan_file_exists()
+    if (!(e1 && e2)) {
+      stop("At least one Stan model file doesn't exist. Please call $reinit().")
+    }
     TRUE
   },
 
   #' @description
-  #' (Re)compile the Stan models
-  compile = function() {
-    self$prior$compile()
-    self$posterior$compile()
+  #' (Re)initialize the Stan models
+  reinit = function() {
+    self$prior$reinit()
+    self$posterior$reinit()
   },
 
   #' @description
@@ -125,15 +135,33 @@ OdeModel <- R6::R6Class("OdeModel", list(
 StanModelWithCode <- R6::R6Class("StanModelWithCode", list(
   model = NULL,
   code = "",
-  initialize = function(code) {
+  initialize = function(code, compile) {
+    if (!compile) {
+      message(
+        "Not compiling the models. You need to call $reinit() before",
+        " being able to sample."
+      )
+    }
     self$code <- code
-    self$model <- stan_model_from_code(code)
+    if (compile) {
+      self$model <- stan_model_from_code(code)
+    }
   },
-  compile = function() {
+  reinit = function() {
     self$model <- stan_model_from_code(self$code)
   },
   print = function() {
     cat_stancode(self$code)
     invisible(self)
+  },
+  stan_file_exists = function() {
+    if (is.null(self$model)) {
+      return(FALSE)
+    }
+    sf <- self$model$stan_file()
+    if (file.exists(sf)) {
+      return(TRUE)
+    }
+    FALSE
   }
 ))

@@ -96,14 +96,14 @@ example_odemodel_gsir <- function(...) {
   I_gen <- stan_transform(I_gen_decl, "model", I_gen_code)
 
   # Works
-  a <- create_odemodel(
+  create_odemodel(
     N = N,
     odefun_vars = odefun_vars,
     odefun_body = odefun_body,
     odefun_init = x0,
     loglik_vars = loglik_vars,
     loglik_body = loglik_body,
-    other_vars = list(I_gen)
+    other_vars = list(I_gen),
+    ...
   )
-  return(a)
 }

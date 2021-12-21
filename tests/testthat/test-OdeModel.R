@@ -29,3 +29,17 @@ test_that("posterior model has correct names", {
   )
   expect_equal(nam3, nam3_real)
 })
+
+
+# Compile
+a$reinit()
+
+test_that("prior model can be compiled and sampled", {
+  expect_error(a$sample_prior(), "is missing, with no default")
+  expect_error(a$sample_prior(data = list(N = 2)), "G is missing from the data")
+  dat <- list(G = 3)
+  fit <- a$sample_prior(
+    data = dat, iter_warmup = 300, iter_sampling = 300, chains = 1, refresh = 0
+  )
+  expect_true(is(fit, "CmdStanMCMC"))
+})

@@ -37,6 +37,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   reinit = function() {
     self$prior$reinit()
     self$posterior$reinit()
+    invisible(self)
   },
 
   #' @description
@@ -133,7 +134,7 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     code = "",
     get_model = function() {
       mod <- self$model
-      if (is.null(self$mod)) {
+      if (is.null(mod)) {
         stop("Model not initialized. You need to call $reinit().")
       }
       return(mod)
@@ -164,6 +165,7 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     },
     reinit = function() {
       self$model <- stan_model_from_code(self$code)
+      invisible(self)
     },
     print = function() {
       cat_stancode(self$code)
@@ -202,7 +204,7 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     },
     data_check = function(data) {
       checkmate::assert_list(data)
-      needed <- self$needed_inputs()
+      needed <- self$data_names()
       given <- names(data)
       for (name in needed) {
         if (!(name %in% given)) {

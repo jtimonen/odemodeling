@@ -97,7 +97,14 @@ generate_stancode_posterior <- function(N,
   code <- autoformat_stancode(code)
 
   # Return
-  StanModelWithCode$new(code, dims, data, tdata, params, tparams, gqs, compile)
+  model <- StanModelWithCode$new(
+    code, dims, data, tdata, params, tparams, gqs, compile
+  )
+  list(
+    model = model,
+    t_dim = N,
+    ode_dim = D
+  )
 }
 
 # Create the functions block

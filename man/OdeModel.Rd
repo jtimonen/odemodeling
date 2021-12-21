@@ -16,6 +16,8 @@ An ODE model (R6 class)
 \item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{odetuner_version}}{of the package used to create the model}
+
+\item{\code{sig_figs}}{Number of significant figures to use everywhere.}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,7 +40,7 @@ An ODE model (R6 class)
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(prior, posterior)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(prior, posterior, sig_figs, t_dim, ode_dim)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -47,6 +49,12 @@ Create an \code{OdeModel} object.
 \item{\code{prior}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
+
+\item{\code{sig_figs}}{Number of significant figures to use in all Stan i/o.}
+
+\item{\code{t_dim}}{Time points vector dimension variable.}
+
+\item{\code{ode_dim}}{ODE system dimension variable.}
 
 \item{\code{compile}}{Should the models be compiled.}
 }
@@ -89,21 +97,15 @@ Print information about the model
 \subsection{Method \code{sample_prior()}}{
 Sample from parameter prior (no ODE solving)
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(dims = list(), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{dims}}{Needed parameter dimensions as a list.}
+
 \item{\code{...}}{Arguments passed to \verb{$sample()}.}
-
-\item{\code{t0}}{initial time point}
-
-\item{\code{t}}{data time points}
-
-\item{\code{D}}{ODE system dimension}
-
-\item{\code{add}}{data list of additional data needed to run the model}
 }
 \if{html}{\out{</div>}}
 }
@@ -114,12 +116,29 @@ Sample from parameter prior (no ODE solving)
 \subsection{Method \code{sample_posterior()}}{
 Sample from parameter posterior
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior(solver_args, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior(
+  t0,
+  t,
+  solver = "rk45",
+  solver_args = NULL,
+  other_data = list(),
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{t0}}{Initial time point.}
+
+\item{\code{t}}{Vector of time points.}
+
+\item{\code{solver}}{ODE solver name.}
+
+\item{\code{solver_args}}{List of ODE solver control arguments.}
+
+\item{\code{other_data}}{Other needed data as a list.}
+
 \item{\code{...}}{Arguments passed to \verb{$sample()}.}
 }
 \if{html}{\out{</div>}}

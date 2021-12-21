@@ -4,10 +4,16 @@
 #' @field prior An object of class `StanModelWithCode`.
 #' @field posterior An object of class `StanModelWithCode`.
 #' @field odetuner_version of the package used to create the model
+#' @field sig_figs Number of significant figures to use everywhere.
+#' @param t_dim A `StanDimension` of the time points array.
+#' @param ode_dim A `StanDimension` of the ODE system.
 OdeModel <- R6::R6Class("OdeModel", list(
   prior = NULL,
   posterior = NULL,
   odetuner_version = NULL,
+  sig_figs = NULL,
+  t_dim = NULL,
+  ode_dim = NULL,
 
   #' @description
   #' Create an `OdeModel` object.
@@ -15,10 +21,19 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @param prior An object of class `StanModelWithCode`.
   #' @param posterior An object of class `StanModelWithCode`.
   #' @param compile Should the models be compiled.
-  initialize = function(prior, posterior) {
+  #' @param sig_figs Number of significant figures to use in all Stan i/o.
+  #' @param t_dim Time points vector dimension variable.
+  #' @param ode_dim ODE system dimension variable.
+  initialize = function(prior, posterior, sig_figs, t_dim, ode_dim) {
+    checkmate::assert_integerish(sig_figs, lower = 3)
+    checkmate::assert_class(t_dim, "StanDimension")
+    checkmate::assert_class(ode_dim, "StanDimension")
     self$prior <- prior
     self$posterior <- posterior
     self$odetuner_version <- pkg_version("odetuner")
+    self$sig_figs <- sig_figs
+    self$t_dim <- t_dim
+    self$ode_dim <- ode_dim
   },
 
   #' @description
@@ -44,36 +59,53 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' Print information about the model
   print = function() {
     cat("An object of class OdeModel. See ?OdeModel for help. \n", sep = "")
-    cat("\nModel for sampling from prior:\n")
-    self$prior$print()
-    cat("\nModel for sampling from posterior:\n")
-    self$posterior$print()
+    cat(" * ODE dimension: ")
+    self$ode_dim$print()
+    cat(" * Time points array dimension: ")
+    self$t_dim$print()
+    sf <- self$sig_figs
+    cat(" * Number of significant figures in csv files: ")
+    cat_number(sf)
+    cat("\n")
     invisible(self)
   },
 
   #' @description
   #' Sample from parameter prior (no ODE solving)
-  #' @param t0 initial time point
-  #' @param t data time points
-  #' @param D ODE system dimension
-  #' @param add data list of additional data needed to run the model
+  #' @param dims Needed parameter dimensions as a list.
   #' @param ... Arguments passed to `$sample()`.
-  sample_prior = function(...) {
-    self$prior$sample(
-      ...
-    )
+  sample_prior = function(dims = list(), ...) {
+    self$prior$sample(data = dims, sig_figs = self$sig_figs, ...)
   },
 
   #' @description
   #' Sample from parameter posterior
+  #' @param t0 Initial time point.
+  #' @param t Vector of time points.
+  #' @param solver ODE solver name.
+  #' @param solver_args List of ODE solver control arguments.
+  #' @param other_data Other needed data as a list.
   #' @param ... Arguments passed to `$sample()`.
-  sample_posterior = function(solver_args, ...) {
-    stan_opts <- self$stan_opts
-    data <- self$data
-    init <- self$init
-    sample_posterior(self$stanmodel, data, solver_args, stan_opts,
-      init = init, ...
+  sample_posterior = function(t0,
+                              t,
+                              solver = "rk45",
+                              solver_args = NULL,
+                              other_data = list(),
+                              ...) {
+    solver <- solver_to_num(solver)
+    if (solver <= 10) {
+      nams <- c("abs_tol", "rel_tol", "max_num_steps")
+      checkmate::assert_list(solver_args, names = nams)
+    } else {
+      checkmate::assert_list(solver_args, names = "num_steps")
+    }
+    full_data <- c(
+      dims,
+      list(t0 = t0, t = t, solver = solver),
+      solver_args,
+      other_data
     )
+    self$posterior$sample(data = full_data, sig_figs = self$sig_figs, ...)
   },
 
   #' @description

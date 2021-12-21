@@ -38,6 +38,7 @@
 #' @param other_vars Other variables.
 #' @param verbose Should this print more information?
 #' @param compile Should the model be compiled?
+#' @param sig_figs Number of significant figures to use in all Stan i/o.
 #' @return An object of class `OdeModel`.
 #' @family setup functions
 create_odemodel <- function(N,
@@ -48,7 +49,8 @@ create_odemodel <- function(N,
                             loglik_body = "",
                             other_vars = list(),
                             verbose = FALSE,
-                            compile = TRUE) {
+                            compile = TRUE,
+                            sig_figs = 12) {
 
   # Argument checks
   choices_vars <- c("StanParameter", "StanTransformation", "StanDeclaration")
@@ -70,7 +72,7 @@ create_odemodel <- function(N,
   )
 
   # Posterior
-  posterior <- generate_stancode_posterior(
+  gpost <- generate_stancode_posterior(
     N,
     odefun_vars,
     odefun_body,
@@ -84,6 +86,9 @@ create_odemodel <- function(N,
   # Create the object
   OdeModel$new(
     prior = prior,
-    posterior = posterior
+    posterior = gpost$model,
+    sig_figs = sig_figs,
+    t_dim = gpost$t_dim,
+    ode_dim = gpost$ode_dim
   )
 }

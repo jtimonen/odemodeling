@@ -13,7 +13,8 @@ create_odemodel(
   loglik_body = "",
   other_vars = list(),
   verbose = FALSE,
-  compile = TRUE
+  compile = TRUE,
+  sig_figs = 12
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ function.}
 \item{verbose}{Should this print more information?}
 
 \item{compile}{Should the model be compiled?}
+
+\item{sig_figs}{Number of significant figures to use in all Stan i/o.}
 }
 \value{
 An object of class \code{OdeModel}.

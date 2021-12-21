@@ -10,6 +10,27 @@ cat_colored <- function(x, col = "\033[95m") {
   cat(x)
 }
 
+# Solver name to numeric encoding
+solver_to_num <- function(solver) {
+  ok <- c("rk45", "bdf", "rk4")
+  checkmate::assert_choice(solver, ok)
+  if (solver == "rk45") {
+    return(1)
+  }
+  if (solver == "bdf") {
+    return(2)
+  }
+  if (solver == "rk4") {
+    return(11)
+  }
+}
+
+# Print a number
+cat_number <- function(x) {
+  col <- "\u001b[34;1m"
+  cat_colored(x, col = col)
+}
+
 # Print Stan code
 cat_stancode <- function(x) {
   col <- "\u001b[33m"

@@ -2,23 +2,21 @@
 generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
                                     compile) {
   all_vars <- c(odefun_vars, loglik_vars)
-  all_decls <- lapply(all_vars, get_decl)
-  dims <- dims_of_decls(all_decls)
-  tdata <- all_vars[sapply(all_vars, is_tdata)]
   params <- all_vars[sapply(all_vars, is_param)]
   tparams <- all_vars[sapply(all_vars, is_tparam)]
+  all_vars <- c(params, tparams)
+  all_decls <- lapply(all_vars, get_decl)
+  dims <- dims_of_decls(all_decls)
+
   data_b <- generate_data_block(all_decls, list()) # just dimensions
-  tdata_b <- generate_transform_block("transformed data", tdata)
   pars_b <- generate_params_block(params)
   tpars_b <- generate_transform_block("transformed parameters", tparams)
   model_b <- generate_model_block(params, params_only = TRUE)
-  code <- paste(data_b, tdata_b, pars_b, tpars_b, model_b, sep = "\n")
+  code <- paste(data_b, pars_b, tpars_b, model_b, sep = "\n")
   code <- autoformat_stancode(code)
 
   # Return
-  data <- NULL
-  gqs <- NULL
-  StanModelWithCode$new(code, dims, data, tdata, params, tparams, gqs, compile)
+  StanModelWithCode$new(code, dims, NULL, NULL, params, tparams, NULL, compile)
 }
 
 # Generate 'Stan' code for posterior model

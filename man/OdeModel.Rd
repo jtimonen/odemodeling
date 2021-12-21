@@ -89,19 +89,19 @@ Print information about the model
 \subsection{Method \code{sample_prior()}}{
 Sample from parameter prior (no ODE solving)
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(t0 = 0, t = c(1, 2, 3), D = 1, add_data = list(), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+
 \item{\code{t0}}{initial time point}
 
 \item{\code{t}}{data time points}
 
 \item{\code{D}}{ODE system dimension}
-
-\item{\code{...}}{Arguments passed to \verb{$sample()}.}
 
 \item{\code{add}}{data list of additional data needed to run the model}
 }

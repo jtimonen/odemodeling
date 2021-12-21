@@ -57,19 +57,8 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @param D ODE system dimension
   #' @param add data list of additional data needed to run the model
   #' @param ... Arguments passed to `$sample()`.
-  sample_prior = function(t0 = 0.0, t = c(1, 2, 3), D = 1, add_data = list(),
-                          ...) {
-    data <- list(
-      do_likelihood = FALSE,
-      do_genquant = FALSE,
-      t0 = t0,
-      t = t,
-      D = D,
-      solver = 10,
-    )
-
-    self$stanmodel$sample(
-      data = data,
+  sample_prior = function(...) {
+    self$prior$sample(
       ...
     )
   },
@@ -132,49 +121,108 @@ OdeModel <- R6::R6Class("OdeModel", list(
 
 
 # A model (R6 class)
-StanModelWithCode <- R6::R6Class("StanModelWithCode", list(
-  model = NULL,
-  code = "",
-  dims = NULL,
-  data = NULL,
-  tdata = NULL,
-  params = NULL,
-  tparams = NULL,
-  gqs = NULL,
-  initialize = function(code, dims, data, tdata, params, tparams, gqs,
-                        compile) {
-    if (!compile) {
-      message(
-        "Not compiling the models. You need to call $reinit() before",
-        " being able to sample."
+StanModelWithCode <- R6::R6Class("StanModelWithCode",
+  public = list(
+    model = NULL,
+    dims = NULL,
+    data = NULL,
+    tdata = NULL,
+    params = NULL,
+    tparams = NULL,
+    gqs = NULL,
+    code = "",
+    get_model = function() {
+      mod <- self$model
+      if (is.null(self$mod)) {
+        stop("Model not initialized. You need to call $reinit().")
+      }
+      return(mod)
+    },
+    get_decls = function(type) {
+      dnames <- c("dims", "data", "tdata", "params", "tparams", "gqs")
+      checkmate::assert_choice(type, dnames)
+      self[[type]]
+    },
+    initialize = function(code, dims, data, tdata, params, tparams, gqs,
+                          compile) {
+      if (!compile) {
+        message(
+          "Not compiling the model. You need to call $reinit() before",
+          " being able to sample."
+        )
+      }
+      self$code <- code
+      self$dims <- dims
+      self$data <- data
+      self$tdata <- tdata
+      self$params <- params
+      self$tparams <- tparams
+      self$gqs <- gqs
+      if (compile) {
+        self$model <- stan_model_from_code(code)
+      }
+    },
+    reinit = function() {
+      self$model <- stan_model_from_code(self$code)
+    },
+    print = function() {
+      cat_stancode(self$code)
+      invisible(self)
+    },
+    stan_file_exists = function() {
+      mod <- self$get_model()
+      sf <- mod$stan_file()
+      if (file.exists(sf)) {
+        return(TRUE)
+      }
+      FALSE
+    },
+    names_of = function(type) {
+      decls <- self$get_decls(type)
+      nams <- sapply(decls, get_name)
+      if (length(nams) == 0) {
+        return(NULL)
+      }
+      nams
+    },
+    data_names = function() {
+      nam1 <- self$names_of("dims")
+      nam2 <- self$names_of("data")
+      unique(c(nam1, nam2))
+    },
+    param_names = function(inc_transformed = FALSE) {
+      nam <- self$names_of("params")
+      if (inc_transformed) {
+        nam <- c(nam, self$names_of("tparams"))
+      }
+      unique(nam)
+    },
+    gq_names = function() {
+      self$names_of("gqs")
+    },
+    data_check = function(data) {
+      checkmate::assert_list(data)
+      needed <- self$needed_inputs()
+      given <- names(data)
+      for (name in needed) {
+        if (!(name %in% given)) {
+          stop(paste0(name, " is missing from the data list!"))
+        }
+      }
+      TRUE
+    },
+    sample = function(data, ...) {
+      self$data_check(data)
+      mod <- self$get_model()
+      mod$sample(data = data, ...)
+    },
+    generate_quantities = function(data, fitted_params, ...) {
+      self$data_check(data)
+      mod <- self$get_model()
+      mod$model$generate_quantities(
+        fitted_params = fitted_params,
+        data = data, ...
       )
     }
-    self$code <- code
-    self$dims <- dims
-    self$data <- data
-    self$tdata <- tdata
-    self$params <- params
-    self$tparams <- tparams
-    self$gqs <- gqs
-    if (compile) {
-      self$model <- stan_model_from_code(code)
-    }
-  },
-  reinit = function() {
-    self$model <- stan_model_from_code(self$code)
-  },
-  print = function() {
-    cat_stancode(self$code)
-    invisible(self)
-  },
-  stan_file_exists = function() {
-    if (is.null(self$model)) {
-      return(FALSE)
-    }
-    sf <- self$model$stan_file()
-    if (file.exists(sf)) {
-      return(TRUE)
-    }
-    FALSE
-  }
-))
+  )
+)

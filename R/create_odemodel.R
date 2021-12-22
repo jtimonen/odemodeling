@@ -67,12 +67,7 @@ create_odemodel <- function(N,
   checkmate::assert_true(get_name(odefun_init) == "x0")
 
   # Generate full Stan model code
-  prior <- generate_stancode_prior(
-    odefun_vars, loglik_vars, other_vars, compile
-  )
-
-  # Posterior
-  gpost <- generate_stancode_posterior(
+  gprior <- generate_stancode(
     N,
     odefun_vars,
     odefun_body,
@@ -80,12 +75,25 @@ create_odemodel <- function(N,
     loglik_vars,
     loglik_body,
     other_vars,
-    compile
+    compile,
+    TRUE
+  )
+
+  gpost <- generate_stancode(
+    N,
+    odefun_vars,
+    odefun_body,
+    odefun_init,
+    loglik_vars,
+    loglik_body,
+    other_vars,
+    compile,
+    FALSE
   )
 
   # Create the object
   OdeModel$new(
-    prior = prior,
+    prior = gprior$model,
     posterior = gpost$model,
     sig_figs = sig_figs,
     t_dim = gpost$t_dim,

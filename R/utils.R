@@ -25,6 +25,24 @@ solver_to_num <- function(solver) {
   }
 }
 
+# Solver numeric encoding to default args list
+default_solver_args <- function(solver_num) {
+  if (solver_num == 1) {
+    out <- list(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6)
+  } else if (solver_num == 2) {
+    out <- list(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9)
+  } else if (solver_num == "rk4") {
+    out <- list(num_steps = 1)
+  } else {
+    stop("unknown solver")
+  }
+  str <- paste(names(out), out, sep = "=", collapse = ", ")
+  msg <- paste0("solver_args was NULL, defaulting to {", str, "}")
+  message(msg)
+  return(out)
+}
+
+
 # Print a number
 cat_number <- function(x) {
   col <- "\u001b[34;1m"

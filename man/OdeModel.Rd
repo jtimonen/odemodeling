@@ -28,8 +28,7 @@ An ODE model (R6 class)
 \item \href{#method-assert_files_exist}{\code{OdeModel$assert_files_exist()}}
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
-\item \href{#method-sample_prior}{\code{OdeModel$sample_prior()}}
-\item \href{#method-sample_posterior}{\code{OdeModel$sample_posterior()}}
+\item \href{#method-sample}{\code{OdeModel$sample()}}
 \item \href{#method-sample_posterior_many}{\code{OdeModel$sample_posterior_many()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
@@ -92,36 +91,18 @@ Print information about the model
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample_prior"></a>}}
-\if{latex}{\out{\hypertarget{method-sample_prior}{}}}
-\subsection{Method \code{sample_prior()}}{
-Sample from parameter prior (no ODE solving)
+\if{html}{\out{<a id="method-sample"></a>}}
+\if{latex}{\out{\hypertarget{method-sample}{}}}
+\subsection{Method \code{sample()}}{
+Sample parameters
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_prior(dims = list(), ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dims}}{Needed parameter dimensions as a list.}
-
-\item{\code{...}}{Arguments passed to \verb{$sample()}.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample_posterior"></a>}}
-\if{latex}{\out{\hypertarget{method-sample_posterior}{}}}
-\subsection{Method \code{sample_posterior()}}{
-Sample from parameter posterior
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior(
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample(
   t0,
   t,
   solver = "rk45",
   solver_args = NULL,
-  other_data = list(),
+  data = list(),
+  prior_only = FALSE,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -137,9 +118,14 @@ Sample from parameter posterior
 
 \item{\code{solver_args}}{List of ODE solver control arguments.}
 
-\item{\code{other_data}}{Other needed data as a list.}
+\item{\code{data}}{Other needed data as a list.}
 
-\item{\code{...}}{Arguments passed to \verb{$sample()}.}
+\item{\code{prior_only}}{Sample only from the prior? If this is true, ODE
+solves are done only in generated quantities, and there is no need to
+compute gradients for the solutions.}
+
+\item{\code{...}}{Arguments passed to the \verb{$sample()} method of the
+underlying \code{CmdStanModel} objects.}
 }
 \if{html}{\out{</div>}}
 }

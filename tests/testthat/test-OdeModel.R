@@ -13,7 +13,12 @@ test_that("prior model has correct names", {
   nam3 <- a$prior$data_names()
   expect_equal(nam1, c("beta", "gamma", "phi_inv"))
   expect_equal(nam2, c("beta", "gamma", "phi_inv", "phi"))
-  expect_equal(nam3, c("G"))
+  nam3_real <- c(
+    "G", "N", "D", "pop_sizes", "I0", "contacts",
+    "delta", "I_data", "t0", "t", "abs_tol", "rel_tol",
+    "max_num_steps", "num_steps", "solver"
+  )
+  expect_equal(nam3, nam3_real)
 })
 
 test_that("posterior model has correct names", {
@@ -29,4 +34,3 @@ test_that("posterior model has correct names", {
   )
   expect_equal(nam3, nam3_real)
 })
-

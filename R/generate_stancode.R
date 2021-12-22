@@ -1,4 +1,4 @@
-# Generate 'Stan' code for prior model
+# Generate 'Stan' code for prior model (only parameters, no ODE solving)
 generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
                                     compile) {
   all_vars <- c(odefun_vars, loglik_vars)
@@ -11,7 +11,7 @@ generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
   data_b <- generate_data_block(all_decls, list()) # just dimensions
   pars_b <- generate_params_block(params)
   tpars_b <- generate_transform_block("transformed parameters", tparams)
-  model_b <- generate_model_block(params, params_only = TRUE)
+  model_b <- generate_model_block(params, prior_mode = TRUE)
   code <- paste(data_b, pars_b, tpars_b, model_b, sep = "\n")
   code <- autoformat_stancode(code)
 
@@ -19,21 +19,24 @@ generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
   StanModelWithCode$new(code, dims, NULL, NULL, params, tparams, NULL, compile)
 }
 
-# Generate 'Stan' code for posterior model
-generate_stancode_posterior <- function(N,
-                                        odefun_vars,
-                                        odefun_body,
-                                        odefun_init,
-                                        loglik_vars,
-                                        loglik_body,
-                                        other_vars,
-                                        compile) {
+# Generate 'Stan' code
+generate_stancode <- function(N,
+                              odefun_vars,
+                              odefun_body,
+                              odefun_init,
+                              loglik_vars,
+                              loglik_body,
+                              other_vars,
+                              compile,
+                              prior) {
 
-  # Function signatures
+  # ODE function signature
   odefun_add_signature <- generate_add_signature(odefun_vars, FALSE)
   odefun_add_args <- generate_add_signature(odefun_vars, TRUE)
   so_args <- "solver, rel_tol, abs_tol, max_num_steps, num_steps, x0, t0, t"
   solve_ode_args <- append_to_signature(so_args, odefun_add_args)
+
+  # Log likelihood function signature
   loglik_add_signature <- generate_add_signature(loglik_vars, FALSE)
   loglik_add_args <- generate_add_signature(loglik_vars, TRUE)
   loglik_args <- append_to_signature("x_ode", loglik_add_args)
@@ -50,17 +53,28 @@ generate_stancode_posterior <- function(N,
     stan_var("solver", lower = 0, type = "int")
   )
   D <- get_dims(odefun_init)[[1]]
+  if (prior) {
+    x_ode_origin <- "model"
+  } else {
+    x_ode_origin <- "param"
+    log_lik <- stan_transform(
+      decl = stan_var("log_lik", "real"),
+      origin = "param",
+      code = paste0("log_lik = log_likelihood(", loglik_args, ");")
+    )
+  }
   x_ode <- stan_transform(
     decl = stan_vector_array("x_ode", dims = list(N), length = D),
-    origin = "param",
+    origin = x_ode_origin,
     code = paste0("x_ode = solve_ode(", solve_ode_args, ");")
   )
-  log_lik <- stan_transform(
-    decl = stan_var("log_lik", "real"),
-    origin = "param",
-    code = paste0("log_lik = log_likelihood(", loglik_args, ");")
-  )
-  other_vars <- c(other_vars, list(x_ode, log_lik))
+  if (prior) {
+    other_vars_add <- list(x_ode)
+  } else {
+    other_vars_add <- list(x_ode, log_lik)
+  }
+
+  other_vars <- c(other_vars_add, other_vars)
   all_vars <- c(odefun_vars, loglik_vars, other_vars, base_vars, solver_vars)
   all_vars <- unique(all_vars)
   all_decls <- lapply(all_vars, get_decl)
@@ -76,7 +90,7 @@ generate_stancode_posterior <- function(N,
   tdata_b <- generate_transform_block("transformed data", tdata)
   pars_b <- generate_params_block(params)
   tpars_b <- generate_transform_block("transformed parameters", tparams)
-  model_b <- generate_model_block(params, params_only = FALSE)
+  model_b <- generate_model_block(params, prior_mode = prior)
   gq_b <- generate_transform_block("generated quantities", gqs)
 
   # Functions block
@@ -85,7 +99,6 @@ generate_stancode_posterior <- function(N,
     odefun_add_args,
     odefun_body,
     loglik_add_signature,
-    loglik_add_args,
     loglik_body
   )
 
@@ -112,7 +125,6 @@ generate_functions_block <- function(odefun_add_sign,
                                      odefun_add_args,
                                      odefun_body,
                                      loglik_add_sign,
-                                     loglik_add_args,
                                      loglik_body) {
   odefun <- generate_odefun(odefun_add_sign, odefun_body)
   loglik <- generate_loglik(loglik_add_sign, loglik_body)
@@ -201,9 +213,9 @@ generate_params_block <- function(params) {
 }
 
 # Create the parameters block
-generate_model_block <- function(params, params_only) {
+generate_model_block <- function(params, prior_mode) {
   codes <- paste(lapply(params, get_prior_code), collapse = "\n")
-  if (params_only) {
+  if (prior_mode) {
     target <- ""
   } else {
     target <- "target += log_lik;"

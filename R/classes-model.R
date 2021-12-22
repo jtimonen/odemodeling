@@ -71,41 +71,55 @@ OdeModel <- R6::R6Class("OdeModel", list(
   },
 
   #' @description
-  #' Sample from parameter prior (no ODE solving)
-  #' @param dims Needed parameter dimensions as a list.
-  #' @param ... Arguments passed to `$sample()`.
-  sample_prior = function(dims = list(), ...) {
-    self$prior$sample(data = dims, sig_figs = self$sig_figs, ...)
-  },
-
-  #' @description
-  #' Sample from parameter posterior
+  #' Sample parameters
   #' @param t0 Initial time point.
   #' @param t Vector of time points.
   #' @param solver ODE solver name.
   #' @param solver_args List of ODE solver control arguments.
-  #' @param other_data Other needed data as a list.
-  #' @param ... Arguments passed to `$sample()`.
-  sample_posterior = function(t0,
-                              t,
-                              solver = "rk45",
-                              solver_args = NULL,
-                              other_data = list(),
-                              ...) {
-    solver <- solver_to_num(solver)
-    if (solver <= 10) {
-      nams <- c("abs_tol", "rel_tol", "max_num_steps")
-      checkmate::assert_list(solver_args, names = nams)
-    } else {
-      checkmate::assert_list(solver_args, names = "num_steps")
+  #' @param data Other needed data as a list.
+  #' @param prior_only Sample only from the prior? If this is true, ODE
+  #' solves are done only in generated quantities, and there is no need to
+  #' compute gradients for the solutions.
+  #' @param ... Arguments passed to the `$sample()` method of the
+  #' underlying `CmdStanModel` objects.
+  sample = function(t0,
+                    t,
+                    solver = "rk45",
+                    solver_args = NULL,
+                    data = list(),
+                    prior_only = FALSE,
+                    ...) {
+    checkmate::assertNumber(t0)
+    checkmate::assert_vector(t)
+    checkmate::assert_numeric(t)
+    checkmate::assert_string(solver)
+    if (is.null(solver_args)) {
+      solver_num <- solver_to_num(solver)
+      solver_args <- default_solver_args(solver_num)
     }
+    solver_num <- solver_to_num(solver)
+    if (solver_num <= 10) {
+      nams <- c("abs_tol", "rel_tol", "max_num_steps")
+      checkmate::assert_list(solver_args)
+      checkmate::assert_set_equal(names(solver_args), nams)
+      dummy <- list(num_steps = 1)
+      solver_args <- c(solver_args, dummy)
+    } else {
+      checkmate::assert_list(solver_args)
+      checkmate::assert_set_equal(names(solver_args), "num_steps")
+      dummy <- list(abs_tol = 1, rel_tol = 1, max_num_steps = 1)
+      solver_args <- c(solver_args, dummy)
+    }
+    N <- list(N = length(t))
+    names(N) <- self$t_dim$name
     full_data <- c(
-      dims,
-      list(t0 = t0, t = t, solver = solver),
+      N,
+      list(t0 = t0, t = t, solver = solver_num),
       solver_args,
-      other_data
+      data
     )
-    self$posterior$sample(data = full_data, sig_figs = self$sig_figs, ...)
+    model <- if (prior_only) self$prior else self$posterior
+    model$sample(data = full_data, sig_figs = self$sig_figs, ...)
   },
 
   #' @description

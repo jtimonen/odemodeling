@@ -31,9 +31,12 @@ sample_odemodel <- function(model,
   }
   solver_num <- solver_to_num(solver)
   if (solver_num <= 10) {
+    MAX_INT <- 2^31 - 1
     nams <- c("abs_tol", "rel_tol", "max_num_steps")
     checkmate::assert_list(solver_conf)
     checkmate::assert_set_equal(names(solver_conf), nams)
+    mns <- solver_conf$max_num_steps
+    checkmate::assert_integerish(mns, lower = 1, upper = MAX_INT)
     dummy <- list(num_steps = 1)
     solver_args <- c(solver_conf, dummy)
   } else {

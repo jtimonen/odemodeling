@@ -59,7 +59,8 @@ sample_odemodel <- function(model,
 #'
 #' @export
 #' @inheritParams sample_odemodel
-#' @param solver_confs List of ODE solver configurations.
+#' @param solver_confs List of ODE solver configurations. See
+#' [create_solver_conf_list()] for creating this.
 #' @param savedir Directory where results are saved.
 #' @param basename Base name for saved files.
 #' @param chains Number of MCMC chains.
@@ -75,7 +76,7 @@ sample_odemodel_manyconf <- function(model,
                                      chains = 4,
                                      ...) {
   if (!dir.exists(savedir)) {
-    message(savedir, "doesn't exist, creating it")
+    message("directory '", savedir, "' doesn't exist, creating it")
     dir.create(savedir)
   }
   L <- length(solver_confs)
@@ -89,27 +90,28 @@ sample_odemodel_manyconf <- function(model,
     j <- j + 1
     conf_str <- list_to_str(conf_j)
     cat("=================================================================\n")
-    cat(" (", j, ") Sampling with configuration = ", conf_str, "\n", sep = "")
+    cat(" (", j, ") Sampling with configuration: ", conf_str, "\n", sep = "")
     fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
     fit <- sample_odemodel(
-      model,
-      t0,
-      t,
-      data,
-      solver,
-      conf_j,
-      prior_only,
+      model =  model,
+      t0 = t0,
+      t = t,
+      data  = data,
+      solver = solver,
+      solver_conf = conf_j,
+      prior_only = prior_only,
+      chains = chains,
       ...
     )
     cat("Saving fit to ", fn, "\n", sep = "")
     fit$save_object(fn)
     FN <- c(FN, fn)
-    t <- fit$time()$chains$total
+    t_total <- fit$time()$chains$total
     gt <- fit$time()$total
     GT[j] <- gt
     WT[j, ] <- fit$time()$chains$warmup
     ST[j, ] <- fit$time()$chains$sampling
-    TT[j, ] <- t
+    TT[j, ] <- t_total
   }
   times <- list(warmup = WT, sampling = ST, total = TT, grand_total = GT)
 

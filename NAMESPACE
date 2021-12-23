@@ -2,6 +2,7 @@
 
 export(OdeModel)
 export(create_odemodel)
+export(create_solver_conf_list)
 export(example_odemodel)
 export(get_array_draw)
 export(sample_odemodel)

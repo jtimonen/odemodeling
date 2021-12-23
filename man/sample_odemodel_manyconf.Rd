@@ -30,7 +30,8 @@ sample_odemodel_manyconf(
 
 \item{solver}{ODE solver name.}
 
-\item{solver_confs}{List of ODE solver configurations.}
+\item{solver_confs}{List of ODE solver configurations. See
+\code{\link[=create_solver_conf_list]{create_solver_conf_list()}} for creating this.}
 
 \item{prior_only}{Sample only from the prior? If this is true, ODE
 solves are done only in generated quantities, and there is no need to

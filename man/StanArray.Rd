@@ -42,7 +42,7 @@ A Stan array
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanArray} object.
+Create a \link{StanArray} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanArray$new(name, dims, type = "real", lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }
@@ -53,7 +53,7 @@ Create a \code{StanArray} object.
 \item{\code{name}}{name of the array}
 
 \item{\code{dims}}{list of array dimensions, must be a list of
-\code{StanDimension} objects}
+\link{StanDimension} objects}
 
 \item{\code{type}}{base type of the array}
 

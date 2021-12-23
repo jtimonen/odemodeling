@@ -31,7 +31,7 @@ A Stan transformation
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanTransformation} object.
+Create a \link{StanTransformation} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanTransformation$new(decl, origin = "model", code = "")}\if{html}{\out{</div>}}
 }

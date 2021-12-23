@@ -40,7 +40,7 @@ A Stan vector
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanVector} object.
+Create a \link{StanVector} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanVector$new(name, length, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }
@@ -50,7 +50,7 @@ Create a \code{StanVector} object.
 \describe{
 \item{\code{name}}{name of the vector}
 
-\item{\code{length}}{length of the vector, must be a \code{StanDimension} object}
+\item{\code{length}}{length of the vector, must be a \link{StanDimension} object}
 
 \item{\code{lower}}{lower bound}
 

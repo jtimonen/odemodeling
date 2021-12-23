@@ -33,7 +33,7 @@ A dimension for a Stan vector or array
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanDimension} object
+Create a \link{StanDimension} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDimension$new(name, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }

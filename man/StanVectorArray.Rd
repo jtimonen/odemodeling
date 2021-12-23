@@ -42,7 +42,7 @@ A Stan array of vectors
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanVectorArray} object.
+Create a \link{StanVectorArray} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanVectorArray$new(name, dims, length, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }
@@ -53,9 +53,9 @@ Create a \code{StanVectorArray} object.
 \item{\code{name}}{name of the vector array}
 
 \item{\code{dims}}{list of array dimensions, must be a list of
-\code{StanDimension} objects}
+\link{StanDimension} objects}
 
-\item{\code{length}}{length of the vector, must be a \code{StanDimension} object}
+\item{\code{length}}{length of the vector, must be a \link{StanDimension} object}
 
 \item{\code{lower}}{lower bound}
 

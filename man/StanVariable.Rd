@@ -40,7 +40,7 @@ A Stan variable
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanVariable} object.
+Create a \link{StanVariable} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanVariable$new(name, type = "real", lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }

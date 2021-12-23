@@ -42,7 +42,7 @@ A Stan matrix
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanMatrix} object.
+Create a \link{StanMatrix} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanMatrix$new(name, nrow, ncol, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
 }
@@ -52,9 +52,9 @@ Create a \code{StanMatrix} object.
 \describe{
 \item{\code{name}}{name of the matrix}
 
-\item{\code{nrow}}{number of rows, must be a \code{StanDimension} object}
+\item{\code{nrow}}{number of rows, must be a \link{StanDimension} object}
 
-\item{\code{ncol}}{number of columns, must be a \code{StanDimension} object}
+\item{\code{ncol}}{number of columns, must be a \link{StanDimension} object}
 
 \item{\code{lower}}{lower bound}
 

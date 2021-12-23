@@ -57,7 +57,7 @@ StanDimension <- R6::R6Class("StanDimension",
   public = list(
 
     #' @description
-    #' Create a `StanDimension` object
+    #' Create a [StanDimension] object
     #'
     #' @param name name of the dimension variable
     #' @param lower lower bound
@@ -108,7 +108,7 @@ StanVariable <- R6::R6Class("StanVariable",
     type = NULL,
 
     #' @description
-    #' Create a `StanVariable` object.
+    #' Create a [StanVariable] object.
     #'
     #' @param name name of the dimension variable
     #' @param lower lower bound
@@ -165,12 +165,12 @@ StanVector <- R6::R6Class("StanVector",
     length = NULL,
 
     #' @description
-    #' Create a `StanVector` object.
+    #' Create a [StanVector] object.
     #'
     #' @param name name of the vector
     #' @param lower lower bound
     #' @param upper upper bound
-    #' @param length length of the vector, must be a `StanDimension` object
+    #' @param length length of the vector, must be a [StanDimension] object
     initialize = function(name, length, lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_class(length, "StanDimension")
@@ -232,13 +232,13 @@ StanMatrix <- R6::R6Class("StanMatrix",
     ncol = NULL,
 
     #' @description
-    #' Create a `StanMatrix` object.
+    #' Create a [StanMatrix] object.
     #'
     #' @param name name of the matrix
     #' @param lower lower bound
     #' @param upper upper bound
-    #' @param nrow number of rows, must be a `StanDimension` object
-    #' @param ncol number of columns, must be a `StanDimension` object
+    #' @param nrow number of rows, must be a [StanDimension] object
+    #' @param ncol number of columns, must be a [StanDimension] object
     initialize = function(name, nrow, ncol, lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_class(nrow, "StanDimension")
@@ -302,13 +302,13 @@ StanArray <- R6::R6Class("StanArray",
     type = NULL,
 
     #' @description
-    #' Create a `StanArray` object.
+    #' Create a [StanArray] object.
     #'
     #' @param name name of the array
     #' @param lower lower bound
     #' @param upper upper bound
     #' @param dims list of array dimensions, must be a list of
-    #'  `StanDimension` objects
+    #' [StanDimension] objects
     #' @param type base type of the array
     initialize = function(name, dims, type = "real",
                           lower = NULL, upper = NULL) {
@@ -377,14 +377,14 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
     length = NULL,
 
     #' @description
-    #' Create a `StanVectorArray` object.
+    #' Create a [StanVectorArray] object.
     #'
     #' @param name name of the vector array
     #' @param lower lower bound
     #' @param upper upper bound
     #' @param dims list of array dimensions, must be a list of
-    #'  `StanDimension` objects
-    #' @param length length of the vector, must be a `StanDimension` object
+    #' [StanDimension] objects
+    #' @param length length of the vector, must be a [StanDimension] object
     initialize = function(name, dims, length, lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_list(dims, types = "StanDimension", min.len = 1)
@@ -450,7 +450,7 @@ StanParameter <- R6::R6Class("StanParameter",
     prior_code = NULL,
 
     #' @description
-    #' Create a `StanParameter` object.
+    #' Create a [StanParameter] object.
     #'
     #' @param decl The underlying variable.
     #' @param prior_code Code that defines prior for the parameter.
@@ -493,7 +493,7 @@ StanTransformation <- R6::R6Class("StanTransformation",
     origin = NULL,
 
     #' @description
-    #' Create a `StanTransformation` object.
+    #' Create a [StanTransformation] object.
     #'
     #' @param decl The underlying variable.
     #' @param origin Must be either `"data"`, `"param"`, or `"model"`.

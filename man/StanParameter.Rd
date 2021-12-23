@@ -29,7 +29,7 @@ A Stan parameter
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a \code{StanParameter} object.
+Create a \link{StanParameter} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanParameter$new(decl, prior_code = "")}\if{html}{\out{</div>}}
 }

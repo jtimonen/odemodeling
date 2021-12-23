@@ -1,4 +1,4 @@
-#' Create a `StanDimension` object
+#' Create a [StanDimension] object
 #'
 #' @param name name of the dimension variable
 #' @param lower lower bound
@@ -14,7 +14,7 @@ stan_dim <- function(name, lower = NULL, upper = NULL) {
   StanDimension$new(name = name, lower = lower, upper = upper)
 }
 
-#' Create a `StanVariable` object.
+#' Create a [StanVariable] object.
 #'
 #' @param name name of the dimension variable
 #' @param lower lower bound
@@ -31,12 +31,12 @@ stan_var <- function(name, type = "real", lower = NULL, upper = NULL) {
   StanVariable$new(name = name, type = type, lower = lower, upper = upper)
 }
 
-#' Create a `StanVector` object.
+#' Create a [StanVector] object.
 #'
 #' @param name name of the vector
 #' @param lower lower bound
 #' @param upper upper bound
-#' @param length length of the vector, must be a `StanDimension` object
+#' @param length length of the vector, must be a [StanDimension] object
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
@@ -46,13 +46,13 @@ stan_vector <- function(name, length, lower = NULL, upper = NULL) {
   StanVector$new(name = name, length = length, lower = lower, upper = upper)
 }
 
-#' Create a `StanMatrix` object.
+#' Create a [StanMatrix] object.
 #'
 #' @param name name of the matrix
 #' @param lower lower bound
 #' @param upper upper bound
-#' @param nrow number of rows, must be a `StanDimension` object
-#' @param ncol number of columns, must be a `StanDimension` object
+#' @param nrow number of rows, must be a [StanDimension] object
+#' @param ncol number of columns, must be a [StanDimension] object
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
@@ -67,7 +67,7 @@ stan_matrix <- function(name, nrow, ncol, lower = NULL, upper = NULL) {
   )
 }
 
-#' Create a `StanArray` object.
+#' Create a [StanArray] object.
 #'
 #' @param name name of the array
 #' @param lower lower bound
@@ -89,14 +89,14 @@ stan_array <- function(name, dims, type = "real", lower = NULL, upper = NULL) {
   )
 }
 
-#' Create a `StanVectorArray` object.
+#' Create a [StanVectorArray] object.
 #'
 #' @param name name of the vector array
 #' @param lower lower bound
 #' @param upper upper bound
 #' @param dims list of array dimensions, must be a list of
-#'  `StanDimension` objects
-#' @param length length of the vector, must be a `StanDimension` object
+#'  [StanDimension] objects
+#' @param length length of the vector, must be a [StanDimension] object
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
@@ -111,10 +111,10 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
   )
 }
 
-#' Create a `StanParameter` object
+#' Create a [StanParameter] object
 #'
 #' @param decl The Stan variable declaration from which the parameter is
-#' created. Must be an object that inherits from `StanDeclaration` and
+#' created. Must be an object that inherits from [StanDeclaration] and
 #' has a real or vector base type.
 #' @param prior_code A string of Stan code that defines the prior for the
 #' parameter. The default is empty string (no prior).
@@ -134,10 +134,10 @@ stan_param <- function(decl, prior_code = "") {
 }
 
 
-#' Create a `StanTransformation` object
+#' Create a [StanTransformation] object
 #'
 #' @param decl The Stan variable declaration for the quantity.
-#'  Must be an object that inherits from `StanDeclaration`.
+#'  Must be an object that inherits from [StanDeclaration].
 #' @param origin Must be either `"data"`, `"param"`, or `"model"`.
 #' These correspond to the `transformed data`, `transformed parameters`, and
 #' `generated quantities` blocks, respectively.

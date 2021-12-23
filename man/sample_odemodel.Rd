@@ -16,7 +16,7 @@ sample_odemodel(
 )
 }
 \arguments{
-\item{model}{An object of class \code{OdeModel}.}
+\item{model}{An object of class \link{OdeModel}.}
 
 \item{t0}{Initial time point.}
 
@@ -32,8 +32,8 @@ sample_odemodel(
 solves are done only in generated quantities, and there is no need to
 compute gradients for the solutions.}
 
-\item{...}{Arguments passed to the \verb{$sample()} method of the
-underlying \code{CmdStanModel} objects.}
+\item{...}{Arguments passed to the \code{\link[=$sample]{$sample()}} method of the
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} objects.}
 }
 \description{
 Sample parameters  of an ODE model

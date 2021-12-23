@@ -1,7 +1,7 @@
 #' Sample parameters  of an ODE model
 #'
 #' @export
-#' @param model An object of class `OdeModel`.
+#' @param model An object of class [OdeModel].
 #' @param t0 Initial time point.
 #' @param t Vector of time points.
 #' @param solver ODE solver name.
@@ -10,8 +10,8 @@
 #' @param prior_only Sample only from the prior? If this is true, ODE
 #' solves are done only in generated quantities, and there is no need to
 #' compute gradients for the solutions.
-#' @param ... Arguments passed to the `$sample()` method of the
-#' underlying `CmdStanModel` objects.
+#' @param ... Arguments passed to the [$sample()] method of the
+#' underlying [cmdstanr::CmdStanModel] objects.
 sample_odemodel <- function(model,
                             t0,
                             t,

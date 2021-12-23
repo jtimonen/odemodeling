@@ -9,6 +9,9 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
     name = NULL,
     lower = NULL,
     upper = NULL,
+
+    #' @description
+    #' `StanDeclaration` is an abstract class that can't be initialized.
     initialize = function() {
       stop("StanDeclaration is an abstract class that can't be initialized.")
     },
@@ -19,10 +22,13 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
 
     },
 
+    #' @description
     #' The variable when used in function signature
     signature = function() {
 
     },
+
+    #' @description
     #' Print
     print = function() {
       code <- paste0(self$declaration(), ";\n")

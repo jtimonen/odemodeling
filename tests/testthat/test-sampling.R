@@ -13,7 +13,8 @@ test_that("prior can be used to simulate data", {
     delta = 0.001,
     I_data = matrix(1, num_tp, G)
   )
-  fit <- a$sample(
+  fit <- sample_odemodel(
+    model = a,
     t0 = 0, t = 1:num_tp,
     data = dat,
     prior_only = TRUE,
@@ -22,6 +23,6 @@ test_that("prior can be used to simulate data", {
   x_ode <- fit$draws("x_ode")
   I_gen <- fit$draws("I_gen")
   expect_true(is(fit, "CmdStanMCMC"))
-  expect_equal(dim(x_ode), c(1000, 1, 90)) # 90 = 15*6
-  expect_equal(dim(I_gen), c(1000, 1, 45)) # 45 = 15*3
+  expect_equal(dim(x_ode), c(1000, 1, 90)) # 90 = 15 * 6
+  expect_equal(dim(I_gen), c(1000, 1, 45)) # 45 = 15 * 3
 })

@@ -26,7 +26,7 @@ solver_to_num <- function(solver) {
 }
 
 # Solver numeric encoding to default args list
-default_solver_args <- function(solver_num) {
+default_solver_conf <- function(solver_num) {
   if (solver_num == 1) {
     out <- list(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6)
   } else if (solver_num == 2) {
@@ -36,12 +36,17 @@ default_solver_args <- function(solver_num) {
   } else {
     stop("unknown solver")
   }
-  str <- paste(names(out), out, sep = "=", collapse = ", ")
-  msg <- paste0("solver_args was NULL, defaulting to {", str, "}")
+  str <- list_to_str(out)
+  msg <- paste0("solver_conf was NULL, defaulting to ", str)
   message(msg)
   return(out)
 }
 
+# Named list to string
+list_to_str <- function(x) {
+  str <- paste(names(x), x, sep = "=", collapse = ", ")
+  paste0("{", str, "}")
+}
 
 # Print a number
 cat_number <- function(x) {

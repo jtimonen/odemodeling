@@ -3,6 +3,8 @@
 export(OdeModel)
 export(create_odemodel)
 export(example_odemodel)
+export(sample_odemodel)
+export(sample_odemodel_manyconf)
 export(stan_array)
 export(stan_dim)
 export(stan_matrix)

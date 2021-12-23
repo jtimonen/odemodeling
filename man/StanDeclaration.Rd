@@ -35,6 +35,7 @@ A Stan variable declaration (an abstract base class)
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+\code{StanDeclaration} is an abstract class that can't be initialized.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$new()}\if{html}{\out{</div>}}
 }
@@ -45,8 +46,6 @@ A Stan variable declaration (an abstract base class)
 \if{latex}{\out{\hypertarget{method-declaration}{}}}
 \subsection{Method \code{declaration()}}{
 The variable declaration as a string.
-The variable when used in function signature
-Print
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$declaration()}\if{html}{\out{</div>}}
 }
@@ -56,6 +55,7 @@ Print
 \if{html}{\out{<a id="method-signature"></a>}}
 \if{latex}{\out{\hypertarget{method-signature}{}}}
 \subsection{Method \code{signature()}}{
+The variable when used in function signature
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$signature()}\if{html}{\out{</div>}}
 }
@@ -65,6 +65,7 @@ Print
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
+Print
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{StanDeclaration$print()}\if{html}{\out{</div>}}
 }

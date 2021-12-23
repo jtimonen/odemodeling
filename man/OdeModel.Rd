@@ -18,6 +18,10 @@ An ODE model (R6 class)
 \item{\code{odetuner_version}}{of the package used to create the model}
 
 \item{\code{sig_figs}}{Number of significant figures to use everywhere.}
+
+\item{\code{t_dim}}{A \code{StanDimension} of the time points array.}
+
+\item{\code{ode_dim}}{A \code{StanDimension} of the ODE system.}
 }
 \if{html}{\out{</div>}}
 }
@@ -28,8 +32,6 @@ An ODE model (R6 class)
 \item \href{#method-assert_files_exist}{\code{OdeModel$assert_files_exist()}}
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
-\item \href{#method-sample}{\code{OdeModel$sample()}}
-\item \href{#method-sample_posterior_many}{\code{OdeModel$sample_posterior_many()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
 }
@@ -89,70 +91,6 @@ Print information about the model
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$print()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample"></a>}}
-\if{latex}{\out{\hypertarget{method-sample}{}}}
-\subsection{Method \code{sample()}}{
-Sample parameters
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample(
-  t0,
-  t,
-  solver = "rk45",
-  solver_args = NULL,
-  data = list(),
-  prior_only = FALSE,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{t0}}{Initial time point.}
-
-\item{\code{t}}{Vector of time points.}
-
-\item{\code{solver}}{ODE solver name.}
-
-\item{\code{solver_args}}{List of ODE solver control arguments.}
-
-\item{\code{data}}{Other needed data as a list.}
-
-\item{\code{prior_only}}{Sample only from the prior? If this is true, ODE
-solves are done only in generated quantities, and there is no need to
-compute gradients for the solutions.}
-
-\item{\code{...}}{Arguments passed to the \verb{$sample()} method of the
-underlying \code{CmdStanModel} objects.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample_posterior_many"></a>}}
-\if{latex}{\out{\hypertarget{method-sample_posterior_many}{}}}
-\subsection{Method \code{sample_posterior_many()}}{
-Sample from parameter posterior using several different ODE tolerances
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_posterior_many(
-  res_dir,
-  idx,
-  tols,
-  max_num_steps,
-  chains = 4,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Arguments passed to \verb{$sample()}.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

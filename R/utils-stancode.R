@@ -313,14 +313,3 @@ fill_stancode_part <- function(code, replacement, placeholder) {
   }
   gsub(pattern = placeholder, fixed = TRUE, x = code, replacement = replacement)
 }
-
-# Stan function additional argument vector (with types)
-# to just names of arguments in one string
-parse_add_args <- function(add_args) {
-  splitter <- function(x) {
-    x <- trimws(x)
-    words <- strsplit(x, split = " ", fixed = TRUE)[[1]]
-    words[length(words)]
-  }
-  paste(sapply(add_args, splitter), collapse = ", ")
-}

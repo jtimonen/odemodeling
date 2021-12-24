@@ -4,12 +4,6 @@ stan_model_from_code <- function(code) {
   cmdstanr::cmdstan_model(file)
 }
 
-# Print colored text
-cat_colored <- function(x, col = "\033[95m") {
-  x <- paste0(col, x, "\u001b[0m")
-  cat(x)
-}
-
 # Solver name to numeric encoding
 solver_to_num <- function(solver) {
   ok <- c("rk45", "bdf", "rk4")
@@ -46,6 +40,15 @@ default_solver_conf <- function(solver_num) {
 list_to_str <- function(x) {
   str <- paste(names(x), x, sep = "=", collapse = ", ")
   paste0("{", str, "}")
+}
+
+
+# Print colored text
+cat_colored <- function(x, col = "\033[95m") {
+  if (interactive()) {
+    x <- paste0(col, x, "\u001b[0m")
+  }
+  cat(x)
 }
 
 # Print a number

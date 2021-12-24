@@ -49,7 +49,7 @@ sample_odemodel <- function(model,
     solver_args,
     data
   )
-  smc <- model$model
+  smc <- model$stanmodel
   smc$sample(data = full_data, sig_figs = model$sig_figs, ...)
 }
 

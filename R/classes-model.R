@@ -39,7 +39,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @description
   #' Check that the Stan model has been initialized correctly
   assert_stanfile_exists = function() {
-    e1 <- self$model$stan_file_exists()
+    e1 <- self$stanmodel$stan_file_exists()
     if (!(e1)) {
       stop("Stan model file doesn't exist. Please call $reinit().")
     }
@@ -49,21 +49,23 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @description
   #' (Re)initialize the Stan model
   reinit = function() {
-    self$model$reinit()
+    self$stanmodel$reinit()
     invisible(self)
   },
 
   #' @description
   #' Print information about the model
   print = function() {
-    cat("An object of class OdeModel. See ?OdeModel for help. \n", sep = "")
+    cat("An object of class OdeModel. Type ?OdeModel for help. \n", sep = "")
     cat(" * ODE dimension: ")
     self$ode_dim$print()
     cat(" * Time points array dimension: ")
     self$t_dim$print()
-    sf <- self$sig_figs
     cat(" * Number of significant figures in csv files: ")
-    cat_number(sf)
+    cat_number(self$sig_figs)
+    cat("\n")
+    cat(" * Has likelihood: ")
+    cat_number(self$has_likelihood)
     cat("\n")
     invisible(self)
   },

@@ -4,9 +4,11 @@
 \alias{example_odemodel}
 \title{Create an example ODE model}
 \usage{
-example_odemodel(...)
+example_odemodel(prior_only = FALSE, ...)
 }
 \arguments{
+\item{prior_only}{Create a prior-only version of the model?}
+
 \item{...}{Additional arguments to \code{\link{create_odemodel}}.}
 }
 \value{

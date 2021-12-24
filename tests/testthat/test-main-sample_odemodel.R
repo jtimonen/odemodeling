@@ -1,8 +1,9 @@
 SEED <- 555
 
-# Create model
-a <- example_odemodel(compile = F)
-a$reinit()
+# Create models
+prior <- example_odemodel(compile = F, prior_only = TRUE)
+prior$reinit()
+post <- example_odemodel()
 
 # Create data
 num_tp <- 15
@@ -21,23 +22,22 @@ dat <- list(
 
 # Sample from prior
 fit <- sample_odemodel(
-  model = a,
+  model = prior,
   t0 = t0, t = t,
   data = dat,
-  prior_only = TRUE,
   iter_warmup = 1000, iter_sampling = 1000, chains = 1, refresh = 0,
   seed = SEED
 )
 
 # Get data
 idx <- 322
-x_ode <- get_array_draw(fit, variable = "x_ode", iteration = idx)
+y_sol <- get_array_draw(fit, variable = "y_sol", iteration = idx)
 I_gen <- get_array_draw(fit, variable = "I_gen", iteration = idx)
 dat$I_data <- I_gen
 
 test_that("prior sampling works", {
   expect_true(is(fit, "CmdStanMCMC"))
-  expect_equal(dim(x_ode), c(15, 6))
+  expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
 })
 
@@ -45,7 +45,7 @@ test_that("posterior sampling works", {
 
   # Posterior sampling
   post_fit <- sample_odemodel(
-    model = a,
+    model = post,
     t0 = t0, t = t,
     data = dat,
     iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
@@ -54,17 +54,17 @@ test_that("posterior sampling works", {
   )
 
   idx <- 7
-  x_ode <- get_array_draw(post_fit, variable = "x_ode", iteration = idx)
+  y_sol <- get_array_draw(post_fit, variable = "y_sol", iteration = idx)
   I_gen <- get_array_draw(post_fit, variable = "I_gen", iteration = idx)
   expect_true(is(post_fit, "CmdStanMCMC"))
-  expect_equal(dim(x_ode), c(15, 6))
+  expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
 })
 
 test_that("posterior sampling using many configurations works", {
   confs <- create_solver_conf_list(tols = 10^(-c(2:5)), max_num_steps = 1000)
   res <- sample_odemodel_manyconf(
-    model = a,
+    model = post,
     t0 = t0, t = t,
     data = dat,
     solver_confs = confs,

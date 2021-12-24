@@ -1,3 +1,5 @@
+SEED <- 555
+
 # Create model
 a <- example_odemodel(compile = F)
 a$reinit()
@@ -24,7 +26,7 @@ fit <- sample_odemodel(
   data = dat,
   prior_only = TRUE,
   iter_warmup = 1000, iter_sampling = 1000, chains = 1, refresh = 0,
-  seed = 312
+  seed = SEED
 )
 
 # Get data
@@ -47,7 +49,8 @@ test_that("posterior sampling works", {
     t0 = t0, t = t,
     data = dat,
     iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
-    init = 0, step_size = 0.1
+    init = 0, step_size = 0.1,
+    seed = SEED
   )
 
   idx <- 7
@@ -66,7 +69,8 @@ test_that("posterior sampling using many configurations works", {
     data = dat,
     solver_confs = confs,
     iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
-    init = 0, step_size = 0.1
+    init = 0, step_size = 0.1,
+    seed = SEED
   )
   expect_length(res$times$grand_total, 4)
   unlink("results", recursive = TRUE)

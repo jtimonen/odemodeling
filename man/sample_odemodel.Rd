@@ -11,7 +11,6 @@ sample_odemodel(
   data = list(),
   solver = "rk45",
   solver_conf = NULL,
-  prior_only = FALSE,
   ...
 )
 }
@@ -27,10 +26,6 @@ sample_odemodel(
 \item{solver}{ODE solver name.}
 
 \item{solver_conf}{List of ODE solver configuration arguments.}
-
-\item{prior_only}{Sample only from the prior? If this is true, ODE
-solves are done only in generated quantities, and there is no need to
-compute gradients for the solutions.}
 
 \item{...}{Arguments passed to the \verb{$sample()} method of the
 underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} objects.}

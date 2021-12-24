@@ -1,15 +1,15 @@
 #' An ODE model (R6 class)
 #'
 #' @export
-#' @field prior An object of class `StanModelWithCode`.
-#' @field posterior An object of class `StanModelWithCode`.
+#' @field has_likelihood Is there a likelihood function?
+#' @field stanmodel An object of class `StanModelWithCode`.
 #' @field odetuner_version of the package used to create the model
 #' @field sig_figs Number of significant figures to use everywhere.
 #' @field t_dim A `StanDimension` of the time points array.
 #' @field ode_dim A `StanDimension` of the ODE system.
 OdeModel <- R6::R6Class("OdeModel", list(
-  prior = NULL,
-  posterior = NULL,
+  has_likelihood = NULL,
+  stanmodel = NULL,
   odetuner_version = NULL,
   sig_figs = NULL,
   t_dim = NULL,
@@ -18,18 +18,18 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @description
   #' Create an `OdeModel` object.
   #'
-  #' @param prior An object of class `StanModelWithCode`.
-  #' @param posterior An object of class `StanModelWithCode`.
+  #' @param has_likelihood Is there a likelihood function?
+  #' @param stanmodel An object of class `StanModelWithCode`.
   #' @param compile Should the models be compiled.
   #' @param sig_figs Number of significant figures to use in all Stan i/o.
   #' @param t_dim Time points vector dimension variable.
   #' @param ode_dim ODE system dimension variable.
-  initialize = function(prior, posterior, sig_figs, t_dim, ode_dim) {
+  initialize = function(has_likelihood, stanmodel, sig_figs, t_dim, ode_dim) {
     checkmate::assert_integerish(sig_figs, lower = 3)
     checkmate::assert_class(t_dim, "StanDimension")
     checkmate::assert_class(ode_dim, "StanDimension")
-    self$prior <- prior
-    self$posterior <- posterior
+    self$has_likelihood <- has_likelihood
+    self$stanmodel <- stanmodel
     self$odetuner_version <- pkg_version("odetuner")
     self$sig_figs <- sig_figs
     self$t_dim <- t_dim
@@ -37,21 +37,19 @@ OdeModel <- R6::R6Class("OdeModel", list(
   },
 
   #' @description
-  #' Check that the Stan models have been initialized correctly
-  assert_files_exist = function() {
-    e1 <- self$prior$stan_file_exists()
-    e2 <- self$prior$stan_file_exists()
-    if (!(e1 && e2)) {
-      stop("At least one Stan model file doesn't exist. Please call $reinit().")
+  #' Check that the Stan model has been initialized correctly
+  assert_stanfile_exists = function() {
+    e1 <- self$model$stan_file_exists()
+    if (!(e1)) {
+      stop("Stan model file doesn't exist. Please call $reinit().")
     }
     TRUE
   },
 
   #' @description
-  #' (Re)initialize the Stan models
+  #' (Re)initialize the Stan model
   reinit = function() {
-    self$prior$reinit()
-    self$posterior$reinit()
+    self$model$reinit()
     invisible(self)
   },
 
@@ -68,6 +66,12 @@ OdeModel <- R6::R6Class("OdeModel", list(
     cat_number(sf)
     cat("\n")
     invisible(self)
+  },
+
+  #' @description
+  #' Get the Stan code of the model.
+  code = function() {
+    self$stanmodel$code
   }
 ))
 

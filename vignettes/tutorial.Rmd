@@ -1,0 +1,45 @@
+---
+title: "The odetuner package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The odetuner package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(odetuner)
+```
+
+## Creating a model
+
+```{r create}
+N <- stan_dim("N", lower=1)
+P <- stan_dim("P")
+D <- stan_dim("D")
+theta <- stan_param(stan_var("theta", lower=0), "theta ~ normal(1, 0.5);")
+odefun_body <- "
+  vector[2] dy_dt;
+  dy_dt[1] = y[1];
+  dy_dt[2] = - y[1] - theta*y[2];
+  return(dy_dt);
+"
+y0 <- stan_vector("y0", length = D)
+model <- create_odemodel(N,
+                         odefun_vars = list(theta), 
+                         odefun_body = odefun_body,
+                         odefun_init = y0)
+```
+
+We print the Stan code
+
+```{r print}
+model$stanmodel
+```

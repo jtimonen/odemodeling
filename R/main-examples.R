@@ -30,17 +30,17 @@ example_odemodel_gsir <- function(...) {
 
   # Initial value
   D <- stan_dim("D", lower = 0) # number of ODE dimensions
-  x0_var <- stan_vector("x0", length = D)
-  x0_code <-
+  y0_var <- stan_vector("y0", length = D)
+  y0_code <-
     "
     for(g in 1:G) {
-      x0[g] = pop_sizes[g] - I0[g]; // initial number of S
+      y0[g] = pop_sizes[g] - I0[g]; // initial number of S
     }
     for(g in 1:G) {
-      x0[G + g] = I0[g]; // initial number of I
+      y0[G + g] = I0[g]; // initial number of I
     }
   "
-  x0 <- stan_transform(x0_var, "data", x0_code)
+  y0 <- stan_transform(y0_var, "data", y0_code)
 
   # Observation model data
   delta <- stan_var("delta", lower = 0)
@@ -77,7 +77,7 @@ example_odemodel_gsir <- function(...) {
     real log_lik = 0.0;
     for(n in 1:N) {
       for(g in 1:G) {
-        log_lik += neg_binomial_2_lpmf(I_data[n,g] | x_ode[n][G+g] + delta,
+        log_lik += neg_binomial_2_lpmf(I_data[n,g] | y_sol[n][G+g] + delta,
           phi[g]);
       }
     }
@@ -89,7 +89,7 @@ example_odemodel_gsir <- function(...) {
   I_gen_code <- "
     for(n in 1:N) {
       for(g in 1:G) {
-        I_gen[n,g] = neg_binomial_2_rng(x_ode[n][G+g] + delta, phi[g]);
+        I_gen[n,g] = neg_binomial_2_rng(y_sol[n][G+g] + delta, phi[g]);
       }
     }
   "
@@ -100,7 +100,7 @@ example_odemodel_gsir <- function(...) {
     N = N,
     odefun_vars = odefun_vars,
     odefun_body = odefun_body,
-    odefun_init = x0,
+    odefun_init = y0,
     loglik_vars = loglik_vars,
     loglik_body = loglik_body,
     other_vars = list(I_gen),

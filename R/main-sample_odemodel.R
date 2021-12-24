@@ -7,9 +7,6 @@
 #' @param solver ODE solver name.
 #' @param solver_conf List of ODE solver configuration arguments.
 #' @param data Other needed data as a list.
-#' @param prior_only Sample only from the prior? If this is true, ODE
-#' solves are done only in generated quantities, and there is no need to
-#' compute gradients for the solutions.
 #' @param ... Arguments passed to the `$sample()` method of the
 #' underlying [cmdstanr::CmdStanModel] objects.
 sample_odemodel <- function(model,
@@ -18,7 +15,6 @@ sample_odemodel <- function(model,
                             data = list(),
                             solver = "rk45",
                             solver_conf = NULL,
-                            prior_only = FALSE,
                             ...) {
   checkmate::assert_class(model, "OdeModel")
   checkmate::assertNumber(t0)
@@ -53,7 +49,7 @@ sample_odemodel <- function(model,
     solver_args,
     data
   )
-  smc <- if (prior_only) model$prior else model$posterior
+  smc <- model$model
   smc$sample(data = full_data, sig_figs = model$sig_figs, ...)
 }
 
@@ -73,7 +69,6 @@ sample_odemodel_manyconf <- function(model,
                                      data = list(),
                                      solver = "rk45",
                                      solver_confs = list(),
-                                     prior_only = FALSE,
                                      savedir = "results",
                                      basename = "out",
                                      chains = 4,
@@ -102,7 +97,6 @@ sample_odemodel_manyconf <- function(model,
       data  = data,
       solver = solver,
       solver_conf = conf_j,
-      prior_only = prior_only,
       chains = chains,
       ...
     )

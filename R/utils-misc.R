@@ -130,4 +130,5 @@ append_to_signature <- function(code, add) {
       code <- add
     }
   }
+  return(code)
 }

@@ -11,9 +11,9 @@ An ODE model (R6 class)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{prior}}{An object of class \code{StanModelWithCode}.}
+\item{\code{has_likelihood}}{Is there a likelihood function?}
 
-\item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
+\item{\code{stanmodel}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{odetuner_version}}{of the package used to create the model}
 
@@ -29,9 +29,10 @@ An ODE model (R6 class)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OdeModel$new()}}
-\item \href{#method-assert_files_exist}{\code{OdeModel$assert_files_exist()}}
+\item \href{#method-assert_stanfile_exists}{\code{OdeModel$assert_stanfile_exists()}}
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
+\item \href{#method-code}{\code{OdeModel$code()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
 }
@@ -41,15 +42,15 @@ An ODE model (R6 class)
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(prior, posterior, sig_figs, t_dim, ode_dim)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$new(has_likelihood, stanmodel, sig_figs, t_dim, ode_dim)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{prior}}{An object of class \code{StanModelWithCode}.}
+\item{\code{has_likelihood}}{Is there a likelihood function?}
 
-\item{\code{posterior}}{An object of class \code{StanModelWithCode}.}
+\item{\code{stanmodel}}{An object of class \code{StanModelWithCode}.}
 
 \item{\code{sig_figs}}{Number of significant figures to use in all Stan i/o.}
 
@@ -63,12 +64,12 @@ Create an \code{OdeModel} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assert_files_exist"></a>}}
-\if{latex}{\out{\hypertarget{method-assert_files_exist}{}}}
-\subsection{Method \code{assert_files_exist()}}{
-Check that the Stan models have been initialized correctly
+\if{html}{\out{<a id="method-assert_stanfile_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-assert_stanfile_exists}{}}}
+\subsection{Method \code{assert_stanfile_exists()}}{
+Check that the Stan model has been initialized correctly
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModel$assert_files_exist()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$assert_stanfile_exists()}\if{html}{\out{</div>}}
 }
 
 }
@@ -76,7 +77,7 @@ Check that the Stan models have been initialized correctly
 \if{html}{\out{<a id="method-reinit"></a>}}
 \if{latex}{\out{\hypertarget{method-reinit}{}}}
 \subsection{Method \code{reinit()}}{
-(Re)initialize the Stan models
+(Re)initialize the Stan model
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$reinit()}\if{html}{\out{</div>}}
 }
@@ -89,6 +90,16 @@ Check that the Stan models have been initialized correctly
 Print information about the model
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-code"></a>}}
+\if{latex}{\out{\hypertarget{method-code}{}}}
+\subsection{Method \code{code()}}{
+Get the Stan code of the model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$code()}\if{html}{\out{</div>}}
 }
 
 }

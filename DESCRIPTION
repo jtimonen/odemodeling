@@ -1,6 +1,6 @@
 Package: odetuner
 Title: Tuning and validating solver tolerances in Bayesian ODE models
-Version: 0.0.1.9001
+Version: 0.0.2
 Authors@R: 
     person(given = "Juho",
            family = "Timonen",

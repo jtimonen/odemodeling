@@ -67,9 +67,14 @@ sho_fit_prior <- sample_odemodel(sho,
                              )
 ```
 
+We can view a summary of results 
+```{r sho_fit_print}
+print(sho_fit_prior)
+```
+
 We can obtain the ODE solution using each parameter draw by doing
-```{r sho_solutions}
-ys <- sho_fit_prior$draws
+```{r sho_fit_view_ode}
+# TODO
 ```
 
 

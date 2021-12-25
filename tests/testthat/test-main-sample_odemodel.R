@@ -44,6 +44,7 @@ test_that("prior sampling works", {
   expect_gt(fit$time()$total, 0.0)
   expect_gt(nchar(fit$draws_size()), 2)
   expect_gt(nchar(fit$cmdstan_version()), 5)
+  expect_true(fit$model$assert_stanfile_exists())
 })
 
 test_that("posterior sampling works", {

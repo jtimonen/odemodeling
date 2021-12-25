@@ -19,21 +19,23 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' Create an `OdeModel` object.
   #'
   #' @param has_likelihood Is there a likelihood function?
-  #' @param stanmodel An object of class `StanModelWithCode`.
+  #' @param stanmodel An object of class `StanModelWithCode`
+  #' (will be deepcopied)..
   #' @param compile Should the models be compiled.
   #' @param sig_figs Number of significant figures to use in all Stan i/o.
-  #' @param t_dim Time points vector dimension variable.
-  #' @param ode_dim ODE system dimension variable.
+  #' @param t_dim Time points vector dimension variable
+  #' (will be deepcopied).
+  #' @param ode_dim ODE system dimension variable (will be deepcopied).
   initialize = function(has_likelihood, stanmodel, sig_figs, t_dim, ode_dim) {
     checkmate::assert_integerish(sig_figs, lower = 3)
     checkmate::assert_class(t_dim, "StanDimension")
     checkmate::assert_class(ode_dim, "StanDimension")
     self$has_likelihood <- has_likelihood
-    self$stanmodel <- stanmodel
+    self$stanmodel <- stanmodel$clone(deep = TRUE)
     self$odetuner_version <- pkg_version("odetuner")
     self$sig_figs <- sig_figs
-    self$t_dim <- t_dim
-    self$ode_dim <- ode_dim
+    self$t_dim <- t_dim$clone(deep = TRUE)
+    self$ode_dim <- ode_dim$clone(deep = TRUE)
   },
 
   #' @description

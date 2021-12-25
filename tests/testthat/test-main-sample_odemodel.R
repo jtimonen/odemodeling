@@ -31,14 +31,19 @@ fit <- sample_odemodel(
 
 # Get data
 idx <- 322
-y_sol <- get_array_draw(fit, variable = "y_sol", iteration = idx)
-I_gen <- get_array_draw(fit, variable = "I_gen", iteration = idx)
+y_sol <- fit$get_array_draw(variable = "y_sol", iteration = idx)
+I_gen <- fit$get_array_draw(variable = "I_gen", iteration = idx)
 dat$I_data <- I_gen
 
 test_that("prior sampling works", {
-  expect_true(is(fit, "CmdStanMCMC"))
+  expect_true(is(fit, "OdeModelFit"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
+  expect_output(fit$print())
+  expect_gt(fit$setup_time, 0.0)
+  expect_gt(fit$time()$total, 0.0)
+  expect_gt(nchar(fit$draws_size()), 2)
+  expect_gt(nchar(fit$cmdstan_version()), 5)
 })
 
 test_that("posterior sampling works", {
@@ -54,9 +59,9 @@ test_that("posterior sampling works", {
   )
 
   idx <- 7
-  y_sol <- get_array_draw(post_fit, variable = "y_sol", iteration = idx)
-  I_gen <- get_array_draw(post_fit, variable = "I_gen", iteration = idx)
-  expect_true(is(post_fit, "CmdStanMCMC"))
+  y_sol <- post_fit$get_array_draw(variable = "y_sol", iteration = idx)
+  I_gen <- post_fit$get_array_draw(variable = "I_gen", iteration = idx)
+  expect_true(is(post_fit, "OdeModelFit"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
 })

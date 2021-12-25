@@ -13,7 +13,7 @@ sample_odemodel_manyconf(
   solver = "rk45",
   solver_confs = list(),
   savedir = "results",
-  basename = "out",
+  basename = "odemodelfit",
   chains = 4,
   ...
 )

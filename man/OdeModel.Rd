@@ -50,13 +50,15 @@ Create an \code{OdeModel} object.
 \describe{
 \item{\code{has_likelihood}}{Is there a likelihood function?}
 
-\item{\code{stanmodel}}{An object of class \code{StanModelWithCode}.}
+\item{\code{stanmodel}}{An object of class \code{StanModelWithCode}
+(will be deepcopied)..}
 
 \item{\code{sig_figs}}{Number of significant figures to use in all Stan i/o.}
 
-\item{\code{t_dim}}{Time points vector dimension variable.}
+\item{\code{t_dim}}{Time points vector dimension variable
+(will be deepcopied).}
 
-\item{\code{ode_dim}}{ODE system dimension variable.}
+\item{\code{ode_dim}}{ODE system dimension variable (will be deepcopied).}
 
 \item{\code{compile}}{Should the models be compiled.}
 }

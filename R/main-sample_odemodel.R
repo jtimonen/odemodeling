@@ -16,6 +16,8 @@ sample_odemodel <- function(model,
                             solver = "rk45",
                             solver_conf = NULL,
                             ...) {
+
+  # Check input
   checkmate::assert_class(model, "OdeModel")
   checkmate::assertNumber(t0)
   checkmate::assert_vector(t)
@@ -41,6 +43,8 @@ sample_odemodel <- function(model,
     dummy <- list(abs_tol = 1, rel_tol = 1, max_num_steps = 1)
     solver_args <- c(solver_conf, dummy)
   }
+
+  # Create full data
   N <- list(N = length(t))
   names(N) <- model$t_dim$name
   full_data <- c(
@@ -49,8 +53,17 @@ sample_odemodel <- function(model,
     solver_args,
     data
   )
-  smc <- model$stanmodel
-  smc$sample(data = full_data, sig_figs = model$sig_figs, ...)
+
+  # Actual sampling
+  sm <- model$stanmodel
+  cmdstanr_fit <- sm$sample(data = full_data, sig_figs = model$sig_figs, ...)
+
+  # Return
+  OdeModelFit$new(
+    model = model,
+    cmdstanr_fit = cmdstanr_fit,
+    standata = full_data
+  )
 }
 
 #' Sample parameters  of an ODE model using many different ODE solver
@@ -70,7 +83,7 @@ sample_odemodel_manyconf <- function(model,
                                      solver = "rk45",
                                      solver_confs = list(),
                                      savedir = "results",
-                                     basename = "out",
+                                     basename = "odemodelfit",
                                      chains = 4,
                                      ...) {
   if (!dir.exists(savedir)) {
@@ -100,8 +113,8 @@ sample_odemodel_manyconf <- function(model,
       chains = chains,
       ...
     )
-    cat("Saving fit to ", fn, "\n", sep = "")
-    fit$save_object(fn)
+    cat("Saving OdeModelFit to ", fn, "\n", sep = "")
+    saveRDS(fit, file = fn)
     FN <- c(FN, fn)
     t_total <- fit$time()$chains$total
     gt <- fit$time()$total

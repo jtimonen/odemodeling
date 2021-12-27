@@ -31,8 +31,8 @@ fit <- sample_odemodel(
 
 # Get data
 idx <- 322
-y_sol <- fit$get_array_draw(variable = "y_sol", iteration = idx)
-I_gen <- fit$get_array_draw(variable = "I_gen", iteration = idx)
+y_sol <- fit$extract_odesol()[idx, , ]
+I_gen <- fit$extract_unflattened(variable = "I_gen")[idx, , ]
 dat$I_data <- I_gen
 
 test_that("prior sampling works", {
@@ -60,8 +60,8 @@ test_that("posterior sampling works", {
   )
 
   idx <- 7
-  y_sol <- post_fit$get_array_draw(variable = "y_sol", iteration = idx)
-  I_gen <- post_fit$get_array_draw(variable = "I_gen", iteration = idx)
+  y_sol <- post_fit$extract_odesol()[idx, , ]
+  I_gen <- post_fit$extract_unflattened(variable = "I_gen")[idx, , ]
   expect_true(is(post_fit, "OdeModelFit"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))

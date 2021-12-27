@@ -30,10 +30,10 @@ system dimension is declared as `D` and number of time points as `N`.
 N <- stan_dim("N", lower=1)
 D <- stan_dim("D")
 y0 <- stan_vector("y0", length = D)
-theta <- stan_param(stan_var("theta", lower=0), "theta ~ normal(1, 0.5);")
+theta <- stan_param(stan_var("theta", lower=0), "theta ~ inv_gamma(5, 1);")
 sho_fun_body <- "
   vector[2] dy_dt;
-  dy_dt[1] = y[1];
+  dy_dt[1] = y[2];
   dy_dt[2] = - y[1] - theta*y[2];
   return(dy_dt);
 "
@@ -79,8 +79,10 @@ print(sho_fit_prior)
 
 We can obtain the ODE solution using each parameter draw by doing
 ```{r sho_fit_view_ode}
-# TODO
-print(sho_fit_prior$extract_odesol())
+ys <- sho_fit_prior$extract_odesol()
+print(dim(ys))
+plot(ys[12,,2])
+plot(ys[12,,1])
 ```
 
 

@@ -55,18 +55,26 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
 
   #' @description
   #' Get time information.
+  #' @return A list.
   time = function() {
     self$cmdstanr_time
   },
 
   #' @description
-  #' Get draws.
-  draws = function() {
-    self$cmdstanr_draws
+  #' Get draws (parameters and generated quantities).
+  #' @param variable Name of variable.
+  #' @param iteration Index of iteration.
+  #' @return A [posterior::draws_array] object.
+  draws = function(variable = NULL, iteration = NULL) {
+    posterior::subset_draws(self$cmdstanr_draws,
+      variable = variable,
+      iteration = iteration
+    )
   },
 
   #' @description
   #' Get summary
+  #' @return A `tibble`.
   summary = function() {
     self$cmdstanr_summary
   },
@@ -90,7 +98,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get used Cmdstan version.
+  #' Get used 'CmdStan' version.
   #' @return A string.
   cmdstan_version = function() {
     md <- self$cmdstanr_metadata
@@ -101,7 +109,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get used Cmdstan rng seed.
+  #' Get used 'CmdStan' rng seed.
   #' @return A string.
   cmdstan_seed = function() {
     md <- self$cmdstanr_metadata
@@ -109,7 +117,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get used Cmdstan init argument.
+  #' Get used 'CmdStan' init argument.
   #' @return A string.
   cmdstan_init = function() {
     md <- self$cmdstanr_metadata
@@ -117,21 +125,53 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get an array draw (unflattened).
+  #' Extract the ODE solutions using each parameter draw, in an
+  #' unflattened format.
+  #' @return Equal to `self$extract_unflattened(variable = "y_sol")]`.
+  extract_odesol = function() {
+    self$extract_unflattened(variable = "y_sol")
+  },
+
+  #' @description
+  #' Extract the dimensions of the ODE solution variable.
+  #' @return A numeric vector of length 2, where first element is the
+  #' number of time points and second element is the ODE system dimension.
+  dim_odesol = function() {
+    a <- self$dim(variable = "y_sol")
+    if (length(a) != 2) {
+      stop("Something went wrong in 'dim_odesol'. Please report a bug.")
+    }
+    return(a)
+  },
+
+  #' @description
+  #' Extract array variable draws so that the array is unflattened.
   #'
-  #' @param variable Name of array variable.
-  #' @param iteration Index of iteration.
-  #' @return An array.
-  get_array_draw = function(variable, iteration) {
-    checkmate::assert_string(variable)
-    checkmate::assert_integerish(iteration)
-    checkmate::assert_atomic(iteration)
-    draws <- self$draws()
-    arr <- posterior::subset_draws(draws,
-      variable = variable,
-      iteration = iteration
-    )
-    rvar <- posterior::as_draws_rvars(arr)[[variable]]
-    mean(rvar)
+  #' @param variable Name of variable.
+  #' @return A base \R array of dimension `c(num_draws, ...)` where `num_draws`
+  #' is the total number of draws and `...` is the 'Stan' variable dimension,
+  #' obtained as `self$dim(variable)`.
+  extract_unflattened = function(variable) {
+    draws <- self$draws(variable = variable)
+    if (variable == "y_sol") {
+      stanvar_dim <- self$dim_odesol()
+    } else {
+      stanvar_dim <- self$dim(variable = variable)
+    }
+    A <- as.matrix(posterior::as_draws_matrix(d)) # to base R matrix
+    num_draws <- dim(A)[1]
+    array(data = A, dim = c(num_draws, stanvar_dim))
+  },
+
+  #' @description
+  #' Get dimensions of a variable.
+  #'
+  #' @param variable Name of variable.
+  #' @return A numeric vector, which is the 'Stan' variable dimension,
+  #' obtained as `metadata$stan_variable_dims[[variable]]`, where
+  #' `metadata` is the metadata of the [cmdstanr::CmdStanMCMC] object.
+  dim = function(variable) {
+    dims <- self$cmdstanr_metadata$stan_variable_dims
+    dims[[variable]]
   }
 ))

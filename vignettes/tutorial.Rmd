@@ -63,7 +63,12 @@ sho_fit_prior <- sample_odemodel(sho,
                              t0 = 0.0, 
                              t = seq(0.1, 10, by = 0.1),
                              data = list(y0 = c(1, 0), D = 2),
-                             refresh = 0
+                             refresh = 0,
+                             solver_conf = list(
+                               abs_tol = 1e-13,
+                               rel_tol = 1e-13,
+                               max_num_steps = 1e9
+                             )
                              )
 ```
 
@@ -75,6 +80,7 @@ print(sho_fit_prior)
 We can obtain the ODE solution using each parameter draw by doing
 ```{r sho_fit_view_ode}
 # TODO
+print(sho_fit_prior$extract_odesol())
 ```
 
 

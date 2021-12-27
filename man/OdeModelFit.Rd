@@ -48,7 +48,10 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
 \item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelFit$cmdstan_init()}}
-\item \href{#method-get_array_draw}{\code{OdeModelFit$get_array_draw()}}
+\item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
+\item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
+\item \href{#method-dim}{\code{OdeModelFit$dim()}}
 \item \href{#method-clone}{\code{OdeModelFit$clone()}}
 }
 }
@@ -82,16 +85,31 @@ Get time information.
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$time()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A list.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-draws"></a>}}
 \if{latex}{\out{\hypertarget{method-draws}{}}}
 \subsection{Method \code{draws()}}{
-Get draws.
+Get draws (parameters and generated quantities).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$draws()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$draws(variable = NULL, iteration = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{variable}}{Name of variable.}
+
+\item{\code{iteration}}{Index of iteration.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link[posterior:draws_array]{posterior::draws_array} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-summary"></a>}}
@@ -102,6 +120,9 @@ Get summary
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$summary()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \code{tibble}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
@@ -130,7 +151,7 @@ A string.
 \if{html}{\out{<a id="method-cmdstan_version"></a>}}
 \if{latex}{\out{\hypertarget{method-cmdstan_version}{}}}
 \subsection{Method \code{cmdstan_version()}}{
-Get used Cmdstan version.
+Get used 'CmdStan' version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_version()}\if{html}{\out{</div>}}
 }
@@ -143,7 +164,7 @@ A string.
 \if{html}{\out{<a id="method-cmdstan_seed"></a>}}
 \if{latex}{\out{\hypertarget{method-cmdstan_seed}{}}}
 \subsection{Method \code{cmdstan_seed()}}{
-Get used Cmdstan rng seed.
+Get used 'CmdStan' rng seed.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_seed()}\if{html}{\out{</div>}}
 }
@@ -156,7 +177,7 @@ A string.
 \if{html}{\out{<a id="method-cmdstan_init"></a>}}
 \if{latex}{\out{\hypertarget{method-cmdstan_init}{}}}
 \subsection{Method \code{cmdstan_init()}}{
-Get used Cmdstan init argument.
+Get used 'CmdStan' init argument.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_init()}\if{html}{\out{</div>}}
 }
@@ -166,25 +187,75 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_array_draw"></a>}}
-\if{latex}{\out{\hypertarget{method-get_array_draw}{}}}
-\subsection{Method \code{get_array_draw()}}{
-Get an array draw (unflattened).
+\if{html}{\out{<a id="method-extract_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_odesol}{}}}
+\subsection{Method \code{extract_odesol()}}{
+Extract the ODE solutions using each parameter draw, in an
+unflattened format.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_array_draw(variable, iteration)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Equal to \verb{self$extract_unflattened(variable = "y_sol")]}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dim_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-dim_odesol}{}}}
+\subsection{Method \code{dim_odesol()}}{
+Extract the dimensions of the ODE solution variable.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$dim_odesol()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric vector of length 2, where first element is the
+number of time points and second element is the ODE system dimension.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-extract_unflattened"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_unflattened}{}}}
+\subsection{Method \code{extract_unflattened()}}{
+Extract array variable draws so that the array is unflattened.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_unflattened(variable)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{variable}}{Name of array variable.}
-
-\item{\code{iteration}}{Index of iteration.}
+\item{\code{variable}}{Name of variable.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-An array.
+A base \R array of dimension \code{c(num_draws, ...)} where \code{num_draws}
+is the total number of draws and \code{...} is the 'Stan' variable dimension,
+obtained as \code{self$dim(variable)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-dim}{}}}
+\subsection{Method \code{dim()}}{
+Get dimensions of a variable.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$dim(variable)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{variable}}{Name of variable.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A numeric vector, which is the 'Stan' variable dimension,
+obtained as \code{metadata$stan_variable_dims[[variable]]}, where
+\code{metadata} is the metadata of the \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.
 }
 }
 \if{html}{\out{<hr>}}

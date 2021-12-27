@@ -1,14 +1,15 @@
-Package: odetuner
-Title: Tuning and validating solver tolerances in Bayesian ODE models
-Version: 0.0.3
+Package: odemodeling
+Title: Building and fitting Bayesian ODE models using Stan
+Version: 0.0.0.9000
 Authors@R: 
     person(given = "Juho",
            family = "Timonen",
            role = c("aut", "cre"),
            email = "juho.timonen@iki.fi",
            comment = c(ORCID = "0000-0003-2341-6765"))
-Description: Efficient tuning and validation of solver tolerances in Bayesian
-    ODE models using Pareto-smoothed importance sampling (PSIS) and
+Description: Building and fitting models with different numerical
+    solvers using Stan. Includes efficient tuning and validation of
+    numerical solvers using Pareto-smoothed importance sampling (PSIS) and
     its diagnostics.
 License: BSD_3_clause + file LICENCE
 Encoding: UTF-8

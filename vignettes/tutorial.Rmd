@@ -1,8 +1,8 @@
 ---
-title: "The odetuner package"
+title: "Defining and fitting ODE models using the odemodeling package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{The odetuner package}
+  %\VignetteIndexEntry{Defining and fitting ODE models using the odemodeling package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(odetuner)
+library(odemodeling)
 ```
 
 ## Simple harmonic oscillator

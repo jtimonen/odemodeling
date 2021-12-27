@@ -9,7 +9,7 @@ A Stan array
 A Stan array
 }
 \section{Super class}{
-\code{\link[odetuner:StanDeclaration]{odetuner::StanDeclaration}} -> \code{StanArray}
+\code{\link[odemodeling:StanDeclaration]{odemodeling::StanDeclaration}} -> \code{StanArray}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -34,7 +34,7 @@ A Stan array
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print">}\href{../../odemodeling/html/StanDeclaration.html#method-print}{\code{odemodeling::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}
 }

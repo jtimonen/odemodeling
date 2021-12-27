@@ -1,3 +1,3 @@
-# odetuner
+# odemodeling
 
-An R-package for tuning and validating numerical ODE solvers in the Bayesian context.
+R-package for building and fitting Bayesian ODE models in Stan.

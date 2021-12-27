@@ -10,15 +10,23 @@ Efficient tuning and validation of solver tolerances in Bayesian
 ODE models using Pareto-smoothed importance sampling (PSIS) and
 its diagnostics.
 }
-\section{Main functions}{
+\section{Creating a model}{
 
 \itemize{
-\item Create a model using \link{create_odemodel}.
-\item Create the input needed for \link{create_odemodel} using
+\item Declare model data, parameters, and other variables using
 \code{\link[=stan_array]{stan_array()}}, \code{\link[=stan_dim]{stan_dim()}}, \code{\link[=stan_matrix]{stan_matrix()}}, \code{\link[=stan_param]{stan_param()}},
 \code{\link[=stan_transform]{stan_transform()}}, \code{\link[=stan_vector_array]{stan_vector_array()}}, and \code{\link[=stan_vector]{stan_vector()}}.
+\item Create an \link{OdeModel} model using \code{\link[=create_odemodel]{create_odemodel()}}.
+}
+}
+
+\section{Fitting a model}{
+
+\itemize{
 \item Sample the posterior or prior distribution of the model parameters,
-and generate corresponding ODE solutions using \link{sample_odemodel}.
+and generate corresponding ODE solutions using \code{\link[=sample_odemodel]{sample_odemodel()}}.
+\item See methods of the \link{OdeModelFit} class for studying the returned
+object.
 }
 }
 

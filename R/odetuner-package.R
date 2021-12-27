@@ -13,14 +13,19 @@
 #' @importFrom methods is
 #' @importFrom utils capture.output
 #'
-#' @section Main functions:
+#' @section Creating a model:
 #' \itemize{
-#'   \item Create a model using [create_odemodel].
-#'   \item Create the input needed for [create_odemodel] using
+#'   \item Declare model data, parameters, and other variables using
 #'   [stan_array()], [stan_dim()], [stan_matrix()], [stan_param()],
 #'   [stan_transform()], [stan_vector_array()], and [stan_vector()].
+#'   \item Create an [OdeModel] model using [create_odemodel()].
+#' }
+#' @section Fitting a model:
+#' \itemize{
 #'   \item Sample the posterior or prior distribution of the model parameters,
-#'   and generate corresponding ODE solutions using [sample_odemodel].
+#'   and generate corresponding ODE solutions using [sample_odemodel()].
+#'   \item See methods of the [OdeModelFit] class for studying the returned
+#'   object.
 #' }
 #'
 NULL

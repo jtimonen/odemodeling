@@ -125,11 +125,15 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Extract the ODE solutions using each parameter draw, in an
-  #' unflattened format.
-  #' @return Equal to `self$extract_unflattened(variable = "y_sol")]`.
-  extract_odesol = function() {
-    self$extract_unflattened(variable = "y_sol")
+  #' Get dimensions of a variable.
+  #'
+  #' @param variable Name of variable.
+  #' @return A numeric vector, which is the 'Stan' variable dimension,
+  #' obtained as `metadata$stan_variable_dims[[variable]]`, where
+  #' `metadata` is the metadata of the [cmdstanr::CmdStanMCMC] object.
+  dim = function(variable) {
+    dims <- self$cmdstanr_metadata$stan_variable_dims
+    dims[[variable]]
   },
 
   #' @description
@@ -138,9 +142,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' number of time points and second element is the ODE system dimension.
   dim_odesol = function() {
     a <- self$dim(variable = "y_sol")
-    if (length(a) != 2) {
-      stop("Something went wrong in 'dim_odesol'. Please report a bug.")
-    }
+    internal_assert_len(a, 2, "dim_odesol")
     return(a)
   },
 
@@ -164,14 +166,29 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get dimensions of a variable.
-  #'
-  #' @param variable Name of variable.
-  #' @return A numeric vector, which is the 'Stan' variable dimension,
-  #' obtained as `metadata$stan_variable_dims[[variable]]`, where
-  #' `metadata` is the metadata of the [cmdstanr::CmdStanMCMC] object.
-  dim = function(variable) {
-    dims <- self$cmdstanr_metadata$stan_variable_dims
-    dims[[variable]]
+  #' Extract the ODE solutions using each parameter draw, in an
+  #' unflattened base \R array format.
+  #' @return A base \R array of dimension `c(num_draws, N, D)` where
+  #' `num_draws` is the total number of draws and `N` is the number of
+  #' time points and `D` is the number of ODE system dimensions.
+  extract_odesol = function() {
+    arr <- self$extract_unflattened(variable = "y_sol")
+    internal_assert_len(dim(arr), 3, "extract_odesol_unflattened")
+    return(arr)
+  },
+
+  #' @description
+  #' Extract the ODE solutions using each parameter draw, in a
+  #' flattened data frame format that is easy to pass as data
+  #' to [ggplot2::ggplot()].
+  #' @return A tibble.
+  extract_odesol_tibble = function() {
+    arr <- self$extract_odesol_unflattened()
+    num_draws <- dim(arr)[1]
+    N <- dim(arr)[2]
+    D <- dim(arr)[3]
+    ysol <- as.vector(arr)
+    var <- as.factor(1:4)
+    stop("not implemented")
   }
 ))

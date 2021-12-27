@@ -1,12 +1,13 @@
-#' The 'odetuner' package
+#' The 'odemodeling' package
 #'
-#' @description Efficient tuning and validation of solver tolerances in Bayesian
-#' ODE models using Pareto-smoothed importance sampling (PSIS) and
+#' @description Building and fitting models with different numerical
+#' solvers using Stan. Includes efficient tuning and validation of
+#' numerical solvers using Pareto-smoothed importance sampling (PSIS) and
 #' its diagnostics.
 #'
 #' @docType package
-#' @name odetuner-package
-#' @aliases odetuner
+#' @name odemodeling-package
+#' @aliases odemodeling
 #'
 #' @import R6
 #' @import ggplot2

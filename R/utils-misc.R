@@ -1,3 +1,12 @@
+# Internal assertion that should never fail
+internal_assert_len <- function(vec, expected, source) {
+  if (length(vec) != expected) {
+    msg <- paste0("Unexpected length in '", source, "'. Please report a bug.")
+    stop(msg)
+  }
+  TRUE
+}
+
 # Create Stan model from model code
 stan_model_from_code <- function(code) {
   file <- cmdstanr::write_stan_file(code)

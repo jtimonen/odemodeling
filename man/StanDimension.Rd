@@ -9,7 +9,7 @@ A dimension for a Stan vector or array
 A dimension for a Stan vector or array
 }
 \section{Super class}{
-\code{\link[odetuner:StanDeclaration]{odetuner::StanDeclaration}} -> \code{StanDimension}
+\code{\link[odemodeling:StanDeclaration]{odemodeling::StanDeclaration}} -> \code{StanDimension}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -24,8 +24,8 @@ A dimension for a Stan vector or array
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="can_be_made_parameter">}\href{../../odetuner/html/StanDeclaration.html#method-can_be_made_parameter}{\code{odetuner::StanDeclaration$can_be_made_parameter()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="can_be_made_parameter">}\href{../../odemodeling/html/StanDeclaration.html#method-can_be_made_parameter}{\code{odemodeling::StanDeclaration$can_be_made_parameter()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print">}\href{../../odemodeling/html/StanDeclaration.html#method-print}{\code{odemodeling::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}
 }

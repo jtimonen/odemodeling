@@ -5,8 +5,8 @@
 
 # Create package startup message
 create_startup_message <- function() {
-  v_ot <- pkg_version("odetuner")
-  msg <- paste0("Attached odetuner ", v_ot, ".")
+  v_ot <- pkg_version("odemodeling")
+  msg <- paste0("Attached odemodeling ", v_ot, ".")
   return(msg)
 }
 

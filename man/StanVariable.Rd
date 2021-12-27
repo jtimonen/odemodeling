@@ -9,7 +9,7 @@ A Stan variable
 A Stan variable
 }
 \section{Super class}{
-\code{\link[odetuner:StanDeclaration]{odetuner::StanDeclaration}} -> \code{StanVariable}
+\code{\link[odemodeling:StanDeclaration]{odemodeling::StanDeclaration}} -> \code{StanVariable}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -31,8 +31,8 @@ A Stan variable
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="get_dims">}\href{../../odetuner/html/StanDeclaration.html#method-get_dims}{\code{odetuner::StanDeclaration$get_dims()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odetuner" data-topic="StanDeclaration" data-id="print">}\href{../../odetuner/html/StanDeclaration.html#method-print}{\code{odetuner::StanDeclaration$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="get_dims">}\href{../../odemodeling/html/StanDeclaration.html#method-get_dims}{\code{odemodeling::StanDeclaration$get_dims()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print">}\href{../../odemodeling/html/StanDeclaration.html#method-print}{\code{odemodeling::StanDeclaration$print()}}\out{</span>}
 }
 \out{</details>}
 }

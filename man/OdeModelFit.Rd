@@ -48,10 +48,11 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
 \item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelFit$cmdstan_init()}}
-\item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-dim}{\code{OdeModelFit$dim()}}
 \item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
 \item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
-\item \href{#method-dim}{\code{OdeModelFit$dim()}}
+\item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-extract_odesol_tibble}{\code{OdeModelFit$extract_odesol_tibble()}}
 \item \href{#method-clone}{\code{OdeModelFit$clone()}}
 }
 }
@@ -187,17 +188,25 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol}{}}}
-\subsection{Method \code{extract_odesol()}}{
-Extract the ODE solutions using each parameter draw, in an
-unflattened format.
+\if{html}{\out{<a id="method-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-dim}{}}}
+\subsection{Method \code{dim()}}{
+Get dimensions of a variable.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$dim(variable)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{variable}}{Name of variable.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-Equal to \verb{self$extract_unflattened(variable = "y_sol")]}.
+A numeric vector, which is the 'Stan' variable dimension,
+obtained as \code{metadata$stan_variable_dims[[variable]]}, where
+\code{metadata} is the metadata of the \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -237,25 +246,34 @@ obtained as \code{self$dim(variable)}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dim"></a>}}
-\if{latex}{\out{\hypertarget{method-dim}{}}}
-\subsection{Method \code{dim()}}{
-Get dimensions of a variable.
+\if{html}{\out{<a id="method-extract_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_odesol}{}}}
+\subsection{Method \code{extract_odesol()}}{
+Extract the ODE solutions using each parameter draw, in an
+unflattened base \R array format.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$dim(variable)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{variable}}{Name of variable.}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-A numeric vector, which is the 'Stan' variable dimension,
-obtained as \code{metadata$stan_variable_dims[[variable]]}, where
-\code{metadata} is the metadata of the \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.
+A base \R array of dimension \code{c(num_draws, N, D)} where
+\code{num_draws} is the total number of draws and \code{N} is the number of
+time points and \code{D} is the number of ODE system dimensions.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-extract_odesol_tibble"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_odesol_tibble}{}}}
+\subsection{Method \code{extract_odesol_tibble()}}{
+Extract the ODE solutions using each parameter draw, in a
+flattened data frame format that is easy to pass as data
+to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_tibble()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A tibble.
 }
 }
 \if{html}{\out{<hr>}}

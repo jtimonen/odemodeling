@@ -158,7 +158,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     } else {
       stanvar_dim <- self$dim(variable = variable)
     }
-    A <- as.matrix(posterior::as_draws_matrix(d)) # to base R matrix
+    A <- as.matrix(posterior::as_draws_matrix(draws)) # to base R matrix
     num_draws <- dim(A)[1]
     array(data = A, dim = c(num_draws, stanvar_dim))
   },

@@ -68,7 +68,8 @@ test_that("posterior sampling works", {
 })
 
 test_that("posterior sampling using many configurations works", {
-  confs <- create_solver_conf_list(tols = 10^(-c(2:5)), max_num_steps = 1000)
+  e_tols <- -c(2:5)
+  confs <- create_solver_conf_list(tols = 10^e_tols, max_num_steps = 1000)
   res <- sample_odemodel_manyconf(
     model = post,
     t0 = t0, t = t,

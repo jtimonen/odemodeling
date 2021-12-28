@@ -1,4 +1,4 @@
 library(testthat)
-library(odetuner)
+library(odemodeling)
 
-test_check("odetuner")
+test_check("odemodeling")

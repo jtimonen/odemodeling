@@ -205,7 +205,7 @@ generate_var_declarations <- function(vars) {
 
 # Template 'Stan' model code
 functions_template <- function() {
-  filepath <- system.file("template_functions.stan", package = "odetuner")
+  filepath <- system.file("template_functions.stan", package = "odemodeling")
   read_file_lines(filepath)
 }
 

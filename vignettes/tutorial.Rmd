@@ -83,12 +83,12 @@ ys <- sho_fit_prior$extract_odesol_df()
 ```
 
 We can plot ODE solutions like so
-```{r sho_fit_view_ode2}
+```{r sho_fit_view_ode2, fig.width=7, fig.height=3.6}
 sho_fit_prior$plot_odesol(linealpha = 0.3)
 ```
 
 We can plot ODE solution using one draw like so
-```{r sho_fit_view_ode3}
+```{r sho_fit_view_ode3, fig.width=7, fig.height=3.6}
 sho_fit_prior$plot_odesol(draw_inds = 45)
 ```
 

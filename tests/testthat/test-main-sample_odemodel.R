@@ -47,6 +47,13 @@ test_that("prior sampling works", {
   expect_true(fit$model$assert_stanfile_exists())
 })
 
+test_that("plotting ODE solutions works", {
+  plt <- fit$plot_odesol()
+  expect_s3_class(plt, "ggplot")
+  plt <- fit$plot_odesol(draw_inds = c(2:9))
+  expect_s3_class(plt, "ggplot")
+})
+
 test_that("posterior sampling works", {
 
   # Posterior sampling

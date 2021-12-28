@@ -250,8 +250,10 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
                          linecolor = "firebrick") {
     num_draws <- self$ndraws()
     if (!is.null(draw_inds)) {
-      if (draw_inds == 0) {
-        draw_inds <- 1:num_draws
+      if (length(draw_inds) == 1) {
+        if (draw_inds == 0) {
+          draw_inds <- 1:num_draws
+        }
       }
     }
     if (num_draws >= 100 && is.null(draw_inds)) {

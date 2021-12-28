@@ -44,15 +44,21 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-draws}{\code{OdeModelFit$draws()}}
 \item \href{#method-summary}{\code{OdeModelFit$summary()}}
 \item \href{#method-print}{\code{OdeModelFit$print()}}
+\item \href{#method-niterations}{\code{OdeModelFit$niterations()}}
+\item \href{#method-nchains}{\code{OdeModelFit$nchains()}}
+\item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
 \item \href{#method-draws_size}{\code{OdeModelFit$draws_size()}}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
 \item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelFit$cmdstan_init()}}
+\item \href{#method-get_t}{\code{OdeModelFit$get_t()}}
+\item \href{#method-get_t0}{\code{OdeModelFit$get_t0()}}
 \item \href{#method-dim}{\code{OdeModelFit$dim()}}
 \item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
 \item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
 \item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
-\item \href{#method-extract_odesol_tibble}{\code{OdeModelFit$extract_odesol_tibble()}}
+\item \href{#method-extract_odesol_df}{\code{OdeModelFit$extract_odesol_df()}}
+\item \href{#method-plot_odesol}{\code{OdeModelFit$plot_odesol()}}
 \item \href{#method-clone}{\code{OdeModelFit$clone()}}
 }
 }
@@ -136,6 +142,36 @@ Print information about the fit
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-niterations"></a>}}
+\if{latex}{\out{\hypertarget{method-niterations}{}}}
+\subsection{Method \code{niterations()}}{
+Get number of post-warmup iterations per MCMC chain.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$niterations()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-nchains"></a>}}
+\if{latex}{\out{\hypertarget{method-nchains}{}}}
+\subsection{Method \code{nchains()}}{
+Get number of MCMC chains.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$nchains()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ndraws"></a>}}
+\if{latex}{\out{\hypertarget{method-ndraws}{}}}
+\subsection{Method \code{ndraws()}}{
+Get total number of post-warmup draws.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$ndraws()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-draws_size"></a>}}
 \if{latex}{\out{\hypertarget{method-draws_size}{}}}
 \subsection{Method \code{draws_size()}}{
@@ -185,6 +221,32 @@ Get used 'CmdStan' init argument.
 
 \subsection{Returns}{
 A string.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_t"></a>}}
+\if{latex}{\out{\hypertarget{method-get_t}{}}}
+\subsection{Method \code{get_t()}}{
+Get timepoints where the model was fitted.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_t()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric vector.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_t0"></a>}}
+\if{latex}{\out{\hypertarget{method-get_t0}{}}}
+\subsection{Method \code{get_t0()}}{
+Get used initial time point t0.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_t0()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric value.
 }
 }
 \if{html}{\out{<hr>}}
@@ -262,18 +324,56 @@ time points and \code{D} is the number of ODE system dimensions.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol_tibble"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol_tibble}{}}}
-\subsection{Method \code{extract_odesol_tibble()}}{
+\if{html}{\out{<a id="method-extract_odesol_df"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_odesol_df}{}}}
+\subsection{Method \code{extract_odesol_df()}}{
 Extract the ODE solutions using each parameter draw, in a
 flattened data frame format that is easy to pass as data
-to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
+to for example \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_tibble()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_df(draw_inds = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{draw_inds}}{If this is not \code{NULL}, returns ode solutions
+corresponding only to given draws.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-A tibble.
+A \code{data.frame}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-plot_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-plot_odesol}{}}}
+\subsection{Method \code{plot_odesol()}}{
+A quick way to plot the ODE solutions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$plot_odesol(
+  draw_inds = NULL,
+  linealpha = 0.75,
+  linecolor = "firebrick"
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{draw_inds}}{If this numeric and positive, plots ODE solutions
+corresponding only to given draws. If this is \code{0}, all draws are plotted.
+If this is \code{NULL}, a random subset of at most 100 draws are plotted.}
+
+\item{\code{linealpha}}{line alpha}
+
+\item{\code{linecolor}}{line color}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{ggplot} object.
 }
 }
 \if{html}{\out{<hr>}}

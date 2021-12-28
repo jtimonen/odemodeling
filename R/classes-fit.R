@@ -91,6 +91,24 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
+  #' Get number of post-warmup iterations per MCMC chain.
+  niterations = function() {
+    posterior::niterations(self$cmdstanr_draws)
+  },
+
+  #' @description
+  #' Get number of MCMC chains.
+  nchains = function() {
+    posterior::nchains(self$cmdstanr_draws)
+  },
+
+  #' @description
+  #' Get total number of post-warmup draws.
+  ndraws = function() {
+    self$nchains() * self$niterations()
+  },
+
+  #' @description
   #' Get size of the draws object in Mb.
   #' @return A string.
   draws_size = function() {
@@ -122,6 +140,22 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   cmdstan_init = function() {
     md <- self$cmdstanr_metadata
     md$init
+  },
+
+  #' @description
+  #' Get timepoints where the model was fitted.
+  #'
+  #' @return A numeric vector.
+  get_t = function() {
+    self$standata$t
+  },
+
+  #' @description
+  #' Get used initial time point t0.
+  #'
+  #' @return A numeric value.
+  get_t0 = function() {
+    self$standata$t0
   },
 
   #' @description
@@ -180,15 +214,60 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @description
   #' Extract the ODE solutions using each parameter draw, in a
   #' flattened data frame format that is easy to pass as data
-  #' to [ggplot2::ggplot()].
-  #' @return A tibble.
-  extract_odesol_tibble = function() {
-    arr <- self$extract_odesol_unflattened()
+  #' to for example [ggplot2::ggplot()].
+  #' @param draw_inds If this is not `NULL`, returns ode solutions
+  #' corresponding only to given draws.
+  #' @return A `data.frame`.
+  extract_odesol_df = function(draw_inds = NULL) {
+    arr <- self$extract_odesol()
     num_draws <- dim(arr)[1]
     N <- dim(arr)[2]
     D <- dim(arr)[3]
     ysol <- as.vector(arr)
-    var <- as.factor(1:4)
-    stop("not implemented")
+    idx <- as.factor(rep(c(1:num_draws), N * D))
+    t <- rep(rep(self$get_t(), D), each = num_draws)
+    YDIM <- paste0("y", c(1:D))
+    ydim <- as.factor(rep(rep(YDIM, each = N), each = num_draws))
+    df <- data.frame(idx, t, ydim, ysol)
+    if (!is.null(draw_inds)) {
+      inds <- which(df$idx %in% as.character(draw_inds))
+      df <- df[inds, ]
+    }
+    rownames(df) <- NULL
+    return(df)
+  },
+
+  #' @description
+  #' A quick way to plot the ODE solutions.
+  #'
+  #' @param draw_inds If this numeric and positive, plots ODE solutions
+  #' corresponding only to given draws. If this is `0`, all draws are plotted.
+  #' If this is `NULL`, a random subset of at most 100 draws are plotted.
+  #' @param linealpha line alpha
+  #' @param linecolor line color
+  #' @return A `ggplot` object.
+  plot_odesol = function(draw_inds = NULL, linealpha = 0.75,
+                         linecolor = "firebrick") {
+    num_draws <- self$ndraws()
+    if (!is.null(draw_inds)) {
+      if (draw_inds == 0) {
+        draw_inds <- 1:num_draws
+      }
+    }
+    if (num_draws >= 100 && is.null(draw_inds)) {
+      message(
+        "Randomly selecting a subset of 100 draws to plot. ",
+        "Set draw_inds=0 to plot all ", num_draws,
+        " draws."
+      )
+      draw_inds <- sample.int(num_draws, 100, replace = FALSE)
+    }
+    df <- self$extract_odesol_df(draw_inds = draw_inds)
+    wf <- as.formula(". ~ ydim")
+    aesth <- aes_string(x = "t", y = "ysol", group = "idx")
+    ggplot(df, aesth) +
+      geom_line(alpha = linealpha, color = linecolor) +
+      facet_wrap(wf) +
+      ylab("ODE solution")
   }
 ))

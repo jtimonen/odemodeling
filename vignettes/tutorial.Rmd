@@ -78,11 +78,17 @@ print(sho_fit_prior)
 ```
 
 We can obtain the ODE solution using each parameter draw by doing
-```{r sho_fit_view_ode}
-ys <- sho_fit_prior$extract_odesol()
-print(dim(ys))
-plot(ys[12,,2])
-plot(ys[12,,1])
+```{r sho_fit_view_ode1}
+ys <- sho_fit_prior$extract_odesol_df()
 ```
 
+We can plot ODE solutions like so
+```{r sho_fit_view_ode2}
+sho_fit_prior$plot_odesol(linealpha = 0.3)
+```
+
+We can plot ODE solution using one draw like so
+```{r sho_fit_view_ode3}
+sho_fit_prior$plot_odesol(draw_inds = 45)
+```
 

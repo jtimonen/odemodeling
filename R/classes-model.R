@@ -180,7 +180,7 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     generate_quantities = function(data, fitted_params, ...) {
       self$data_check(data)
       mod <- self$get_model()
-      mod$model$generate_quantities(
+      mod$generate_quantities(
         fitted_params = fitted_params,
         data = data, ...
       )

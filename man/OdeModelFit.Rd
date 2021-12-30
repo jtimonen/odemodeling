@@ -10,14 +10,29 @@ methods \verb{$time()}, \verb{$summary()}, and \verb{$draws()} methods, respecti
 in memory in case \code{cmdstanr_fit} gets corrupted (for example
 if the CSV files that it reads the data from are destroyed).
 }
+\seealso{
+Other Model fit classes.: 
+\code{\link{OdeModelGQ}},
+\code{\link{OdeModelMCMC}}
+}
+\concept{Model fit classes.}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{model}}{An object of class \link{OdeModel}.}
 
-\item{\code{standata}}{Full 'Stan' input data list.}
+\item{\code{t0}}{Used initial time.}
 
-\item{\code{cmdstanr_fit}}{a \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.}
+\item{\code{t}}{Used time points.}
+
+\item{\code{solver}}{Used solver.}
+
+\item{\code{solver_conf}}{Used solver configuration.}
+
+\item{\code{data}}{Given additional data.}
+
+\item{\code{cmdstanr_fit}}{A \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} or \link[cmdstanr:CmdStanGQ]{cmdstanr::CmdStanGQ}
+object.}
 
 \item{\code{cmdstanr_time}}{A list containing output of the  \verb{$time()} method
 of \code{cmdstanr_fit}.}
@@ -41,9 +56,9 @@ method of \code{cmdstanr_fit}.}
 \itemize{
 \item \href{#method-new}{\code{OdeModelFit$new()}}
 \item \href{#method-time}{\code{OdeModelFit$time()}}
+\item \href{#method-info}{\code{OdeModelFit$info()}}
 \item \href{#method-draws}{\code{OdeModelFit$draws()}}
 \item \href{#method-summary}{\code{OdeModelFit$summary()}}
-\item \href{#method-print}{\code{OdeModelFit$print()}}
 \item \href{#method-niterations}{\code{OdeModelFit$niterations()}}
 \item \href{#method-nchains}{\code{OdeModelFit$nchains()}}
 \item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
@@ -68,7 +83,7 @@ method of \code{cmdstanr_fit}.}
 \subsection{Method \code{new()}}{
 Create an \link{OdeModelFit} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$new(model, cmdstanr_fit, standata)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$new(model, t0, t, solver, solver_conf, data, cmdstanr_fit)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -76,9 +91,18 @@ Create an \link{OdeModelFit} object.
 \describe{
 \item{\code{model}}{An object of class \link{OdeModel} (will be deepcopied).}
 
-\item{\code{cmdstanr_fit}}{A \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object (will be deepcopied).}
+\item{\code{t0}}{Used initial time.}
 
-\item{\code{standata}}{Full 'Stan' input data list.}
+\item{\code{t}}{Used time points.}
+
+\item{\code{solver}}{Used solver.}
+
+\item{\code{solver_conf}}{Used solver configuration.}
+
+\item{\code{data}}{Given additional data.}
+
+\item{\code{cmdstanr_fit}}{A \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} or \link[cmdstanr:CmdStanGQ]{cmdstanr::CmdStanGQ}
+object (will be deepcopied).}
 }
 \if{html}{\out{</div>}}
 }
@@ -94,6 +118,19 @@ Get time information.
 
 \subsection{Returns}{
 A list.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-info"></a>}}
+\if{latex}{\out{\hypertarget{method-info}{}}}
+\subsection{Method \code{info()}}{
+Get various information.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$info()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string.
 }
 }
 \if{html}{\out{<hr>}}
@@ -130,16 +167,6 @@ Get summary
 \subsection{Returns}{
 A \code{tibble}.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print information about the fit
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$print()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-niterations"></a>}}
@@ -268,7 +295,8 @@ Get dimensions of a variable.
 \subsection{Returns}{
 A numeric vector, which is the 'Stan' variable dimension,
 obtained as \code{metadata$stan_variable_dims[[variable]]}, where
-\code{metadata} is the metadata of the \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.
+\code{metadata} is the metadata of the \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} or
+\link[cmdstanr:CmdStanGQ]{cmdstanr::CmdStanGQ} object.
 }
 }
 \if{html}{\out{<hr>}}

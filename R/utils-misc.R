@@ -13,37 +13,6 @@ stan_model_from_code <- function(code) {
   cmdstanr::cmdstan_model(file)
 }
 
-# Solver name to numeric encoding
-solver_to_num <- function(solver) {
-  ok <- c("rk45", "bdf", "rk4")
-  checkmate::assert_choice(solver, ok)
-  if (solver == "rk45") {
-    return(1)
-  }
-  if (solver == "bdf") {
-    return(2)
-  }
-  if (solver == "rk4") {
-    return(11)
-  }
-}
-
-# Solver numeric encoding to default args list
-default_solver_conf <- function(solver_num) {
-  if (solver_num == 1) {
-    out <- list(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6)
-  } else if (solver_num == 2) {
-    out <- list(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9)
-  } else if (solver_num == "rk4") {
-    out <- list(num_steps = 1)
-  } else {
-    stop("unknown solver")
-  }
-  str <- list_to_str(out)
-  msg <- paste0("solver_conf was NULL, defaulting to ", str)
-  message(msg)
-  return(out)
-}
 
 # Named list to string
 list_to_str <- function(x) {
@@ -51,25 +20,45 @@ list_to_str <- function(x) {
   paste0("{", str, "}")
 }
 
-
-# Print colored text
-cat_colored <- function(x, col = "\033[95m") {
+# Colorize string
+colorize_string <- function(x, col) {
   if (interactive()) {
     x <- paste0(col, x, "\u001b[0m")
   }
-  cat(x)
+  x
+}
+
+# Number string
+number_string <- function(x) {
+  col <- "\u001b[34;1m"
+  colorize_string(x, col)
+}
+
+# Highlight string
+highlight_string <- function(x) {
+  col <- "\033[37m"
+  colorize_string(x, col)
+}
+
+# Stan code string
+stancode_string <- function(x) {
+  col <- "\u001b[33m"
+  colorize_string(x, col)
+}
+
+# Print colored text
+cat_colored <- function(x, col = "\033[95m") {
+  cat(colorize_string(x, col))
 }
 
 # Print a number
 cat_number <- function(x) {
-  col <- "\u001b[34;1m"
-  cat_colored(x, col = col)
+  cat(number_string(x))
 }
 
 # Print Stan code
 cat_stancode <- function(x) {
-  col <- "\u001b[33m"
-  cat_colored(x, col = col)
+  cat(stancode_string(x))
 }
 
 # Read lines from file

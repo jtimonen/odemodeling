@@ -1,3 +1,116 @@
+# OdeModelMCMC ------------------------------------------------------------
+
+#' An ODE model MCMC fit (R6 class)
+#'
+#' @export
+#' @family Model fit classes.
+OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
+  inherit = OdeModelFit,
+  public = list(
+
+    #' @description
+    #' Print information about the fit
+    print = function() {
+      cat("An object of class OdeModelMCMC. Type ?OdeModelMCMC for help.\n")
+      cat(self$info())
+      invisible(self)
+    },
+
+    #' @description
+    #' Get used 'CmdStan' rng seed.
+    cmdstan_seed = function() {
+      md <- self$cmdstanr_metadata
+      md$seed
+    },
+
+    #' @description
+    #' Get used 'CmdStan' init argument.
+    cmdstan_init = function() {
+      md <- self$cmdstanr_metadata
+      md$init
+    },
+
+    #' @description
+    #' Compute generated quantities using the model and fitted params. If any
+    #' of the arguments are `NULL` (default), they are replaced with ones saved
+    #' in the [OdeModelFit] object.
+    #'
+    #' @param t0 Initial time.
+    #' @param t Vector of time points.
+    #' @param data Additional data.
+    #' @param solver ODE solver name.
+    #' @param solver_conf ODE solver configuration list.
+    #' @param fitted_params Equal to the `fitted_params` argument  of the
+    #' `$generate_quantities()` method of the underlying
+    #' [cmdstanr::CmdStanModel] object. If this is `NULL` (default),
+    #' parameter draws of the [OdeModelFit] object are used.
+    #' @param ... Arguments passed to the `$generate_quantities()` method of the
+    #' underlying [cmdstanr::CmdStanModel] object.
+    #' @return An object of class [cmdstanr::CmdStanGQ].
+    generate_quantities = function(t0 = NULL,
+                                   t = NULL,
+                                   data = NULL,
+                                   solver = NULL,
+                                   solver_conf = NULL,
+                                   fitted_params = NULL,
+                                   ...) {
+
+      # Handle input
+      t0 <- replace_if_null(t0, self$t0)
+      t <- replace_if_null(t, self$t)
+      solver <- replace_if_null(solver, self$solver)
+      solver_conf <- replace_if_null(solver_conf, self$solver_conf)
+      data <- replace_if_null(data, self$data)
+      fitted_params <- replace_if_null(fitted_params, self$draws())
+
+      # Full Stan data
+      model <- self$model
+      full_data <- create_standata(model, t0, t, solver, solver_conf)
+      full_data <- c(full_data, data)
+
+      # Ru Stan
+      cmdstanr_gq <- model$stanmodel$generate_quantities(
+        fitted_params = fitted_params,
+        data = full_data,
+        sig_figs = model$sig_figs, ...
+      )
+
+      # Return
+      OdeModelGQ$new(
+        model = model,
+        t0 = t0,
+        t = t,
+        solver = solver,
+        solver_conf = solver_conf,
+        data = data,
+        cmdstanr_fit = cmdstanr_gq
+      )
+    }
+  )
+)
+
+# OdeModelGQ --------------------------------------------------------------
+
+#' An ODE model GQ fit (R6 class)
+#'
+#' @export
+#' @family Model fit classes.
+OdeModelGQ <- R6::R6Class("OdeModelGQ",
+  inherit = OdeModelFit,
+  public = list(
+
+    #' @description
+    #' Print information about the object
+    print = function() {
+      cat("An object of class OdeModelGQ. Type ?OdeModelGQ for help.\n")
+      cat(self$info())
+      invisible(self)
+    }
+  )
+)
+
+# OdeModelFit -------------------------------------------------------------
+
 #' An ODE model fit (R6 class)
 #'
 #' @description
@@ -7,10 +120,14 @@
 #' in memory in case `cmdstanr_fit` gets corrupted (for example
 #' if the CSV files that it reads the data from are destroyed).
 #'
-#' @export
 #' @field model An object of class [OdeModel].
-#' @field standata Full 'Stan' input data list.
-#' @field cmdstanr_fit a [cmdstanr::CmdStanMCMC] object.
+#' @field t0 Used initial time.
+#' @field t Used time points.
+#' @field solver Used solver.
+#' @field solver_conf Used solver configuration.
+#' @field data Given additional data.
+#' @field cmdstanr_fit A [cmdstanr::CmdStanMCMC] or [cmdstanr::CmdStanGQ]
+#' object.
 #' @field cmdstanr_time A list containing output of the  `$time()` method
 #' of `cmdstanr_fit`.
 #' @field cmdstanr_summary A tibble containing output of the `$summary()`
@@ -21,9 +138,14 @@
 #' method of `cmdstanr_fit`.
 #' @field setup_time Time it took to call `$initialize()` when the
 #' [OdeModelFit] object was created (in seconds).
+#' @family Model fit classes.
 OdeModelFit <- R6::R6Class("OdeModelFit", list(
   model = NULL,
-  standata = NULL,
+  t0 = NULL,
+  t = NULL,
+  solver = NULL,
+  solver_conf = NULL,
+  data = NULL,
   cmdstanr_fit = NULL,
   cmdstanr_time = NULL,
   cmdstanr_summary = NULL,
@@ -35,16 +157,26 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' Create an [OdeModelFit] object.
   #'
   #' @param model An object of class [OdeModel] (will be deepcopied).
-  #' @param cmdstanr_fit A [cmdstanr::CmdStanMCMC] object (will be deepcopied).
-  #' @param standata Full 'Stan' input data list.
-  initialize = function(model, cmdstanr_fit, standata) {
+  #' @param t0 Used initial time.
+  #' @param t Used time points.
+  #' @param solver Used solver.
+  #' @param solver_conf Used solver configuration.
+  #' @param data Given additional data.
+  #' @param cmdstanr_fit A [cmdstanr::CmdStanMCMC] or [cmdstanr::CmdStanGQ]
+  #' object (will be deepcopied).
+  initialize = function(model, t0, t, solver, solver_conf, data,
+                        cmdstanr_fit) {
     start_time <- Sys.time()
     checkmate::assert_class(model, "OdeModel")
-    checkmate::assert_class(cmdstanr_fit, "CmdStanMCMC")
+    checkmate::assert_multi_class(cmdstanr_fit, c("CmdStanMCMC", "CmdStanGQ"))
     self$model <- model$clone(deep = TRUE)
     sf <- cmdstanr_fit$clone(deep = TRUE)
+    self$t0 <- t0
+    self$t <- t
+    self$solver <- solver
+    self$solver_conf <- solver_conf
+    self$data <- data
     self$cmdstanr_fit <- sf
-    self$standata <- standata
     self$cmdstanr_time <- sf$time()
     self$cmdstanr_summary <- sf$summary()
     self$cmdstanr_draws <- sf$draws()
@@ -58,6 +190,25 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @return A list.
   time = function() {
     self$cmdstanr_time
+  },
+
+  #' @description
+  #' Get various information.
+  #' @return A string.
+  info = function() {
+    tt <- self$time()$total
+    s1 <- number_string(self$nchains())
+    s2 <- number_string(self$niterations())
+    s3 <- number_string(round(tt, 3))
+    s4 <- highlight_string(self$solver)
+    sc <- self$solver_conf
+    s5 <- highlight_string(list_to_str(sc))
+    str <- paste0(" * Number of chains: ", s1)
+    str <- paste0(str, "\n * Number of iterations: ", s2)
+    str <- paste0(str, "\n * Total time: ", s3, " seconds.")
+    str <- paste0(str, "\n * Used solver: ", s4)
+    str <- paste0(str, "\n * Solver configuration: ", s5, "\n")
+    return(str)
   },
 
   #' @description
@@ -77,17 +228,6 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @return A `tibble`.
   summary = function() {
     self$cmdstanr_summary
-  },
-
-  #' @description
-  #' Print information about the fit
-  print = function() {
-    cat("An object of class OdeModelFit. Type ?OdeModelFit for help. Summary:",
-      "\n",
-      sep = ""
-    )
-    print(self$summary())
-    invisible(self)
   },
 
   #' @description
@@ -147,7 +287,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #'
   #' @return A numeric vector.
   get_t = function() {
-    self$standata$t
+    self$t
   },
 
   #' @description
@@ -155,7 +295,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #'
   #' @return A numeric value.
   get_t0 = function() {
-    self$standata$t0
+    self$t0
   },
 
   #' @description
@@ -164,7 +304,8 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @param variable Name of variable.
   #' @return A numeric vector, which is the 'Stan' variable dimension,
   #' obtained as `metadata$stan_variable_dims[[variable]]`, where
-  #' `metadata` is the metadata of the [cmdstanr::CmdStanMCMC] object.
+  #' `metadata` is the metadata of the [cmdstanr::CmdStanMCMC] or
+  #' [cmdstanr::CmdStanGQ] object.
   dim = function(variable) {
     dims <- self$cmdstanr_metadata$stan_variable_dims
     dims[[variable]]

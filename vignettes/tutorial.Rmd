@@ -18,11 +18,10 @@ knitr::opts_chunk$set(
 library(odemodeling)
 ```
 
-## Simple harmonic oscillator
+# Creating a model
 
-### Creating a model
-
-We define an ODE system with only one parameter `theta`. We need to
+We define an ODE system describing a simple harmonic oscillator, 
+with only one parameter `theta`. We need to
 define the variable for the initial system state at `t0` as `y0`. The ODE
 system dimension is declared as `D` and number of time points as `N`.
 
@@ -46,15 +45,10 @@ sho <- create_odemodel(N,
                        odefun_body = sho_fun_body,
                        odefun_init = y0)
 print(sho)
+#print(sho$stanmodel) # this would print the full Stan code
 ```
 
-We print the full Stan code of the model.
-
-```{r sho_print}
-sho$stanmodel
-```
-
-### Sampling from prior
+# Sampling from prior
 
 We can sample from the prior distribution of model parameters like so.
 
@@ -83,12 +77,22 @@ ys <- sho_fit_prior$extract_odesol_df()
 ```
 
 We can plot ODE solutions like so
-```{r sho_fit_view_ode2, fig.width=7, fig.height=3.6}
+```{r sho_fit_view_ode2, fig.width=6.5, fig.height=3.2}
 sho_fit_prior$plot_odesol(linealpha = 0.3)
 ```
 
 We can plot ODE solution using one draw like so
-```{r sho_fit_view_ode3, fig.width=7, fig.height=3.6}
+```{r sho_fit_view_ode3, fig.width=6.5, fig.height=3.2}
 sho_fit_prior$plot_odesol(draw_inds = 45)
 ```
 
+# Using different solvers
+We generate quantities using a different solver and different time points.
+```{r sho_gq, fig.width=6.5, fig.height=3.2}
+gq <- sho_fit_prior$generate_quantities(solver="bdf", t = seq(0.5,10,by=0.5))
+```
+
+We can again plot ODE solution using one draw like so
+```{r sho_view_gq, fig.width=6.5, fig.height=3.2}
+gq$plot_odesol(draw_inds = 45)
+```

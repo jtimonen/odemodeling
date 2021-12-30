@@ -2,7 +2,7 @@
 % Please edit documentation in R/main-sample_odemodel.R
 \name{sample_odemodel}
 \alias{sample_odemodel}
-\title{Sample parameters  of an ODE model}
+\title{Sample parameters of an ODE model}
 \usage{
 sample_odemodel(
   model,
@@ -28,8 +28,11 @@ sample_odemodel(
 \item{solver_conf}{List of ODE solver configuration arguments.}
 
 \item{...}{Arguments passed to the \verb{$sample()} method of the
-underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} objects.}
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+}
+\value{
+An object of class \link{OdeModelMCMC}.
 }
 \description{
-Sample parameters  of an ODE model
+Sample parameters of an ODE model
 }

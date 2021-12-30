@@ -39,7 +39,7 @@ sample_odemodel_manyconf(
 \item{chains}{Number of MCMC chains.}
 
 \item{...}{Arguments passed to the \verb{$sample()} method of the
-underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} objects.}
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
 }
 \description{
 Sample parameters  of an ODE model using many different ODE solver

@@ -1,4 +1,4 @@
-#' Sample parameters  of an ODE model
+#' Sample parameters of an ODE model
 #'
 #' @export
 #' @param model An object of class [OdeModel].
@@ -8,7 +8,8 @@
 #' @param solver_conf List of ODE solver configuration arguments.
 #' @param data Other needed data as a list.
 #' @param ... Arguments passed to the `$sample()` method of the
-#' underlying [cmdstanr::CmdStanModel] objects.
+#' underlying [cmdstanr::CmdStanModel] object.
+#' @return An object of class [OdeModelMCMC].
 sample_odemodel <- function(model,
                             t0,
                             t,
@@ -17,54 +18,27 @@ sample_odemodel <- function(model,
                             solver_conf = NULL,
                             ...) {
 
-  # Check input
-  checkmate::assert_class(model, "OdeModel")
-  checkmate::assertNumber(t0)
-  checkmate::assert_vector(t)
-  checkmate::assert_numeric(t)
-  checkmate::assert_string(solver)
-  if (is.null(solver_conf)) {
-    solver_num <- solver_to_num(solver)
-    solver_conf <- default_solver_conf(solver_num)
-  }
-  solver_num <- solver_to_num(solver)
-  if (solver_num <= 10) {
-    MAX_INT <- 2^31 - 1
-    nams <- c("abs_tol", "rel_tol", "max_num_steps")
-    checkmate::assert_list(solver_conf)
-    checkmate::assert_set_equal(names(solver_conf), nams)
-    mns <- solver_conf$max_num_steps
-    checkmate::assert_integerish(mns, lower = 1, upper = MAX_INT)
-    dummy <- list(num_steps = 1)
-    solver_args <- c(solver_conf, dummy)
-  } else {
-    checkmate::assert_list(solver_conf)
-    checkmate::assert_set_equal(names(solver_conf), "num_steps")
-    dummy <- list(abs_tol = 1, rel_tol = 1, max_num_steps = 1)
-    solver_args <- c(solver_conf, dummy)
-  }
-
-  # Create full data
-  N <- list(N = length(t))
-  names(N) <- model$t_dim$name
-  full_data <- c(
-    N,
-    list(t0 = t0, t = t, solver = solver_num),
-    solver_args,
-    data
-  )
+  # Check and handle input
+  full_data <- create_standata(model, t0, t, solver, solver_conf)
+  full_data <- c(full_data, data)
 
   # Actual sampling
   sm <- model$stanmodel
-  cmdstanr_fit <- sm$sample(data = full_data, sig_figs = model$sig_figs, ...)
+  cmdstanr_mcmc <- sm$sample(data = full_data, sig_figs = model$sig_figs, ...)
 
   # Return
-  OdeModelFit$new(
+  OdeModelMCMC$new(
     model = model,
-    cmdstanr_fit = cmdstanr_fit,
-    standata = full_data
+    t0 = t0,
+    t = t,
+    solver = solver,
+    solver_conf = solver_conf,
+    data = data,
+    cmdstanr_fit = cmdstanr_mcmc
   )
 }
+
+
 
 #' Sample parameters  of an ODE model using many different ODE solver
 #' configurations

@@ -44,54 +44,6 @@
 #   return(t_workflow / t_sample)
 # }
 #
-# # RUNNING CMDSTAN -----------------------------------------------------
-#
-# # Function for simulating ODE solutions and data given parameter(draws)s
-# simulate <- function(setup, params, solver_args) {
-#   stopifnot(is(setup, "OdeExperimentSetup"))
-#   stopifnot(is(params, "draws"))
-#   stopifnot(is(solver_args, "list"))
-#   check_sa(solver_args)
-#   data <- setup$data
-#   stan_opts <- setup$stan_opts
-#   model <- setup$stanmodels$simulator
-#   capture.output({
-#     out <- model$generate_quantities(
-#       data = c(data, solver_args),
-#       fitted_params = params,
-#       seed = stan_opts$seed,
-#       sig_figs = stan_opts$sig_figs
-#     )
-#   })
-#   print_output_if_failed(out)
-#   return(out)
-# }
-#
-# # Run simulate with many tolerances
-# simulate_many <- function(setup, params, tols, max_num_steps) {
-#   out <- list()
-#   for (tol_j in tols) {
-#     cat(" * Simulating with tol = ", tol_j, "\n", sep = "")
-#     sargs <- list(
-#       abs_tol = tol_j,
-#       rel_tol = tol_j,
-#       max_num_steps = max_num_steps
-#     )
-#     sim <- simulate(setup, params, sargs)
-#     out <- c(out, sim)
-#   }
-#   names(out) <- tols
-#   return(out)
-# }
-#
-# # Simulate but denser in time
-# simulate_dense <- function(setup, params, solver_args, new_t) {
-#   new_setup <- setup$clone()
-#   new_setup$data$t <- new_t
-#   new_setup$data$N <- length(new_t)
-#   new_setup$data$y <- rep(1.0, new_setup$data$N)
-#   simulate(new_setup, params, solver_args)
-# }
 #
 # # Load fit from object returned by $sample_posterior_many()
 # load_fit <- function(post, idx) {

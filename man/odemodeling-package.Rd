@@ -26,7 +26,17 @@ its diagnostics.
 \itemize{
 \item Sample the posterior or prior distribution of the model parameters,
 and generate corresponding ODE solutions using \code{\link[=sample_odemodel]{sample_odemodel()}}.
-\item See methods of the \link{OdeModelFit} class for studying the returned
+\item See methods of the \link{OdeModelMCMC} class for studying the returned
+object.
+}
+}
+
+\section{Generating quantities}{
+
+\itemize{
+\item See the especially the \verb{$generate_quantities()} method
+of the \link{OdeModelMCMC} class.
+\item See methods of the \link{OdeModelGQ} class for studying the returned
 object.
 }
 }

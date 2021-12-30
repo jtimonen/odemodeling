@@ -25,7 +25,14 @@
 #' \itemize{
 #'   \item Sample the posterior or prior distribution of the model parameters,
 #'   and generate corresponding ODE solutions using [sample_odemodel()].
-#'   \item See methods of the [OdeModelFit] class for studying the returned
+#'   \item See methods of the [OdeModelMCMC] class for studying the returned
+#'   object.
+#' }
+#' @section Generating quantities:
+#' \itemize{
+#'   \item See the especially the `$generate_quantities()` method
+#'   of the [OdeModelMCMC] class.
+#'   \item See methods of the [OdeModelGQ] class for studying the returned
 #'   object.
 #' }
 #'

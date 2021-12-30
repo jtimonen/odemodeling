@@ -60,13 +60,14 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       t <- replace_if_null(t, self$t)
       solver <- replace_if_null(solver, self$solver)
       solver_conf <- replace_if_null(solver_conf, self$solver_conf)
+      solver_conf <- solver_conf[needed_conf_fields(solver)]
       data <- replace_if_null(data, self$data)
       fitted_params <- replace_if_null(fitted_params, self$draws())
 
       # Full Stan data
       model <- self$model
-      full_data <- create_standata(model, t0, t, solver, solver_conf)
-      full_data <- c(full_data, data)
+      sd <- create_standata(model, t0, t, solver, solver_conf)
+      full_data <- c(sd$other, sd$solver_conf, data)
 
       # Ru Stan
       cmdstanr_gq <- model$stanmodel$generate_quantities(
@@ -81,7 +82,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         t0 = t0,
         t = t,
         solver = solver,
-        solver_conf = solver_conf,
+        solver_conf = sd$solver_conf,
         data = data,
         cmdstanr_fit = cmdstanr_gq
       )
@@ -201,7 +202,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     s2 <- number_string(self$niterations())
     s3 <- number_string(round(tt, 3))
     s4 <- highlight_string(self$solver)
-    sc <- self$solver_conf
+    sc <- self$solver_conf[needed_conf_fields(self$solver)]
     s5 <- highlight_string(list_to_str(sc))
     str <- paste0(" * Number of chains: ", s1)
     str <- paste0(str, "\n * Number of iterations: ", s2)

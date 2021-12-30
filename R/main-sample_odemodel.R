@@ -19,8 +19,8 @@ sample_odemodel <- function(model,
                             ...) {
 
   # Check and handle input
-  full_data <- create_standata(model, t0, t, solver, solver_conf)
-  full_data <- c(full_data, data)
+  sd <- create_standata(model, t0, t, solver, solver_conf)
+  full_data <- c(sd$other, sd$solver_conf, data)
 
   # Actual sampling
   sm <- model$stanmodel
@@ -32,7 +32,7 @@ sample_odemodel <- function(model,
     t0 = t0,
     t = t,
     solver = solver,
-    solver_conf = solver_conf,
+    solver_conf = sd$solver_conf,
     data = data,
     cmdstanr_fit = cmdstanr_mcmc
   )

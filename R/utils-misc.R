@@ -30,19 +30,19 @@ colorize_string <- function(x, col) {
 
 # Number string
 number_string <- function(x) {
-  col <- "\u001b[34;1m"
+  col <- "\u001b[34;1m" # bold blue
   colorize_string(x, col)
 }
 
 # Highlight string
 highlight_string <- function(x) {
-  col <- "\033[37m"
+  col <- "\u001b[33;1m" # bold orange
   colorize_string(x, col)
 }
 
 # Stan code string
 stancode_string <- function(x) {
-  col <- "\u001b[33m"
+  col <- "\u001b[33m" # orange
   colorize_string(x, col)
 }
 

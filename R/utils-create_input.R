@@ -12,40 +12,56 @@ create_standata <- function(model, t0, t, solver, solver_conf) {
 
   # Validate or create default solver configuration
   final_conf <- validate_solver_conf(solver, solver_conf)
-  solver_conf <- final_conf$solver_conf
 
   # Create and return full Stan data
   N <- list(N = length(t))
   names(N) <- model$t_dim$name
-  c(
+  other <- c(
     N,
-    list(t0 = t0, t = t, solver = final_conf$solver_num),
-    solver_conf
+    list(t0 = t0, t = t, solver = final_conf$solver_num)
   )
+
+  # Return
+  list(
+    other = other,
+    solver_conf = final_conf$solver_conf
+  )
+}
+
+# Needed connfiguration fields given name of solver
+needed_conf_fields <- function(solver) {
+  solver_num <- solver_to_num(solver)
+  if (solver_num > 10) {
+    return("num_steps")
+  }
+  c("abs_tol", "rel_tol", "max_num_steps")
 }
 
 # Create solver configuration if not given and validate if given
 validate_solver_conf <- function(solver, solver_conf) {
+
+  # If not given, use default conf
   if (is.null(solver_conf)) {
     solver_num <- solver_to_num(solver)
     solver_conf <- default_solver_conf(solver_num)
   }
+
+  # Check that conf has correct fields
   solver_num <- solver_to_num(solver)
+  needed_fields <- needed_conf_fields(solver)
+  checkmate::assert_list(solver_conf)
+  checkmate::assert_set_equal(names(solver_conf), needed_fields)
+
+  # Validate fields and paste dummy input for Stan
   if (solver_num <= 10) {
-    MAX_INT <- 2^31 - 1
-    nams <- c("abs_tol", "rel_tol", "max_num_steps")
-    checkmate::assert_list(solver_conf)
-    checkmate::assert_set_equal(names(solver_conf), nams)
+    MAX_INT <- 2^31 - 1 # max int Stan can handle
     mns <- solver_conf$max_num_steps
     checkmate::assert_integerish(mns, lower = 1, upper = MAX_INT)
     dummy <- list(num_steps = 1)
-    solver_args <- c(solver_conf, dummy)
   } else {
-    checkmate::assert_list(solver_conf)
-    checkmate::assert_set_equal(names(solver_conf), "num_steps")
     dummy <- list(abs_tol = 1, rel_tol = 1, max_num_steps = 1)
-    solver_args <- c(solver_conf, dummy)
   }
+  solver_args <- c(solver_conf, dummy)
 
   # Return
   list(

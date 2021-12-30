@@ -36,7 +36,7 @@ I_gen <- fit$extract_unflattened(variable = "I_gen")[idx, , ]
 dat$I_data <- I_gen
 
 test_that("prior sampling works", {
-  expect_true(is(fit, "OdeModelFit"))
+  expect_true(is(fit, "OdeModelMCMC"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
   expect_output(fit$print())
@@ -69,7 +69,7 @@ test_that("posterior sampling works", {
   idx <- 7
   y_sol <- post_fit$extract_odesol()[idx, , ]
   I_gen <- post_fit$extract_unflattened(variable = "I_gen")[idx, , ]
-  expect_true(is(post_fit, "OdeModelFit"))
+  expect_true(is(post_fit, "OdeModelMCMC"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
 })
@@ -88,4 +88,19 @@ test_that("posterior sampling using many configurations works", {
   )
   expect_length(res$times$grand_total, 4)
   unlink("results", recursive = TRUE)
+})
+
+test_that("generating quantities works", {
+  expect_error(
+    fit$generate_quantities(t0 = 4.5),
+    "each value in t must be strictly larger than given t0"
+  )
+  a <- fit$generate_quantities(solver = "bdf", t = c(1, 2, 3, 12))
+  expect_output(print(a), "An object of class OdeModelGQ")
+  idx <- 7
+  y_sol <- a$extract_odesol()[idx, , ]
+  I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
+  expect_true(is(a, "OdeModelGQ"))
+  expect_equal(dim(y_sol), c(4, 6))
+  expect_equal(dim(I_gen), c(4, 3))
 })

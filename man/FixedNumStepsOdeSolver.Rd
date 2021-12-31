@@ -22,6 +22,7 @@ An ODE solver with fixed number of steps
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{FixedNumStepsOdeSolver$new()}}
+\item \href{#method-standata}{\code{FixedNumStepsOdeSolver$standata()}}
 \item \href{#method-clone}{\code{FixedNumStepsOdeSolver$clone()}}
 }
 }
@@ -48,6 +49,19 @@ Initialize
 \item{\code{num_steps}}{number of steps per time point interval}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-standata}{}}}
+\subsection{Method \code{standata()}}{
+Create Stan data fields.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FixedNumStepsOdeSolver$standata()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
 }
 }
 \if{html}{\out{<hr>}}

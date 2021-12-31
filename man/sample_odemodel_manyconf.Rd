@@ -27,7 +27,7 @@ sample_odemodel_manyconf(
 
 \item{data}{Other needed data as a list.}
 
-\item{solver}{ODE solver name.}
+\item{solver}{An object of class \link{OdeSolver}.}
 
 \item{solver_confs}{List of ODE solver configurations. See
 \code{\link[=create_solver_conf_list]{create_solver_conf_list()}} for creating this.}

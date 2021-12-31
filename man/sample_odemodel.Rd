@@ -4,15 +4,7 @@
 \alias{sample_odemodel}
 \title{Sample parameters of an ODE model}
 \usage{
-sample_odemodel(
-  model,
-  t0,
-  t,
-  data = list(),
-  solver = "rk45",
-  solver_conf = NULL,
-  ...
-)
+sample_odemodel(model, t0, t, data = list(), solver = rk45(), ...)
 }
 \arguments{
 \item{model}{An object of class \link{OdeModel}.}
@@ -23,9 +15,7 @@ sample_odemodel(
 
 \item{data}{Other needed data as a list.}
 
-\item{solver}{ODE solver name.}
-
-\item{solver_conf}{List of ODE solver configuration arguments.}
+\item{solver}{An object of class \link{OdeSolver}.}
 
 \item{...}{Arguments passed to the \verb{$sample()} method of the
 underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}

@@ -12,6 +12,8 @@ An ODE solver (an abstract base class)
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{name}}{name of the solver}
+
+\item{\code{stan_number}}{integer that indexes the solver in the Stan code}
 }
 \if{html}{\out{</div>}}
 }

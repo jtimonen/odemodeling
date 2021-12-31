@@ -26,6 +26,7 @@ An ODE solver with adaptive step size
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{AdaptiveOdeSolver$new()}}
+\item \href{#method-standata}{\code{AdaptiveOdeSolver$standata()}}
 \item \href{#method-clone}{\code{AdaptiveOdeSolver$clone()}}
 }
 }
@@ -56,6 +57,19 @@ Initialize
 \item{\code{max_num_steps}}{maximum number of steps}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-standata}{}}}
+\subsection{Method \code{standata()}}{
+Create Stan data fields.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AdaptiveOdeSolver$standata()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
 }
 }
 \if{html}{\out{<hr>}}

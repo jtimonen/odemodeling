@@ -4,8 +4,7 @@
 #' @param model An object of class [OdeModel].
 #' @param t0 Initial time point.
 #' @param t Vector of time points.
-#' @param solver ODE solver name.
-#' @param solver_conf List of ODE solver configuration arguments.
+#' @param solver An object of class [OdeSolver].
 #' @param data Other needed data as a list.
 #' @param ... Arguments passed to the `$sample()` method of the
 #' underlying [cmdstanr::CmdStanModel] object.
@@ -14,12 +13,11 @@ sample_odemodel <- function(model,
                             t0,
                             t,
                             data = list(),
-                            solver = "rk45",
-                            solver_conf = NULL,
+                            solver = rk45(),
                             ...) {
 
   # Check and handle input
-  sd <- create_standata(model, t0, t, solver, solver_conf)
+  sd <- create_standata(model, t0, t, solver)
   full_data <- c(sd$other, sd$solver_conf, data)
 
   # Actual sampling
@@ -32,7 +30,6 @@ sample_odemodel <- function(model,
     t0 = t0,
     t = t,
     solver = solver,
-    solver_conf = sd$solver_conf,
     data = data,
     cmdstanr_fit = cmdstanr_mcmc
   )

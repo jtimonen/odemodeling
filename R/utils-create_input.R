@@ -80,26 +80,21 @@ replace_if_null <- function(x, y) {
 
 # Solver name to numeric encoding
 solver_to_num <- function(solver) {
-  ok <- c("rk45", "bdf", "rk4")
+  ok <- c("rk45", "bdf", "adams", "ckrk", "rk4")
+  nums <- c(1, 2, 3, 4, 11)
   checkmate::assert_choice(solver, ok)
-  if (solver == "rk45") {
-    return(1)
-  }
-  if (solver == "bdf") {
-    return(2)
-  }
-  if (solver == "rk4") {
-    return(11)
-  }
+  nums[which(ok == solver)]
 }
 
 # Solver numeric encoding to default args list
 default_solver_conf <- function(solver_num) {
-  if (solver_num == 1) {
+  if (solver_num == 1) { # rk45
     out <- list(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6)
-  } else if (solver_num == 2) {
+  } else if (solver_num == 2) { # bdf
     out <- list(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9)
-  } else if (solver_num == "rk4") {
+  } else if (solver_num == 2) { # bdf
+    out <- list(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9)
+  } else if (solver_num == 11) { # rk4
     out <- list(num_steps = 1)
   } else {
     stop("unknown solver")

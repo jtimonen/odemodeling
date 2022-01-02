@@ -51,6 +51,22 @@ StanDeclaration <- R6::R6Class("StanDeclaration",
   )
 )
 
+# Check that bound is positive integer or NULL
+check_bound_posint <- function(bound) {
+  if (!is.null(bound)) {
+    checkmate::assert_integerish(bound, lower = 0)
+  }
+  bound
+}
+
+# Check that bound is a single number or NULL
+check_bound_num <- function(bound) {
+  if (!is.null(bound)) {
+    checkmate::assert_number(bound)
+  }
+  bound
+}
+
 #' A dimension for a Stan vector or array
 StanDimension <- R6::R6Class("StanDimension",
   inherit = StanDeclaration,
@@ -64,14 +80,8 @@ StanDimension <- R6::R6Class("StanDimension",
     #' @param upper upper bound
     initialize = function(name, lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
-      if (!is.null(lower)) {
-        checkmate::assert_integerish(lower, lower = 0)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_integerish(upper, lower = 0)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_posint(lower)
+      self$upper <- check_bound_posint(upper)
       self$name <- name
     },
 
@@ -116,18 +126,10 @@ StanVariable <- R6::R6Class("StanVariable",
     #' @param type variable type (real or int)
     initialize = function(name, type = "real", lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
-      if (!is.null(lower)) {
-        checkmate::assert_numeric(lower, lower = 0)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_numeric(upper, lower = 0)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_num(lower)
+      self$upper <- check_bound_num(upper)
       checkmate::assert_choice(type, choices = c("real", "int"))
       self$name <- name
-      self$lower <- lower
-      self$upper <- upper
       self$type <- type
     },
 
@@ -174,17 +176,9 @@ StanVector <- R6::R6Class("StanVector",
     initialize = function(name, length, lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_class(length, "StanDimension")
-      if (!is.null(lower)) {
-        checkmate::assert_numeric(lower)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_numeric(upper)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_num(lower)
+      self$upper <- check_bound_num(upper)
       self$name <- name
-      self$lower <- lower
-      self$upper <- upper
       self$length <- length
     },
 
@@ -243,17 +237,9 @@ StanMatrix <- R6::R6Class("StanMatrix",
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_class(nrow, "StanDimension")
       checkmate::assert_class(ncol, "StanDimension")
-      if (!is.null(lower)) {
-        checkmate::assert_numeric(lower)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_numeric(upper)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_num(lower)
+      self$upper <- check_bound_num(upper)
       self$name <- name
-      self$lower <- lower
-      self$upper <- upper
       self$nrow <- nrow
       self$ncol <- ncol
     },
@@ -314,18 +300,10 @@ StanArray <- R6::R6Class("StanArray",
                           lower = NULL, upper = NULL) {
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_list(dims, types = "StanDimension", min.len = 1)
-      if (!is.null(lower)) {
-        checkmate::assert_numeric(lower)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_numeric(upper)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_num(lower)
+      self$upper <- check_bound_num(upper)
       checkmate::assert_choice(type, choices = c("real", "int"))
       self$name <- name
-      self$lower <- lower
-      self$upper <- upper
       self$dims <- dims
       self$type <- type
     },
@@ -389,17 +367,9 @@ StanVectorArray <- R6::R6Class("StanVectorArray",
       checkmate::assert_string(name, min.chars = 1)
       checkmate::assert_list(dims, types = "StanDimension", min.len = 1)
       checkmate::assert_class(length, "StanDimension")
-      if (!is.null(lower)) {
-        checkmate::assert_numeric(lower)
-        self$lower <- lower
-      }
-      if (!is.null(upper)) {
-        checkmate::assert_numeric(upper)
-        self$upper <- upper
-      }
+      self$lower <- check_bound_num(lower)
+      self$upper <- check_bound_num(upper)
       self$name <- name
-      self$lower <- lower
-      self$upper <- upper
       self$dims <- dims
       self$length <- length
     },

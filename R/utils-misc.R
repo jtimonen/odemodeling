@@ -1,8 +1,7 @@
 # Internal assertion that should never fail
 internal_assert_len <- function(vec, expected, source) {
   if (length(vec) != expected) {
-    msg <- paste0("Unexpected length in '", source, "'. Please report a bug.")
-    stop(msg)
+    stop(paste0("Unexpected length in '", source, "'. Please report a bug."))
   }
   TRUE
 }
@@ -27,21 +26,10 @@ number_string <- function(x) {
   colorize_string(x, col)
 }
 
-# Highlight string
-highlight_string <- function(x) {
-  col <- "\u001b[33;1m" # bold orange
-  colorize_string(x, col)
-}
-
 # Stan code string
 stancode_string <- function(x) {
   col <- "\u001b[33m" # orange
   colorize_string(x, col)
-}
-
-# Print colored text
-cat_colored <- function(x, col = "\033[95m") {
-  cat(colorize_string(x, col))
 }
 
 # Print a number

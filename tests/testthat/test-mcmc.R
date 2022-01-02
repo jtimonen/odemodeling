@@ -45,6 +45,9 @@ test_that("prior sampling works", {
   expect_gt(nchar(fit$draws_size()), 2)
   expect_gt(nchar(fit$cmdstan_version()), 5)
   expect_true(fit$model$assert_stanfile_exists())
+  expect_equal(dim(fit$summary()), c(146, 10))
+  expect_equal(fit$cmdstan_seed(), SEED)
+  expect_equal(fit$cmdstan_init(), 2)
 })
 
 test_that("plotting ODE solutions works", {
@@ -102,4 +105,5 @@ test_that("generating quantities works", {
   expect_true(is(a, "OdeModelGQ"))
   expect_equal(dim(y_sol), c(4, 6))
   expect_equal(dim(I_gen), c(4, 3))
+  expect_equal(a$get_t0(), 0.0)
 })

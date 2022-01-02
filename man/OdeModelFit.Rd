@@ -62,8 +62,6 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
 \item \href{#method-draws_size}{\code{OdeModelFit$draws_size()}}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
-\item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
-\item \href{#method-cmdstan_init}{\code{OdeModelFit$cmdstan_init()}}
 \item \href{#method-get_t}{\code{OdeModelFit$get_t()}}
 \item \href{#method-get_t0}{\code{OdeModelFit$get_t0()}}
 \item \href{#method-dim}{\code{OdeModelFit$dim()}}
@@ -214,32 +212,6 @@ A string.
 Get used 'CmdStan' version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_version()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A string.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cmdstan_seed"></a>}}
-\if{latex}{\out{\hypertarget{method-cmdstan_seed}{}}}
-\subsection{Method \code{cmdstan_seed()}}{
-Get used 'CmdStan' rng seed.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_seed()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A string.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cmdstan_init"></a>}}
-\if{latex}{\out{\hypertarget{method-cmdstan_init}{}}}
-\subsection{Method \code{cmdstan_init()}}{
-Get used 'CmdStan' init argument.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_init()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

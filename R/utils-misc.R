@@ -13,13 +13,6 @@ stan_model_from_code <- function(code) {
   cmdstanr::cmdstan_model(file)
 }
 
-
-# Named list to string
-list_to_str <- function(x) {
-  str <- paste(names(x), x, sep = "=", collapse = ", ")
-  paste0("{", str, "}")
-}
-
 # Colorize string
 colorize_string <- function(x, col) {
   if (interactive()) {

@@ -26,8 +26,6 @@ Other Model fit classes.:
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_init">}\href{../../odemodeling/html/OdeModelFit.html#method-cmdstan_init}{\code{odemodeling::OdeModelFit$cmdstan_init()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_seed">}\href{../../odemodeling/html/OdeModelFit.html#method-cmdstan_seed}{\code{odemodeling::OdeModelFit$cmdstan_seed()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_version">}\href{../../odemodeling/html/OdeModelFit.html#method-cmdstan_version}{\code{odemodeling::OdeModelFit$cmdstan_version()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim">}\href{../../odemodeling/html/OdeModelFit.html#method-dim}{\code{odemodeling::OdeModelFit$dim()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-dim_odesol}{\code{odemodeling::OdeModelFit$dim_odesol()}}\out{</span>}

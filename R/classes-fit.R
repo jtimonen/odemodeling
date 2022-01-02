@@ -261,22 +261,6 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get used 'CmdStan' rng seed.
-  #' @return A string.
-  cmdstan_seed = function() {
-    md <- self$cmdstanr_metadata
-    md$seed
-  },
-
-  #' @description
-  #' Get used 'CmdStan' init argument.
-  #' @return A string.
-  cmdstan_init = function() {
-    md <- self$cmdstanr_metadata
-    md$init
-  },
-
-  #' @description
   #' Get timepoints where the model was fitted.
   #'
   #' @return A numeric vector.

@@ -36,23 +36,22 @@ sample_odemodel <- function(model,
 }
 
 
-
-#' Sample parameters  of an ODE model using many different ODE solver
+#' Sample parameters of an ODE model using many different ODE solver
 #' configurations
 #'
 #' @export
 #' @inheritParams sample_odemodel
-#' @param solver_confs List of ODE solver configurations. See
-#' [create_solver_conf_list()] for creating this.
+#' @param solvers List of ODE solvers (possibly the same solver with
+#' different configurations). See [create_solver_list()] for creating this.
 #' @param savedir Directory where results are saved.
 #' @param basename Base name for saved files.
 #' @param chains Number of MCMC chains.
-sample_odemodel_manyconf <- function(model,
+#' @return A named list.
+sample_odemodel_manyconf <- function(solvers,
+                                     model,
                                      t0,
                                      t,
                                      data = list(),
-                                     solver = "rk45",
-                                     solver_confs = list(),
                                      savedir = "results",
                                      basename = "odemodelfit",
                                      chains = 4,
@@ -61,18 +60,18 @@ sample_odemodel_manyconf <- function(model,
     message("directory '", savedir, "' doesn't exist, creating it")
     dir.create(savedir)
   }
-  L <- length(solver_confs)
+  checkmate::assert_list(solvers, "OdeSolver")
+  L <- length(solvers)
   WT <- matrix(0.0, L, chains)
   ST <- matrix(0.0, L, chains)
   TT <- matrix(0.0, L, chains)
   FN <- c()
   GT <- rep(0.0, L)
-  j <- 0
-  for (conf_j in solver_confs) {
-    j <- j + 1
-    conf_str <- list_to_str(conf_j)
+  for (j in seq_len(L)) {
+    solver <- solvers[[j]]
+    conf_str <- solver$to_string()
     cat("=================================================================\n")
-    cat(" (", j, ") Sampling with configuration: ", conf_str, "\n", sep = "")
+    cat(" (", j, ") Sampling with: ", conf_str, "\n", sep = "")
     fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
     fit <- sample_odemodel(
       model =  model,
@@ -80,11 +79,10 @@ sample_odemodel_manyconf <- function(model,
       t = t,
       data  = data,
       solver = solver,
-      solver_conf = conf_j,
       chains = chains,
       ...
     )
-    cat("Saving OdeModelFit to ", fn, "\n", sep = "")
+    cat("Saving OdeModelMCMC object to ", fn, "\n", sep = "")
     saveRDS(fit, file = fn)
     FN <- c(FN, fn)
     t_total <- fit$time()$chains$total
@@ -98,6 +96,6 @@ sample_odemodel_manyconf <- function(model,
 
   # Return
   list(
-    times = times, files = FN, solver = solver, solver_confs = solver_confs
+    times = times, files = FN, solver = solver
   )
 }

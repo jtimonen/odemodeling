@@ -21,6 +21,9 @@ An ODE solver (an abstract base class)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OdeSolver$new()}}
+\item \href{#method-standata}{\code{OdeSolver$standata()}}
+\item \href{#method-to_string}{\code{OdeSolver$to_string()}}
+\item \href{#method-print}{\code{OdeSolver$print()}}
 \item \href{#method-clone}{\code{OdeSolver$clone()}}
 }
 }
@@ -31,6 +34,42 @@ An ODE solver (an abstract base class)
 \code{OdeSolver} is an abstract class that can't be initialized.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeSolver$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-standata}{}}}
+\subsection{Method \code{standata()}}{
+Create Stan data fields.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeSolver$standata()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-to_string"></a>}}
+\if{latex}{\out{\hypertarget{method-to_string}{}}}
+\subsection{Method \code{to_string()}}{
+String description of the solver.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeSolver$to_string()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Print info about the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeSolver$print()}\if{html}{\out{</div>}}
 }
 
 }

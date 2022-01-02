@@ -11,6 +11,27 @@ OdeSolver <- R6::R6Class("OdeSolver",
     #' `OdeSolver` is an abstract class that can't be initialized.
     initialize = function() {
       stop("OdeSolver is an abstract class that can't be initialized.")
+    },
+
+    #' @description
+    #' Create Stan data fields.
+    #' @return A list.
+    standata = function() {
+      stop("standata() must be overridden by inheriting class!")
+    },
+
+    #' @description
+    #' String description of the solver.
+    #' @return A string.
+    to_string = function() {
+      stop("to_string() must be overridden by inheriting class!")
+    },
+
+    #' @description
+    #' Print info about the object.
+    print = function() {
+      cat(self$to_string())
+      invisible(self)
     }
   )
 )
@@ -58,6 +79,17 @@ AdaptiveOdeSolver <- R6::R6Class("AdaptiveOdeSolver",
         max_num_steps = self$max_num_steps,
         num_steps = 1 # dummy
       )
+    },
+
+    #' @description
+    #' String description of the solver.
+    #' @return A string.
+    to_string = function() {
+      paste0(
+        self$name, "(abs_tol=", number_string(self$abs_tol), ", ",
+        "rel_tol=", number_string(self$rel_tol), ", ",
+        "max_num_steps=", number_string(self$max_num_steps), ")"
+      )
     }
   )
 )
@@ -92,6 +124,15 @@ FixedNumStepsOdeSolver <- R6::R6Class("FixedNumStepsOdeSolver",
         rel_tol = 1, # dummy
         max_num_steps = 1, # dummy
         num_steps = self$num_steps
+      )
+    },
+
+    #' @description
+    #' String description of the solver.
+    #' @return A string.
+    to_string = function() {
+      paste0(
+        self$name, "(num_steps=", number_string(self$num_steps), ")"
       )
     }
   )

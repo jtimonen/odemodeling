@@ -23,12 +23,14 @@ An ODE solver with fixed number of steps
 \itemize{
 \item \href{#method-new}{\code{FixedNumStepsOdeSolver$new()}}
 \item \href{#method-standata}{\code{FixedNumStepsOdeSolver$standata()}}
+\item \href{#method-to_string}{\code{FixedNumStepsOdeSolver$to_string()}}
 \item \href{#method-clone}{\code{FixedNumStepsOdeSolver$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeSolver" data-id="print">}\href{../../odemodeling/html/OdeSolver.html#method-print}{\code{odemodeling::OdeSolver$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -62,6 +64,19 @@ Create Stan data fields.
 
 \subsection{Returns}{
 A list.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-to_string"></a>}}
+\if{latex}{\out{\hypertarget{method-to_string}{}}}
+\subsection{Method \code{to_string()}}{
+String description of the solver.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FixedNumStepsOdeSolver$to_string()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string.
 }
 }
 \if{html}{\out{<hr>}}

@@ -21,6 +21,11 @@
 #'   [stan_transform()], [stan_vector_array()], and [stan_vector()].
 #'   \item Create an [OdeModel] model using [create_odemodel()].
 #' }
+#' @section Using different ODE solvers:
+#' \itemize{
+#'    \item See \code{\link{odesolvers}} for constructors that create objects
+#'    of class [OdeSolver].
+#' }
 #' @section Fitting a model:
 #' \itemize{
 #'   \item Sample the posterior or prior distribution of the model parameters,

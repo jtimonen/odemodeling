@@ -1,7 +1,9 @@
+# odesolvers --------------------------------------------------------------
+
 #' Creating ODE solvers
 #'
 #' @description These constructors should be used for creating the `solver`
-#' argument for the [create_odemodel()] function. Each function here returns
+#' argument of [sample_odemodel()]. Each function here returns
 #' an [OdeSolver] which can be either
 #' \itemize{
 #'    \item An [AdaptiveOdeSolver] which can estimate its own error and
@@ -66,4 +68,40 @@ ckrk <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
 #' @export
 rk4 <- function(num_steps = 1) {
   FixedNumStepsOdeSolver$new(name = "rk4", num_steps = num_steps)
+}
+
+
+# odesolvers_lists --------------------------------------------------------
+
+#' Creating lists of ODE solvers
+#'
+#' @description These constructors can be used for creating the `solver`
+#' argument of [sample_odemodel_manyconf()]. Each function here returns
+#' a list of [OdeSolver]s.
+#' @param tols A vector of length `L` of tolerance values.
+#' @param max_num_steps Maximum number of steps between output time
+#' points (one number, same for all solvers in the output list).
+#' @name odesolvers_lists
+NULL
+
+#' @describeIn odesolvers_lists Create a list of RK45 solvers with different
+#' tolerances.
+#' @export
+rk45_list <- function(tols, max_num_steps = 1e6) {
+  checkmate::assert_numeric(tols)
+  creator <- function(x) {
+    rk45(abs_tol = x, rel_tol = x, max_num_steps = max_num_steps)
+  }
+  sapply(tols, creator)
+}
+
+#' @describeIn odesolvers_lists Create a list of BDF solvers with
+#' different tolerances.
+#' @export
+bdf_list <- function(tols, max_num_steps = 1e6) {
+  checkmate::assert_numeric(tols)
+  creator <- function(x) {
+    bdf(abs_tol = x, rel_tol = x, max_num_steps = max_num_steps)
+  }
+  sapply(tols, creator)
 }

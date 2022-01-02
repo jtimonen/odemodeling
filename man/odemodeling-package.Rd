@@ -21,6 +21,14 @@ its diagnostics.
 }
 }
 
+\section{Using different ODE solvers}{
+
+\itemize{
+\item See \code{\link{odesolvers}} for constructors that create objects
+of class \link{OdeSolver}.
+}
+}
+
 \section{Fitting a model}{
 
 \itemize{

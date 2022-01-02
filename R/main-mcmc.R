@@ -18,7 +18,7 @@ sample_odemodel <- function(model,
 
   # Check and handle input
   sd <- create_standata(model, t0, t, solver)
-  full_data <- c(sd$other, sd$solver_conf, data)
+  full_data <- c(sd, data)
 
   # Actual sampling
   sm <- model$stanmodel

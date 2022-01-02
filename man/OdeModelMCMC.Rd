@@ -4,9 +4,7 @@
 \alias{OdeModelMCMC}
 \title{An ODE model MCMC fit (R6 class)}
 \description{
-An ODE model MCMC fit (R6 class)
-
-An ODE model MCMC fit (R6 class)
+Used for holding the output of \code{sample_odemodel()}.
 }
 \seealso{
 Other Model fit classes.: 
@@ -94,7 +92,6 @@ in the \link{OdeModelFit} object.
   t = NULL,
   data = NULL,
   solver = NULL,
-  solver_conf = NULL,
   fitted_params = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -109,9 +106,7 @@ in the \link{OdeModelFit} object.
 
 \item{\code{data}}{Additional data.}
 
-\item{\code{solver}}{ODE solver name.}
-
-\item{\code{solver_conf}}{ODE solver configuration list.}
+\item{\code{solver}}{ODE solver.}
 
 \item{\code{fitted_params}}{Equal to the \code{fitted_params} argument  of the
 \verb{$generate_quantities()} method of the underlying

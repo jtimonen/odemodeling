@@ -2,6 +2,7 @@
 
 #' An ODE model MCMC fit (R6 class)
 #'
+#' @description Used for holding the output of `sample_odemodel()`.
 #' @export
 #' @family Model fit classes.
 OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
@@ -38,8 +39,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' @param t0 Initial time.
     #' @param t Vector of time points.
     #' @param data Additional data.
-    #' @param solver ODE solver name.
-    #' @param solver_conf ODE solver configuration list.
+    #' @param solver ODE solver.
     #' @param fitted_params Equal to the `fitted_params` argument  of the
     #' `$generate_quantities()` method of the underlying
     #' [cmdstanr::CmdStanModel] object. If this is `NULL` (default),
@@ -51,7 +51,6 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
                                    t = NULL,
                                    data = NULL,
                                    solver = NULL,
-                                   solver_conf = NULL,
                                    fitted_params = NULL,
                                    ...) {
 
@@ -59,15 +58,13 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       t0 <- replace_if_null(t0, self$t0)
       t <- replace_if_null(t, self$t)
       solver <- replace_if_null(solver, self$solver)
-      solver_conf <- replace_if_null(solver_conf, self$solver_conf)
-      solver_conf <- solver_conf[needed_conf_fields(solver)]
       data <- replace_if_null(data, self$data)
       fitted_params <- replace_if_null(fitted_params, self$draws())
 
       # Full Stan data
       model <- self$model
-      sd <- create_standata(model, t0, t, solver, solver_conf)
-      full_data <- c(sd$other, sd$solver_conf, data)
+      sd <- create_standata(model, t0, t, solver)
+      full_data <- c(sd, data)
 
       # Ru Stan
       cmdstanr_gq <- model$stanmodel$generate_quantities(
@@ -82,7 +79,6 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         t0 = t0,
         t = t,
         solver = solver,
-        solver_conf = sd$solver_conf,
         data = data,
         cmdstanr_fit = cmdstanr_gq
       )
@@ -94,6 +90,8 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
 #' An ODE model GQ fit (R6 class)
 #'
+#' @description Used for holding the output of the `$generate_quantities()`
+#' method of the [OdeModelMCMC] class.
 #' @export
 #' @family Model fit classes.
 OdeModelGQ <- R6::R6Class("OdeModelGQ",
@@ -125,7 +123,6 @@ OdeModelGQ <- R6::R6Class("OdeModelGQ",
 #' @field t0 Used initial time.
 #' @field t Used time points.
 #' @field solver Used solver.
-#' @field solver_conf Used solver configuration.
 #' @field data Given additional data.
 #' @field cmdstanr_fit A [cmdstanr::CmdStanMCMC] or [cmdstanr::CmdStanGQ]
 #' object.
@@ -145,7 +142,6 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   t0 = NULL,
   t = NULL,
   solver = NULL,
-  solver_conf = NULL,
   data = NULL,
   cmdstanr_fit = NULL,
   cmdstanr_time = NULL,
@@ -160,22 +156,20 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @param model An object of class [OdeModel] (will be deepcopied).
   #' @param t0 Used initial time.
   #' @param t Used time points.
-  #' @param solver Used solver.
-  #' @param solver_conf Used solver configuration.
+  #' @param solver Used solver. An object of class [OdeSolver].
   #' @param data Given additional data.
   #' @param cmdstanr_fit A [cmdstanr::CmdStanMCMC] or [cmdstanr::CmdStanGQ]
   #' object (will be deepcopied).
-  initialize = function(model, t0, t, solver, solver_conf, data,
-                        cmdstanr_fit) {
+  initialize = function(model, t0, t, solver, data, cmdstanr_fit) {
     start_time <- Sys.time()
     checkmate::assert_class(model, "OdeModel")
+    checkmate::assert_class(solver, "OdeSolver")
     checkmate::assert_multi_class(cmdstanr_fit, c("CmdStanMCMC", "CmdStanGQ"))
     self$model <- model$clone(deep = TRUE)
     sf <- cmdstanr_fit$clone(deep = TRUE)
     self$t0 <- t0
     self$t <- t
     self$solver <- solver
-    self$solver_conf <- solver_conf
     self$data <- data
     self$cmdstanr_fit <- sf
     self$cmdstanr_time <- sf$time()
@@ -201,14 +195,11 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     s1 <- number_string(self$nchains())
     s2 <- number_string(self$niterations())
     s3 <- number_string(round(tt, 3))
-    s4 <- highlight_string(self$solver)
-    sc <- self$solver_conf[needed_conf_fields(self$solver)]
-    s5 <- highlight_string(list_to_str(sc))
+    s4 <- self$solver$to_string()
     str <- paste0(" * Number of chains: ", s1)
     str <- paste0(str, "\n * Number of iterations: ", s2)
     str <- paste0(str, "\n * Total time: ", s3, " seconds.")
     str <- paste0(str, "\n * Used solver: ", s4)
-    str <- paste0(str, "\n * Solver configuration: ", s5, "\n")
     return(str)
   },
 

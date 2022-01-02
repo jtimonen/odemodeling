@@ -27,8 +27,6 @@ Other Model fit classes.:
 
 \item{\code{solver}}{Used solver.}
 
-\item{\code{solver_conf}}{Used solver configuration.}
-
 \item{\code{data}}{Given additional data.}
 
 \item{\code{cmdstanr_fit}}{A \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} or \link[cmdstanr:CmdStanGQ]{cmdstanr::CmdStanGQ}
@@ -83,7 +81,7 @@ method of \code{cmdstanr_fit}.}
 \subsection{Method \code{new()}}{
 Create an \link{OdeModelFit} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$new(model, t0, t, solver, solver_conf, data, cmdstanr_fit)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$new(model, t0, t, solver, data, cmdstanr_fit)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -95,9 +93,7 @@ Create an \link{OdeModelFit} object.
 
 \item{\code{t}}{Used time points.}
 
-\item{\code{solver}}{Used solver.}
-
-\item{\code{solver_conf}}{Used solver configuration.}
+\item{\code{solver}}{Used solver. An object of class \link{OdeSolver}.}
 
 \item{\code{data}}{Given additional data.}
 

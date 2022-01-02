@@ -36,6 +36,7 @@ I_gen <- fit$extract_unflattened(variable = "I_gen")[idx, , ]
 dat$I_data <- I_gen
 
 test_that("prior sampling works", {
+  expect_false(prior$has_likelihood)
   expect_true(is(fit, "OdeModelMCMC"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
@@ -55,6 +56,7 @@ test_that("plotting ODE solutions works", {
 })
 
 test_that("posterior sampling works", {
+  expect_true(post$has_likelihood)
 
   # Posterior sampling
   post_fit <- sample_odemodel(
@@ -76,12 +78,12 @@ test_that("posterior sampling works", {
 
 test_that("posterior sampling using many configurations works", {
   e_tols <- -c(2:5)
-  confs <- create_solver_conf_list(tols = 10^e_tols, max_num_steps = 1000)
+  confs <- rk45_list(tols = 10^e_tols, max_num_steps = 1000)
   res <- sample_odemodel_manyconf(
     model = post,
     t0 = t0, t = t,
     data = dat,
-    solver_confs = confs,
+    solvers = confs,
     iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
     init = 0, step_size = 0.1,
     seed = SEED
@@ -95,7 +97,7 @@ test_that("generating quantities works", {
     fit$generate_quantities(t0 = 4.5),
     "each value in t must be strictly larger than given t0"
   )
-  a <- fit$generate_quantities(solver = "bdf", t = c(1, 2, 3, 12))
+  a <- fit$generate_quantities(solver = bdf(), t = c(1, 2, 3, 12))
   expect_output(print(a), "An object of class OdeModelGQ")
   idx <- 7
   y_sol <- a$extract_odesol()[idx, , ]

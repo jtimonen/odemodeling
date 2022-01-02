@@ -4,9 +4,8 @@
 \alias{OdeModelGQ}
 \title{An ODE model GQ fit (R6 class)}
 \description{
-An ODE model GQ fit (R6 class)
-
-An ODE model GQ fit (R6 class)
+Used for holding the output of the \verb{$generate_quantities()}
+method of the \link{OdeModelMCMC} class.
 }
 \seealso{
 Other Model fit classes.: 

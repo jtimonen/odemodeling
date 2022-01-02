@@ -1,6 +1,7 @@
 #' An ODE model (R6 class)
 #'
 #' @export
+#' @description An ODE model (R6 class)
 #' @field has_likelihood Is there a likelihood function?
 #' @field stanmodel An object of class `StanModelWithCode`.
 #' @field odetuner_version of the package used to create the model

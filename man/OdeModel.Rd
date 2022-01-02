@@ -5,8 +5,6 @@
 \title{An ODE model (R6 class)}
 \description{
 An ODE model (R6 class)
-
-An ODE model (R6 class)
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

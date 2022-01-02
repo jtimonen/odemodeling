@@ -38,7 +38,8 @@
 #' @param other_vars Other variables.
 #' @param verbose Should this print more information?
 #' @param compile Should the model be compiled?
-#' @param sig_figs Number of significant figures to use in all Stan i/o.
+#' @param sig_figs Number of significant figures to use in all [CmdStan]
+#' calls.
 #' @return An object of class [OdeModel].
 #' @family setup functions
 create_odemodel <- function(N,

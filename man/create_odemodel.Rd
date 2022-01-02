@@ -41,7 +41,8 @@ function.}
 
 \item{compile}{Should the model be compiled?}
 
-\item{sig_figs}{Number of significant figures to use in all Stan i/o.}
+\item{sig_figs}{Number of significant figures to use in all \link{CmdStan}
+calls.}
 }
 \value{
 An object of class \link{OdeModel}.

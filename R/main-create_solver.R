@@ -1,9 +1,24 @@
-#' Create an RK45 solver (adaptive step size)
+#' Creating ODE solvers
 #'
-#' @param abs_tol Absolute tolerance.
-#' @param rel_tol Relative tolerance.
-#' @param max_num_steps Maximum number of steps.
-#' @family ODE solver creation functions
+#' @description These constructors should be used for creating the `solver`
+#' argument for the [create_odemodel()] function. Each function here returns
+#' an [OdeSolver] which can be either
+#' \itemize{
+#'    \item An [AdaptiveOdeSolver] which can estimate its own error and
+#'    adapts its step size according to given tolerances for the error
+#'    \item A [FixedNumStepsOdeSolver] which always takes the same number of
+#'    steps between consequent output time points
+#' }
+#' @param abs_tol Absolute tolerance (only for [AdaptiveOdeSolver]s).
+#' @param rel_tol Relative tolerance (only for [AdaptiveOdeSolver]s).
+#' @param max_num_steps Maximum number of steps between output time
+#' points (only for [AdaptiveOdeSolver]s).
+#' @param num_steps The number of steps between output time points (only for
+#' [FixedNumStepsOdeSolver]s).
+#' @name odesolvers
+NULL
+
+#' @describeIn odesolvers Create an RK45 solver ([AdaptiveOdeSolver])
 #' @export
 rk45 <- function(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6) {
   AdaptiveOdeSolver$new(
@@ -14,12 +29,7 @@ rk45 <- function(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6) {
   )
 }
 
-#' Create a BDF solver (adaptive step size)
-#'
-#' @param abs_tol Absolute tolerance.
-#' @param rel_tol Relative tolerance.
-#' @param max_num_steps Maximum number of steps.
-#' @family ODE solver creation functions
+#' @describeIn odesolvers Create a BDF solver ([AdaptiveOdeSolver])
 #' @export
 bdf <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   AdaptiveOdeSolver$new(
@@ -30,12 +40,7 @@ bdf <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   )
 }
 
-#' Create an Adams solver (adaptive step size)
-#'
-#' @param abs_tol Absolute tolerance.
-#' @param rel_tol Relative tolerance.
-#' @param max_num_steps Maximum number of steps.
-#' @family ODE solver creation functions
+#' @describeIn odesolvers Create an Adams solver ([AdaptiveOdeSolver])
 #' @export
 adams <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   AdaptiveOdeSolver$new(
@@ -46,12 +51,7 @@ adams <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   )
 }
 
-#' Create a Cash-Karp solver (adaptive step size)
-#'
-#' @param abs_tol Absolute tolerance.
-#' @param rel_tol Relative tolerance.
-#' @param max_num_steps Maximum number of steps.
-#' @family ODE solver creation functions
+#' @describeIn odesolvers  Create a Cash-Karp solver ([AdaptiveOdeSolver]).
 #' @export
 ckrk <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   AdaptiveOdeSolver$new(
@@ -62,10 +62,7 @@ ckrk <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   )
 }
 
-#' Create an RK4 solver (fixed number of steps)
-#'
-#' @param num_steps Number of steps per timepoint interval.
-#' @family ODE solver creation functions
+#' @describeIn odesolvers Create an RK4 solver ([FixedNumStepsOdeSolver])
 #' @export
 rk4 <- function(num_steps = 1) {
   FixedNumStepsOdeSolver$new(name = "rk4", num_steps = num_steps)

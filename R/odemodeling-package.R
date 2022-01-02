@@ -19,7 +19,7 @@
 #'   \item Declare model data, parameters, and other variables using
 #'   [stan_array()], [stan_dim()], [stan_matrix()], [stan_param()],
 #'   [stan_transform()], [stan_vector_array()], and [stan_vector()].
-#'   \item Create an [OdeModel] model using [create_odemodel()].
+#'   \item Create an [OdeModel] model using [odemodel()].
 #' }
 #' @section Using different ODE solvers:
 #' \itemize{
@@ -29,14 +29,14 @@
 #' @section Fitting a model:
 #' \itemize{
 #'   \item Sample the posterior or prior distribution of the model parameters,
-#'   and generate corresponding ODE solutions using [sample_odemodel()].
+#'   and generate corresponding ODE solutions using the `$sample()` method
+#'   of the [OdeModel] class.
 #'   \item See methods of the [OdeModelMCMC] class for studying the returned
 #'   object.
 #' }
-#' @section Generating quantities:
+#' @section Additional simulation of ODE systems:
 #' \itemize{
-#'   \item See the especially the `$generate_quantities()` method
-#'   of the [OdeModelMCMC] class.
+#'   \item See the `$simulate()` method of the [OdeModelMCMC] class.
 #'   \item See methods of the [OdeModelGQ] class for studying the returned
 #'   object.
 #' }

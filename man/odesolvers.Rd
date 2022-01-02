@@ -32,8 +32,8 @@ points (only for \link{AdaptiveOdeSolver}s).}
 }
 \description{
 These constructors should be used for creating the \code{solver}
-argument of \code{\link[=sample_odemodel]{sample_odemodel()}}. Each function here returns
-an \link{OdeSolver} which can be either
+argument of the \code{sample()} method of the \link{OdeModel} class.
+Each function here returns an \link{OdeSolver} which can be either
 \itemize{
 \item An \link{AdaptiveOdeSolver} which can estimate its own error and
 adapts its step size according to given tolerances for the error

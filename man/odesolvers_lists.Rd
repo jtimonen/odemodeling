@@ -17,9 +17,9 @@ bdf_list(tols, max_num_steps = 1e+06)
 points (one number, same for all solvers in the output list).}
 }
 \description{
-These constructors can be used for creating the \code{solver}
-argument of \code{\link[=sample_odemodel_manyconf]{sample_odemodel_manyconf()}}. Each function here returns
-a list of \link{OdeSolver}s.
+These constructors can be used for creating the \code{solvers}
+argument of the \code{sample_manyconf()} method of the \link{OdeModel} class.
+Each function here returns a list of \link{OdeSolver}s.
 }
 \section{Functions}{
 \itemize{

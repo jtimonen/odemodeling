@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @param prior_only Create a prior-only version of the model?
-#' @param ... Additional arguments to \code{\link{create_odemodel}}.
+#' @param ... Additional arguments to [odemodel()].
 #' @return An object of class `OdeModel`.
 #' @family setup functions
 example_odemodel <- function(prior_only = FALSE, ...) {
@@ -100,8 +100,8 @@ example_odemodel_gsir <- function(prior_only, ...) {
   "
   I_gen <- stan_transform(I_gen_decl, "model", I_gen_code)
 
-  # Works
-  create_odemodel(
+  # Return
+  odemodel(
     N = N,
     odefun_vars = odefun_vars,
     odefun_body = odefun_body,

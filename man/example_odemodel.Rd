@@ -9,7 +9,7 @@ example_odemodel(prior_only = FALSE, ...)
 \arguments{
 \item{prior_only}{Create a prior-only version of the model?}
 
-\item{...}{Additional arguments to \code{\link{create_odemodel}}.}
+\item{...}{Additional arguments to \code{\link[=odemodel]{odemodel()}}.}
 }
 \value{
 An object of class \code{OdeModel}.
@@ -19,6 +19,6 @@ Create an example ODE model
 }
 \seealso{
 Other setup functions: 
-\code{\link{create_odemodel}()}
+\code{\link{odemodel}()}
 }
 \concept{setup functions}

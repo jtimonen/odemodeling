@@ -4,14 +4,14 @@
 #' @description An ODE model (R6 class)
 #' @field has_likelihood Is there a likelihood function?
 #' @field stanmodel An object of class `StanModelWithCode`.
-#' @field odetuner_version of the package used to create the model
+#' @field odemodeling_version of the package used to create the model
 #' @field sig_figs Number of significant figures to use everywhere.
 #' @field t_dim A `StanDimension` of the time points array.
 #' @field ode_dim A `StanDimension` of the ODE system.
 OdeModel <- R6::R6Class("OdeModel", list(
   has_likelihood = NULL,
   stanmodel = NULL,
-  odetuner_version = NULL,
+  odemodeling_version = NULL,
   sig_figs = NULL,
   t_dim = NULL,
   ode_dim = NULL,
@@ -33,7 +33,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
     checkmate::assert_class(ode_dim, "StanDimension")
     self$has_likelihood <- has_likelihood
     self$stanmodel <- stanmodel$clone(deep = TRUE)
-    self$odetuner_version <- pkg_version("odetuner")
+    self$odemodeling_version <- pkg_version("odemodeling")
     self$sig_figs <- sig_figs
     self$t_dim <- t_dim$clone(deep = TRUE)
     self$ode_dim <- ode_dim$clone(deep = TRUE)

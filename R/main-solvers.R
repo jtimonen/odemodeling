@@ -3,8 +3,8 @@
 #' Creating ODE solvers
 #'
 #' @description These constructors should be used for creating the `solver`
-#' argument of [sample_odemodel()]. Each function here returns
-#' an [OdeSolver] which can be either
+#' argument of the `sample()` method of the [OdeModel] class.
+#' Each function here returns an [OdeSolver] which can be either
 #' \itemize{
 #'    \item An [AdaptiveOdeSolver] which can estimate its own error and
 #'    adapts its step size according to given tolerances for the error
@@ -75,9 +75,9 @@ rk4 <- function(num_steps = 1) {
 
 #' Creating lists of ODE solvers
 #'
-#' @description These constructors can be used for creating the `solver`
-#' argument of [sample_odemodel_manyconf()]. Each function here returns
-#' a list of [OdeSolver]s.
+#' @description These constructors can be used for creating the `solvers`
+#' argument of the `sample_manyconf()` method of the [OdeModel] class.
+#' Each function here returns a list of [OdeSolver]s.
 #' @param tols A vector of length `L` of tolerance values.
 #' @param max_num_steps Maximum number of steps between output time
 #' points (one number, same for all solvers in the output list).

@@ -17,7 +17,7 @@ its diagnostics.
 \item Declare model data, parameters, and other variables using
 \code{\link[=stan_array]{stan_array()}}, \code{\link[=stan_dim]{stan_dim()}}, \code{\link[=stan_matrix]{stan_matrix()}}, \code{\link[=stan_param]{stan_param()}},
 \code{\link[=stan_transform]{stan_transform()}}, \code{\link[=stan_vector_array]{stan_vector_array()}}, and \code{\link[=stan_vector]{stan_vector()}}.
-\item Create an \link{OdeModel} model using \code{\link[=create_odemodel]{create_odemodel()}}.
+\item Create an \link{OdeModel} model using \code{\link[=odemodel]{odemodel()}}.
 }
 }
 
@@ -33,17 +33,17 @@ of class \link{OdeSolver}.
 
 \itemize{
 \item Sample the posterior or prior distribution of the model parameters,
-and generate corresponding ODE solutions using \code{\link[=sample_odemodel]{sample_odemodel()}}.
+and generate corresponding ODE solutions using the \verb{$sample()} method
+of the \link{OdeModel} class.
 \item See methods of the \link{OdeModelMCMC} class for studying the returned
 object.
 }
 }
 
-\section{Generating quantities}{
+\section{Additional simulation of ODE systems}{
 
 \itemize{
-\item See the especially the \verb{$generate_quantities()} method
-of the \link{OdeModelMCMC} class.
+\item See the \verb{$simulate()} method of the \link{OdeModelMCMC} class.
 \item See methods of the \link{OdeModelGQ} class for studying the returned
 object.
 }

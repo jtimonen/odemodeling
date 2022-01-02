@@ -38,20 +38,20 @@
 #' @param other_vars Other variables.
 #' @param verbose Should this print more information?
 #' @param compile Should the model be compiled?
-#' @param sig_figs Number of significant figures to use in all [CmdStan]
+#' @param sig_figs Number of significant figures to use in all 'CmdStan'
 #' calls.
 #' @return An object of class [OdeModel].
 #' @family setup functions
-create_odemodel <- function(N,
-                            odefun_vars = list(),
-                            odefun_body = "",
-                            odefun_init = NULL,
-                            loglik_vars = list(),
-                            loglik_body = "",
-                            other_vars = list(),
-                            verbose = FALSE,
-                            compile = TRUE,
-                            sig_figs = 12) {
+odemodel <- function(N,
+                     odefun_vars = list(),
+                     odefun_body = "",
+                     odefun_init = NULL,
+                     loglik_vars = list(),
+                     loglik_body = "",
+                     other_vars = list(),
+                     verbose = FALSE,
+                     compile = TRUE,
+                     sig_figs = 12) {
 
   # Argument checks
   choices_vars <- c("StanParameter", "StanTransformation", "StanDeclaration")

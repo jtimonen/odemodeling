@@ -19,7 +19,7 @@
 #'   \item Declare model data, parameters, and other variables using
 #'   [stan_array()], [stan_dim()], [stan_matrix()], [stan_param()],
 #'   [stan_transform()], [stan_vector_array()], and [stan_vector()].
-#'   \item Create an [OdeModel] model using [odemodel()].
+#'   \item Create an [OdeModel] model using [ode_model()].
 #' }
 #' @section Using different ODE solvers:
 #' \itemize{

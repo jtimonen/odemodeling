@@ -42,16 +42,16 @@
 #' calls.
 #' @return An object of class [OdeModel].
 #' @family setup functions
-odemodel <- function(N,
-                     odefun_vars = list(),
-                     odefun_body = "",
-                     odefun_init = NULL,
-                     loglik_vars = list(),
-                     loglik_body = "",
-                     other_vars = list(),
-                     verbose = FALSE,
-                     compile = TRUE,
-                     sig_figs = 12) {
+ode_model <- function(N,
+                      odefun_vars = list(),
+                      odefun_body = "",
+                      odefun_init = NULL,
+                      loglik_vars = list(),
+                      loglik_body = "",
+                      other_vars = list(),
+                      verbose = FALSE,
+                      compile = TRUE,
+                      sig_figs = 12) {
 
   # Argument checks
   choices_vars <- c("StanParameter", "StanTransformation", "StanDeclaration")

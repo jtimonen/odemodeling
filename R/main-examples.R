@@ -2,15 +2,15 @@
 #'
 #' @export
 #' @param prior_only Create a prior-only version of the model?
-#' @param ... Additional arguments to [odemodel()].
+#' @param ... Additional arguments to [ode_model()].
 #' @return An object of class `OdeModel`.
 #' @family setup functions
-example_odemodel <- function(prior_only = FALSE, ...) {
-  example_odemodel_gsir(prior_only, ...)
+example_ode_model <- function(prior_only = FALSE, ...) {
+  example_ode_model_gsir(prior_only, ...)
 }
 
 # Example
-example_odemodel_gsir <- function(prior_only, ...) {
+example_ode_model_gsir <- function(prior_only, ...) {
 
   # Time points
   N <- stan_dim("N", lower = 0) # number of timepoints
@@ -101,7 +101,7 @@ example_odemodel_gsir <- function(prior_only, ...) {
   I_gen <- stan_transform(I_gen_decl, "model", I_gen_code)
 
   # Return
-  odemodel(
+  ode_model(
     N = N,
     odefun_vars = odefun_vars,
     odefun_body = odefun_body,

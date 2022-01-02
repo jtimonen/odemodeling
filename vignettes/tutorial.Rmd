@@ -40,10 +40,10 @@ sho_fun_body <- "
 
 The following code creates and compiles the Stan model.
 ```{r sho_create}
-sho <- odemodel(N,
-                odefun_vars = list(theta), 
-                odefun_body = sho_fun_body,
-                odefun_init = y0)
+sho <- ode_model(N,
+                 odefun_vars = list(theta), 
+                 odefun_body = sho_fun_body,
+                 odefun_init = y0)
 print(sho)
 #print(sho$stanmodel) # this would print the full Stan code
 ```

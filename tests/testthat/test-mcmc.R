@@ -1,9 +1,9 @@
 SEED <- 555
 
 # Create models
-prior <- example_odemodel(compile = F, prior_only = TRUE)
+prior <- example_ode_model(compile = F, prior_only = TRUE)
 prior$reinit()
-post <- example_odemodel()
+post <- example_ode_model()
 
 # Create data
 num_tp <- 15

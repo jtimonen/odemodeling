@@ -17,7 +17,7 @@ its diagnostics.
 \item Declare model data, parameters, and other variables using
 \code{\link[=stan_array]{stan_array()}}, \code{\link[=stan_dim]{stan_dim()}}, \code{\link[=stan_matrix]{stan_matrix()}}, \code{\link[=stan_param]{stan_param()}},
 \code{\link[=stan_transform]{stan_transform()}}, \code{\link[=stan_vector_array]{stan_vector_array()}}, and \code{\link[=stan_vector]{stan_vector()}}.
-\item Create an \link{OdeModel} model using \code{\link[=odemodel]{odemodel()}}.
+\item Create an \link{OdeModel} model using \code{\link[=ode_model]{ode_model()}}.
 }
 }
 

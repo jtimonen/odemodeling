@@ -31,6 +31,8 @@ An ODE model (R6 class)
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
 \item \href{#method-code}{\code{OdeModel$code()}}
+\item \href{#method-sample}{\code{OdeModel$sample()}}
+\item \href{#method-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
 }
@@ -102,6 +104,82 @@ Get the Stan code of the model.
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$code()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-sample"></a>}}
+\if{latex}{\out{\hypertarget{method-sample}{}}}
+\subsection{Method \code{sample()}}{
+Sample parameters of the model
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample(t0, t, data = list(), solver = rk45(), ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{t0}}{Initial time point.}
+
+\item{\code{t}}{Vector of time points.}
+
+\item{\code{data}}{Other needed data as a list.}
+
+\item{\code{solver}}{An object of class \link{OdeSolver}.}
+
+\item{\code{...}}{Arguments passed to the \verb{$sample()} method of the
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+An object of class \link{OdeModelMCMC}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-sample_manyconf"></a>}}
+\if{latex}{\out{\hypertarget{method-sample_manyconf}{}}}
+\subsection{Method \code{sample_manyconf()}}{
+Sample parameters of the ODE model using many different ODE solver
+configurations
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$sample_manyconf(
+  solvers,
+  t0,
+  t,
+  data = list(),
+  savedir = "results",
+  basename = "odemodelfit",
+  chains = 4,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{solvers}}{List of ODE solvers (possibly the same solver with
+different configurations). See \code{\link[=rk45_list]{rk45_list()}} and \code{\link[=bdf_list]{bdf_list()}}
+for creating this.}
+
+\item{\code{t0}}{Initial time point.}
+
+\item{\code{t}}{Vector of time points.}
+
+\item{\code{data}}{Other needed data as a list.}
+
+\item{\code{savedir}}{Directory where results are saved.}
+
+\item{\code{basename}}{Base name for saved files.}
+
+\item{\code{chains}}{Number of MCMC chains.}
+
+\item{\code{...}}{Additional arguments passed to the \verb{$sample()} method of the
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A named list.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

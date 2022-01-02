@@ -21,8 +21,7 @@ dat <- list(
 )
 
 # Sample from prior
-fit <- sample_odemodel(
-  model = prior,
+fit <- prior$sample(
   t0 = t0, t = t,
   data = dat,
   iter_warmup = 1000, iter_sampling = 1000, chains = 1, refresh = 0,
@@ -59,8 +58,7 @@ test_that("posterior sampling works", {
   expect_true(post$has_likelihood)
 
   # Posterior sampling
-  post_fit <- sample_odemodel(
-    model = post,
+  post_fit <- post$sample(
     t0 = t0, t = t,
     data = dat,
     iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
@@ -79,8 +77,7 @@ test_that("posterior sampling works", {
 test_that("posterior sampling using many configurations works", {
   e_tols <- -c(2:5)
   confs <- rk45_list(tols = 10^e_tols, max_num_steps = 1000)
-  res <- sample_odemodel_manyconf(
-    model = post,
+  res <- post$sample_manyconf(
     t0 = t0, t = t,
     data = dat,
     solvers = confs,
@@ -94,10 +91,10 @@ test_that("posterior sampling using many configurations works", {
 
 test_that("generating quantities works", {
   expect_error(
-    fit$generate_quantities(t0 = 4.5),
+    fit$simulate(t0 = 4.5),
     "each value in t must be strictly larger than given t0"
   )
-  a <- fit$generate_quantities(solver = bdf(), t = c(1, 2, 3, 12))
+  a <- fit$simulate(solver = bdf(), t = c(1, 2, 3, 12))
   expect_output(print(a), "An object of class OdeModelGQ")
   idx <- 7
   y_sol <- a$extract_odesol()[idx, , ]

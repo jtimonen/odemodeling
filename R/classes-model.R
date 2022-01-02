@@ -77,6 +77,108 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' Get the Stan code of the model.
   code = function() {
     self$stanmodel$code
+  },
+
+  #' @description Sample parameters of the model
+  #' @param t0 Initial time point.
+  #' @param t Vector of time points.
+  #' @param solver An object of class [OdeSolver].
+  #' @param data Other needed data as a list.
+  #' @param ... Arguments passed to the `$sample()` method of the
+  #' underlying [cmdstanr::CmdStanModel] object.
+  #' @return An object of class [OdeModelMCMC].
+  sample = function(t0,
+                    t,
+                    data = list(),
+                    solver = rk45(),
+                    ...) {
+
+    # Check and handle input
+    sd <- create_standata(self, t0, t, solver)
+    full_data <- c(sd, data)
+
+    # Actual sampling
+    sm <- self$stanmodel
+    cmdstanr_mcmc <- sm$sample(data = full_data, sig_figs = self$sig_figs, ...)
+
+    # Return
+    OdeModelMCMC$new(
+      model = self,
+      t0 = t0,
+      t = t,
+      solver = solver,
+      data = data,
+      cmdstanr_fit = cmdstanr_mcmc
+    )
+  },
+
+  #' @description
+  #' Sample parameters of the ODE model using many different ODE solver
+  #' configurations
+  #'
+  #' @export
+  #' @param solvers List of ODE solvers (possibly the same solver with
+  #' different configurations). See [rk45_list()] and [bdf_list()]
+  #' for creating this.
+  #' @param t0 Initial time point.
+  #' @param t Vector of time points.
+  #' @param data Other needed data as a list.
+  #' @param savedir Directory where results are saved.
+  #' @param basename Base name for saved files.
+  #' @param chains Number of MCMC chains.
+  #' @param ... Additional arguments passed to the `$sample()` method of the
+  #' underlying [cmdstanr::CmdStanModel] object.
+  #' @return A named list.
+  sample_manyconf = function(solvers,
+                             t0,
+                             t,
+                             data = list(),
+                             savedir = "results",
+                             basename = "odemodelfit",
+                             chains = 4,
+                             ...) {
+    model <- self
+    if (!dir.exists(savedir)) {
+      message("directory '", savedir, "' doesn't exist, creating it")
+      dir.create(savedir)
+    }
+    checkmate::assert_list(solvers, "OdeSolver")
+    L <- length(solvers)
+    WT <- matrix(0.0, L, chains)
+    ST <- matrix(0.0, L, chains)
+    TT <- matrix(0.0, L, chains)
+    FN <- c()
+    GT <- rep(0.0, L)
+    for (j in seq_len(L)) {
+      solver <- solvers[[j]]
+      conf_str <- solver$to_string()
+      cat("=================================================================\n")
+      cat(" (", j, ") Sampling with: ", conf_str, "\n", sep = "")
+      fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
+      fit <- model$sample(
+        t0 = t0,
+        t = t,
+        data  = data,
+        solver = solver,
+        chains = chains,
+        ...
+      )
+      cat("Saving OdeModelMCMC object to ", fn, "\n", sep = "")
+      saveRDS(fit, file = fn)
+      FN <- c(FN, fn)
+      t_total <- fit$time()$chains$total
+      gt <- fit$time()$total
+      GT[j] <- gt
+      WT[j, ] <- fit$time()$chains$warmup
+      ST[j, ] <- fit$time()$chains$sampling
+      TT[j, ] <- t_total
+    }
+    times <- list(warmup = WT, sampling = ST, total = TT, grand_total = GT)
+
+    # Return
+    list(
+      times = times, files = FN, solver = solver
+    )
   }
 ))
 

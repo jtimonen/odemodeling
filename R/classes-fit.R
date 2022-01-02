@@ -2,7 +2,8 @@
 
 #' An ODE model MCMC fit (R6 class)
 #'
-#' @description Used for holding the output of `sample_odemodel()`.
+#' @description Used for holding the output of the `$sample()` method  of the
+#' [OdeModel] class.
 #' @export
 #' @family Model fit classes.
 OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
@@ -32,9 +33,10 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     },
 
     #' @description
-    #' Compute generated quantities using the model and fitted params. If any
+    #' Simulate ODE solutions (and other possible generated quantities
+    #' using) the model and fitted params. If any
     #' of the arguments are `NULL` (default), they are replaced with ones saved
-    #' in the [OdeModelFit] object.
+    #' in the [OdeModelMCMC] object.
     #'
     #' @param t0 Initial time.
     #' @param t Vector of time points.
@@ -46,13 +48,13 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' parameter draws of the [OdeModelFit] object are used.
     #' @param ... Arguments passed to the `$generate_quantities()` method of the
     #' underlying [cmdstanr::CmdStanModel] object.
-    #' @return An object of class [cmdstanr::CmdStanGQ].
-    generate_quantities = function(t0 = NULL,
-                                   t = NULL,
-                                   data = NULL,
-                                   solver = NULL,
-                                   fitted_params = NULL,
-                                   ...) {
+    #' @return An object of class [OdeModelGQ].
+    simulate = function(t0 = NULL,
+                        t = NULL,
+                        data = NULL,
+                        solver = NULL,
+                        fitted_params = NULL,
+                        ...) {
 
       # Handle input
       t0 <- replace_if_null(t0, self$t0)
@@ -90,7 +92,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
 #' An ODE model GQ fit (R6 class)
 #'
-#' @description Used for holding the output of the `$generate_quantities()`
+#' @description Used for holding the output of the `$simulate()`
 #' method of the [OdeModelMCMC] class.
 #' @export
 #' @family Model fit classes.

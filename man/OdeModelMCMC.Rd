@@ -4,7 +4,8 @@
 \alias{OdeModelMCMC}
 \title{An ODE model MCMC fit (R6 class)}
 \description{
-Used for holding the output of \code{sample_odemodel()}.
+Used for holding the output of the \verb{$sample()} method  of the
+\link{OdeModel} class.
 }
 \seealso{
 Other Model fit classes.: 
@@ -21,7 +22,7 @@ Other Model fit classes.:
 \item \href{#method-print}{\code{OdeModelMCMC$print()}}
 \item \href{#method-cmdstan_seed}{\code{OdeModelMCMC$cmdstan_seed()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelMCMC$cmdstan_init()}}
-\item \href{#method-generate_quantities}{\code{OdeModelMCMC$generate_quantities()}}
+\item \href{#method-simulate}{\code{OdeModelMCMC$simulate()}}
 \item \href{#method-clone}{\code{OdeModelMCMC$clone()}}
 }
 }
@@ -80,14 +81,15 @@ Get used 'CmdStan' init argument.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-generate_quantities"></a>}}
-\if{latex}{\out{\hypertarget{method-generate_quantities}{}}}
-\subsection{Method \code{generate_quantities()}}{
-Compute generated quantities using the model and fitted params. If any
+\if{html}{\out{<a id="method-simulate"></a>}}
+\if{latex}{\out{\hypertarget{method-simulate}{}}}
+\subsection{Method \code{simulate()}}{
+Simulate ODE solutions (and other possible generated quantities
+using) the model and fitted params. If any
 of the arguments are \code{NULL} (default), they are replaced with ones saved
-in the \link{OdeModelFit} object.
+in the \link{OdeModelMCMC} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$generate_quantities(
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$simulate(
   t0 = NULL,
   t = NULL,
   data = NULL,
@@ -119,7 +121,7 @@ underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-An object of class \link[cmdstanr:CmdStanGQ]{cmdstanr::CmdStanGQ}.
+An object of class \link{OdeModelGQ}.
 }
 }
 \if{html}{\out{<hr>}}

@@ -53,12 +53,12 @@ print(sho)
 We can sample from the prior distribution of model parameters like so.
 
 ```{r sho_prior_sample}
-sho_fit_prior <- sample_odemodel(sho, 
+sho_fit_prior <- sho$sample( 
                              t0 = 0.0, 
                              t = seq(0.1, 10, by = 0.1),
                              data = list(y0 = c(1, 0), D = 2),
                              refresh = 0,
-                             solver_conf = list(
+                             solver = rk45(
                                abs_tol = 1e-13,
                                rel_tol = 1e-13,
                                max_num_steps = 1e9
@@ -89,7 +89,7 @@ sho_fit_prior$plot_odesol(draw_inds = 45)
 # Using different solvers
 We generate quantities using a different solver and different time points.
 ```{r sho_gq, fig.width=6.5, fig.height=3.2}
-gq <- sho_fit_prior$generate_quantities(solver="bdf", t = seq(0.5,10,by=0.5))
+gq <- sho_fit_prior$simulate(solver=bdf(), t = seq(0.5,10,by=0.5))
 ```
 
 We can again plot ODE solution using one draw like so

@@ -1,11 +1,12 @@
 
 # Early development versions
 
-# odemodeling 0.0.5
+# odemodeling 0.0.6
 
   * Includes `ode_model()` for creating models.
   * Includes `stan_var()`, `stan_param()` etc. for model specification.
-  * Includes `rk45()`, `bdf()`, `rk4()` etc. for solver specification.
+  * Includes `rk45()`, `bdf()`, `midpoint()`, `rk4()` etc. for solver
+  specification.
   * Includes the `OdeModel` and `OdeModelMCMC` and `OdeModelGQ` R6 classes.
   * Implements parameter sampling via the `$sample()` method of the
   `OdeModel` class.

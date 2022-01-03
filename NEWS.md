@@ -15,4 +15,3 @@
   * Implemented other useful methods of `OdeModelMCMC` and `OdeModelGQ`
    classes are for example `$extract_unflattened()`, `$extract_odesol()`, 
    `$plot_odesol()`, `$dim()` and `$dim_odesol()`.
-

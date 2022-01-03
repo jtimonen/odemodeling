@@ -75,6 +75,7 @@ test_that("posterior sampling works", {
   expect_true(is(post_fit, "OdeModelMCMC"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
+  expect_equal(dim(post_fit$draws("log_lik")), c(10, 1, 1))
 })
 
 test_that("posterior sampling using many configurations works", {

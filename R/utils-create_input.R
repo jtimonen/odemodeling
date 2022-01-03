@@ -30,8 +30,8 @@ replace_if_null <- function(x, y) {
 
 # Solver name to numeric encoding
 solver_to_num <- function(solver) {
-  ok <- c("rk45", "bdf", "adams", "ckrk", "rk4")
-  nums <- c(1, 2, 3, 4, 11)
+  ok <- c("rk45", "bdf", "adams", "ckrk", "euler", "midpoint", "rk4")
+  nums <- c(1, 2, 3, 4, 101, 102, 103)
   checkmate::assert_choice(solver, ok)
   nums[which(ok == solver)]
 }

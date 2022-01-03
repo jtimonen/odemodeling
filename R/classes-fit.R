@@ -19,13 +19,6 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     },
 
     #' @description
-    #' Get used 'CmdStan' rng seed.
-    cmdstan_seed = function() {
-      md <- self$cmdstanr_metadata
-      md$seed
-    },
-
-    #' @description
     #' Get used 'CmdStan' init argument.
     cmdstan_init = function() {
       md <- self$cmdstanr_metadata
@@ -136,6 +129,8 @@ OdeModelGQ <- R6::R6Class("OdeModelGQ",
 #' output of the `$draws()` method of `cmdstanr_fit`.
 #' @field cmdstanr_metadata A list containing output of the `$metadata()`
 #' method of `cmdstanr_fit`.
+#' @field cmdstanr_output A list containing output of the `$output()`
+#' method of `cmdstanr_fit`.
 #' @field setup_time Time it took to call `$initialize()` when the
 #' [OdeModelFit] object was created (in seconds).
 #' @family Model fit classes.
@@ -151,6 +146,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   cmdstanr_draws = NULL,
   cmdstanr_metadata = NULL,
   setup_time = NULL,
+  cmdstanr_output = NULL,
 
   #' @description
   #' Create an [OdeModelFit] object.
@@ -178,6 +174,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     self$cmdstanr_summary <- sf$summary()
     self$cmdstanr_draws <- sf$draws()
     self$cmdstanr_metadata <- sf$metadata()
+    self$cmdstanr_output <- sf$output()
     end_time <- Sys.time()
     self$setup_time <- as.numeric(end_time - start_time)
   },
@@ -247,6 +244,13 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @return A string.
   draws_size = function() {
     format(object.size(self$draws), "Mb")
+  },
+
+  #' @description
+  #' Get used 'CmdStan' rng seed.
+  cmdstan_seed = function() {
+    md <- self$cmdstanr_metadata
+    md$seed
   },
 
   #' @description

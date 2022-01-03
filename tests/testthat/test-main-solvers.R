@@ -63,6 +63,32 @@ test_that("ckrk() works correctly", {
   expect_output(a$print(), "ckrk")
 })
 
+test_that("euler() works correctly", {
+  ns <- 2
+  a <- euler(num_steps = ns)
+  expect_true("FixedNumStepsOdeSolver" %in% class(a))
+  expect_true("OdeSolver" %in% class(a))
+  expect_equal(a$name, "euler")
+  sd <- a$standata()
+  expect_equal(sd$num_steps, ns)
+  expect_equal(sd$solver, 101)
+
+  expect_output(a$print(), "rk4")
+})
+
+test_that("midpoint() works correctly", {
+  ns <- 5
+  a <- rk4(num_steps = ns)
+  expect_true("FixedNumStepsOdeSolver" %in% class(a))
+  expect_true("OdeSolver" %in% class(a))
+  expect_equal(a$name, "midpoint")
+  sd <- a$standata()
+  expect_equal(sd$num_steps, ns)
+  expect_equal(sd$solver, 102)
+
+  expect_output(a$print(), "midpoint")
+})
+
 test_that("rk4() works correctly", {
   ns <- 3
   a <- rk4(num_steps = ns)
@@ -71,7 +97,7 @@ test_that("rk4() works correctly", {
   expect_equal(a$name, "rk4")
   sd <- a$standata()
   expect_equal(sd$num_steps, ns)
-  expect_equal(sd$solver, 11)
+  expect_equal(sd$solver, 103)
 
   expect_output(a$print(), "rk4")
 })

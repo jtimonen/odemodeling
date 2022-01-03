@@ -44,6 +44,9 @@ output of the \verb{$draws()} method of \code{cmdstanr_fit}.}
 \item{\code{cmdstanr_metadata}}{A list containing output of the \verb{$metadata()}
 method of \code{cmdstanr_fit}.}
 
+\item{\code{cmdstanr_output}}{A list containing output of the \verb{$output()}
+method of \code{cmdstanr_fit}.}
+
 \item{\code{setup_time}}{Time it took to call \verb{$initialize()} when the
 \link{OdeModelFit} object was created (in seconds).}
 }
@@ -61,6 +64,7 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-nchains}{\code{OdeModelFit$nchains()}}
 \item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
 \item \href{#method-draws_size}{\code{OdeModelFit$draws_size()}}
+\item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
 \item \href{#method-get_t}{\code{OdeModelFit$get_t()}}
 \item \href{#method-get_t0}{\code{OdeModelFit$get_t0()}}
@@ -204,6 +208,16 @@ Get size of the draws object in Mb.
 \subsection{Returns}{
 A string.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cmdstan_seed"></a>}}
+\if{latex}{\out{\hypertarget{method-cmdstan_seed}{}}}
+\subsection{Method \code{cmdstan_seed()}}{
+Get used 'CmdStan' rng seed.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$cmdstan_seed()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cmdstan_version"></a>}}

@@ -6,6 +6,8 @@
 \alias{bdf}
 \alias{adams}
 \alias{ckrk}
+\alias{euler}
+\alias{midpoint}
 \alias{rk4}
 \title{Creating ODE solvers}
 \usage{
@@ -16,6 +18,10 @@ bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
 adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
 
 ckrk(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
+
+euler(num_steps = 1)
+
+midpoint(num_steps = 1)
 
 rk4(num_steps = 1)
 }
@@ -50,6 +56,12 @@ steps between consequent output time points
 \item \code{adams}: Create an Adams solver (\link{AdaptiveOdeSolver})
 
 \item \code{ckrk}: Create a Cash-Karp solver (\link{AdaptiveOdeSolver}).
+
+\item \code{euler}: Create a forward Euler solver
+(\link{FixedNumStepsOdeSolver})
+
+\item \code{midpoint}: Create an explcit midpoint solver
+(\link{FixedNumStepsOdeSolver})
 
 \item \code{rk4}: Create an RK4 solver (\link{FixedNumStepsOdeSolver})
 }}

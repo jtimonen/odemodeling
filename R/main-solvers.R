@@ -64,6 +64,20 @@ ckrk <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
   )
 }
 
+#' @describeIn odesolvers Create a forward Euler solver
+#' ([FixedNumStepsOdeSolver])
+#' @export
+euler <- function(num_steps = 1) {
+  FixedNumStepsOdeSolver$new(name = "euler", num_steps = num_steps)
+}
+
+#' @describeIn odesolvers Create an explcit midpoint solver
+#' ([FixedNumStepsOdeSolver])
+#' @export
+midpoint <- function(num_steps = 1) {
+  FixedNumStepsOdeSolver$new(name = "midpoint", num_steps = num_steps)
+}
+
 #' @describeIn odesolvers Create an RK4 solver ([FixedNumStepsOdeSolver])
 #' @export
 rk4 <- function(num_steps = 1) {

@@ -98,13 +98,23 @@ test_that("generating quantities works", {
     fit$simulate(t0 = 4.5),
     "each value in t must be strictly larger than given t0"
   )
-  a <- fit$simulate(solver = bdf(), t = c(1, 2, 3, 12))
-  expect_output(print(a), "An object of class OdeModelGQ")
-  idx <- 7
-  y_sol <- a$extract_odesol()[idx, , ]
-  I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
-  expect_true(is(a, "OdeModelGQ"))
-  expect_equal(dim(y_sol), c(4, 6))
-  expect_equal(dim(I_gen), c(4, 3))
-  expect_equal(a$get_t0(), 0.0)
+  tout <- c(1, 2, 3, 5)
+  sims <- list()
+  sims[[1]] <- fit$simulate(solver = rk45(), t = tout)
+  sims[[2]] <- fit$simulate(solver = bdf(), t = tout)
+  sims[[3]] <- fit$simulate(solver = adams(), t = tout)
+  sims[[4]] <- fit$simulate(solver = ckrk(), t = tout)
+  sims[[5]] <- fit$simulate(solver = euler(num_steps = 30), t = tout)
+  sims[[6]] <- fit$simulate(solver = midpoint(num_steps = 30), t = tout)
+  sims[[7]] <- fit$simulate(solver = rk4(num_steps = 30), t = tout)
+  for (a in sims) {
+    expect_output(print(a), "An object of class OdeModelGQ")
+    idx <- 7
+    y_sol <- a$extract_odesol()[idx, , ]
+    I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
+    expect_true(is(a, "OdeModelGQ"))
+    expect_equal(dim(y_sol), c(4, 6))
+    expect_equal(dim(I_gen), c(4, 3))
+    expect_equal(a$get_t0(), 0.0)
+  }
 })

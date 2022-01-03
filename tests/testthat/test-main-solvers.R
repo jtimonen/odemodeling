@@ -73,12 +73,12 @@ test_that("euler() works correctly", {
   expect_equal(sd$num_steps, ns)
   expect_equal(sd$solver, 101)
 
-  expect_output(a$print(), "rk4")
+  expect_output(a$print(), "euler")
 })
 
 test_that("midpoint() works correctly", {
   ns <- 5
-  a <- rk4(num_steps = ns)
+  a <- midpoint(num_steps = ns)
   expect_true("FixedNumStepsOdeSolver" %in% class(a))
   expect_true("OdeSolver" %in% class(a))
   expect_equal(a$name, "midpoint")

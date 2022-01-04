@@ -155,6 +155,7 @@ test_that("workflow works", {
   N <- length(t)
   for (a in post_sims) {
     expect_output(print(a), "An object of class OdeModelGQ")
+    expect_equal(a$cmdstan_seed(), SEED)
     idx <- 7
     y_sol <- a$extract_odesol()[idx, , ]
     I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
@@ -162,6 +163,6 @@ test_that("workflow works", {
     expect_equal(dim(y_sol), c(N, 6))
     expect_equal(dim(I_gen), c(N, 3))
     expect_equal(a$get_t0(), 0.0)
-    expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
+    expect_equal(dim(a$loglik()), c(10, 2, 1))
   }
 })

@@ -116,17 +116,22 @@ ode_model <- function(N,
       origin = "model",
       code = paste0("{\n y_sol_gq = y_sol_tpar;  \n}")
     )
-    log_lik <- stan_transform(
-      decl = stan_var("log_lik", "real"),
+    log_lik_tpar <- stan_transform(
+      decl = stan_var("log_lik_tpar", "real"),
       origin = "parameters",
-      code = paste0("log_lik = log_likelihood(", loglik_args, ");")
+      code = paste0("log_lik_tpar = log_likelihood(", loglik_args, ");")
+    )
+    log_lik_gq <- stan_transform(
+      decl = stan_var("log_lik_gq", "real"),
+      origin = "model",
+      code = paste0("{\n log_lik_gq = log_lik_tpar; \n}")
     )
   }
 
   if (!has_loglik) {
     other_vars_add <- list(y_sol_gq)
   } else {
-    other_vars_add <- list(y_sol_tpar, y_sol_gq, log_lik)
+    other_vars_add <- list(y_sol_tpar, y_sol_gq, log_lik_tpar, log_lik_gq)
   }
 
   other_vars <- c(other_vars_add, other_vars)

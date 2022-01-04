@@ -342,7 +342,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     if (!hl) {
       stop("The fitted model has no likelihood function specified.")
     }
-    self$draws("log_lik")
+    self$draws("log_lik_gq")
   },
 
   #' @description

@@ -14,7 +14,7 @@ test_that("model has correct names", {
   expect_equal(nam1, c("beta", "gamma", "phi_inv"))
   expect_equal(nam2, c(
     "beta", "gamma", "phi_inv", "phi", "y_sol_tpar",
-    "log_lik"
+    "log_lik_tpar"
   ))
   nam3_real <- c(
     "G", "N", "D", "pop_sizes", "I0", "contacts",

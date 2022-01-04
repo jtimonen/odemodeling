@@ -121,7 +121,7 @@ generate_model_block <- function(params, prior_mode) {
   if (prior_mode) {
     target <- ""
   } else {
-    target <- "target += log_lik;"
+    target <- "target += log_lik_tpar;"
   }
   generate_block("model", c(codes, target))
 }

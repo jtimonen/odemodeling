@@ -153,6 +153,8 @@ test_that("workflow works", {
   post_sims[[6]] <- sfun(solver = midpoint(num_steps = 30))
   post_sims[[7]] <- sfun(solver = rk4(num_steps = 30))
   N <- length(t)
+
+  # Simulation works with all solvers
   for (a in post_sims) {
     expect_output(print(a), "An object of class OdeModelGQ")
     expect_equal(a$cmdstan_seed(), SEED)
@@ -164,5 +166,13 @@ test_that("workflow works", {
     expect_equal(dim(I_gen), c(N, 3))
     expect_equal(a$get_t0(), 0.0)
     expect_equal(dim(a$loglik()), c(10, 2, 1))
+  }
+
+  # Simulation actually gives different result for each solver
+  for (j in 2:length(post_sims)) {
+    d1 <- max_abs_loglik_diff(post_sims[[1]], post_sims[[j]])
+    d2 <- max_abs_odesol_diff(post_sims[[1]], post_sims[[j]])
+    expect_gt(d1, 1e-10)
+    expect_gt(d2, 1e-10)
   }
 })

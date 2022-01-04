@@ -335,6 +335,17 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
+  #' Extract the log likelihood using each parameter draw.
+  #' @return A [posterior::draws_array].
+  loglik = function() {
+    hl <- self$model$has_likelihood
+    if (!hl) {
+      stop("The fitted model has no likelihood function specified.")
+    }
+    self$draws("log_lik")
+  },
+
+  #' @description
   #' Extract the ODE solutions using each parameter draw, in a
   #' flattened data frame format that is easy to pass as data
   #' to for example [ggplot2::ggplot()].

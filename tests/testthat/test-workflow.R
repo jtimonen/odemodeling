@@ -48,6 +48,7 @@ test_that("prior sampling works", {
   expect_equal(dim(fit$summary()), c(146, 10))
   expect_equal(fit$cmdstan_seed(), SEED)
   expect_equal(fit$cmdstan_init(), 2)
+  expect_error(fit$loglik(), "model has no likelihood function specified")
 })
 
 test_that("plotting ODE solutions works", {
@@ -64,9 +65,10 @@ test_that("posterior sampling works", {
   post_fit <- post$sample(
     t0 = t0, t = t,
     data = dat,
-    iter_warmup = 10, iter_sampling = 10, chains = 1, refresh = 0,
+    iter_warmup = 10, iter_sampling = 10, chains = 2, refresh = 0,
     init = 0, step_size = 0.1,
-    seed = SEED
+    seed = SEED,
+    solver = bdf(abs_tol = 1e-4, rel_tol = 1e-4, max_num_steps = 1e3)
   )
 
   idx <- 7
@@ -76,6 +78,7 @@ test_that("posterior sampling works", {
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
   expect_equal(dim(post_fit$draws("log_lik")), c(10, 1, 1))
+  expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
 })
 
 test_that("posterior sampling using many configurations works", {
@@ -116,5 +119,38 @@ test_that("generating quantities works", {
     expect_equal(dim(y_sol), c(4, 6))
     expect_equal(dim(I_gen), c(4, 3))
     expect_equal(a$get_t0(), 0.0)
+    expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
+  }
+})
+
+
+test_that("workflow works", {
+  sfun <- function(solver) {
+    post_fit$simulate(
+      t0 = t0, t = t,
+      data = dat,
+      seed = SEED,
+      solver = solver
+    )
+  }
+
+  post_sims <- list()
+  post_sims[[1]] <- sfun(solver = rk45())
+  post_sims[[2]] <- sfun(solver = bdf())
+  post_sims[[3]] <- sfun(solver = adams())
+  post_sims[[4]] <- sfun(solver = ckrk())
+  post_sims[[5]] <- sfun(solver = euler())
+  post_sims[[6]] <- sfun(solver = midpoint())
+  post_sims[[7]] <- sfun(solver = rk4())
+  for (a in post_sims) {
+    expect_output(print(a), "An object of class OdeModelGQ")
+    idx <- 7
+    y_sol <- a$extract_odesol()[idx, , ]
+    I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
+    expect_true(is(a, "OdeModelGQ"))
+    expect_equal(dim(y_sol), c(4, 6))
+    expect_equal(dim(I_gen), c(4, 3))
+    expect_equal(a$get_t0(), 0.0)
+    expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
   }
 })

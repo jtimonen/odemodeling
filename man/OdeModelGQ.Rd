@@ -39,6 +39,7 @@ Other Model fit classes.:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t0">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t0}{\code{odemodeling::OdeModelFit$get_t0()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="info">}\href{../../odemodeling/html/OdeModelFit.html#method-info}{\code{odemodeling::OdeModelFit$info()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="initialize">}\href{../../odemodeling/html/OdeModelFit.html#method-initialize}{\code{odemodeling::OdeModelFit$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="loglik">}\href{../../odemodeling/html/OdeModelFit.html#method-loglik}{\code{odemodeling::OdeModelFit$loglik()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="nchains">}\href{../../odemodeling/html/OdeModelFit.html#method-nchains}{\code{odemodeling::OdeModelFit$nchains()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="ndraws">}\href{../../odemodeling/html/OdeModelFit.html#method-ndraws}{\code{odemodeling::OdeModelFit$ndraws()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="niterations">}\href{../../odemodeling/html/OdeModelFit.html#method-niterations}{\code{odemodeling::OdeModelFit$niterations()}}\out{</span>}

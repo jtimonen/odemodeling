@@ -72,6 +72,7 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
 \item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
 \item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-loglik}{\code{OdeModelFit$loglik()}}
 \item \href{#method-extract_odesol_df}{\code{OdeModelFit$extract_odesol_df()}}
 \item \href{#method-plot_odesol}{\code{OdeModelFit$plot_odesol()}}
 \item \href{#method-clone}{\code{OdeModelFit$clone()}}
@@ -331,6 +332,19 @@ unflattened base \R array format.
 A base \R array of dimension \code{c(num_draws, N, D)} where
 \code{num_draws} is the total number of draws and \code{N} is the number of
 time points and \code{D} is the number of ODE system dimensions.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-loglik"></a>}}
+\if{latex}{\out{\hypertarget{method-loglik}{}}}
+\subsection{Method \code{loglik()}}{
+Extract the log likelihood using each parameter draw.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$loglik()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \link[posterior:draws_array]{posterior::draws_array}.
 }
 }
 \if{html}{\out{<hr>}}

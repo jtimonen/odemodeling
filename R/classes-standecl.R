@@ -455,7 +455,7 @@ StanParameter <- R6::R6Class("StanParameter",
 #'
 #' @field decl The variable declaration.
 #' @field code The code that assigns to the declared variable.
-#' @field origin Either `"data"`, `"param"`, or `"model"`.
+#' @field origin Either `"data"`, `"parameters"`, or `"model"`.
 StanTransformation <- R6::R6Class("StanTransformation",
   public = list(
     decl = NULL,
@@ -466,11 +466,11 @@ StanTransformation <- R6::R6Class("StanTransformation",
     #' Create a [StanTransformation] object.
     #'
     #' @param decl The underlying variable.
-    #' @param origin Must be either `"data"`, `"param"`, or `"model"`.
+    #' @param origin Must be either `"data"`, `"parameters"`, or `"model"`.
     #' @param code The code that assigns to the declared variable.
     initialize = function(decl, origin = "model", code = "") {
       checkmate::assert_class(decl, "StanDeclaration")
-      checkmate::assert_choice(origin, c("data", "param", "model"))
+      checkmate::assert_choice(origin, c("data", "parameters", "model"))
       checkmate::assert_string(code, min.chars = 0)
       code <- trimws(code, which = "right")
       self$decl <- decl
@@ -483,7 +483,7 @@ StanTransformation <- R6::R6Class("StanTransformation",
     print = function() {
       if (self$origin == "data") {
         type_desc <- "Transformed data"
-      } else if (self$origin == "param") {
+      } else if (self$origin == "parameters") {
         type_desc <- "Transformed parameter"
       } else {
         type_desc <- "Generated quantity"

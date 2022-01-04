@@ -12,7 +12,10 @@ test_that("model has correct names", {
   nam2 <- sm$param_names(inc_transformed = T)
   nam3 <- sm$data_names()
   expect_equal(nam1, c("beta", "gamma", "phi_inv"))
-  expect_equal(nam2, c("beta", "gamma", "phi_inv", "phi", "y_sol", "log_lik"))
+  expect_equal(nam2, c(
+    "beta", "gamma", "phi_inv", "phi", "y_sol_tpar",
+    "log_lik"
+  ))
   nam3_real <- c(
     "G", "N", "D", "pop_sizes", "I0", "contacts",
     "delta", "I_data", "t0", "t", "abs_tol", "rel_tol",

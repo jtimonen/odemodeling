@@ -10,7 +10,7 @@ stan_transform(decl, origin = "model", code = "")
 \item{decl}{The Stan variable declaration for the quantity.
 Must be an object that inherits from \link{StanDeclaration}.}
 
-\item{origin}{Must be either \code{"data"}, \code{"param"}, or \code{"model"}.
+\item{origin}{Must be either \code{"data"}, \code{"parameters"}, or \code{"model"}.
 These correspond to the \verb{transformed data}, \verb{transformed parameters}, and
 \verb{generated quantities} blocks, respectively.}
 

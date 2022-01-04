@@ -51,7 +51,7 @@ example_ode_model_gsir <- function(prior_only, ...) {
   phi_inv_var <- stan_vector("phi_inv", lower = 0, length = G)
   phi_var <- stan_vector("phi", lower = 0, length = G)
   phi_inv <- stan_param(phi_inv_var, "phi_inv ~ exponential(5);")
-  phi <- stan_transform(phi_var, "param", "phi = inv(phi_inv);")
+  phi <- stan_transform(phi_var, "parameters", "phi = inv(phi_inv);")
 
   # All loglik variables
   loglik_vars <- list(delta, I_data, phi_inv, phi)
@@ -94,7 +94,7 @@ example_ode_model_gsir <- function(prior_only, ...) {
   I_gen_code <- "
     for(n in 1:N) {
       for(g in 1:G) {
-        I_gen[n,g] = neg_binomial_2_rng(y_sol[n][G+g] + delta, phi[g]);
+        I_gen[n,g] = neg_binomial_2_rng(y_sol_gq[n][G+g] + delta, phi[g]);
       }
     }
   "

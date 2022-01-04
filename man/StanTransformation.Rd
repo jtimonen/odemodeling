@@ -15,7 +15,7 @@ A Stan transformation
 
 \item{\code{code}}{The code that assigns to the declared variable.}
 
-\item{\code{origin}}{Either \code{"data"}, \code{"param"}, or \code{"model"}.}
+\item{\code{origin}}{Either \code{"data"}, \code{"parameters"}, or \code{"model"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -41,7 +41,7 @@ Create a \link{StanTransformation} object.
 \describe{
 \item{\code{decl}}{The underlying variable.}
 
-\item{\code{origin}}{Must be either \code{"data"}, \code{"param"}, or \code{"model"}.}
+\item{\code{origin}}{Must be either \code{"data"}, \code{"parameters"}, or \code{"model"}.}
 
 \item{\code{code}}{The code that assigns to the declared variable.}
 }

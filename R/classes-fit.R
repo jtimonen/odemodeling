@@ -298,7 +298,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @return A numeric vector of length 2, where first element is the
   #' number of time points and second element is the ODE system dimension.
   dim_odesol = function() {
-    a <- self$dim(variable = "y_sol")
+    a <- self$dim(variable = "y_sol_gq")
     internal_assert_len(a, 2, "dim_odesol")
     return(a)
   },
@@ -312,7 +312,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' obtained as `self$dim(variable)`.
   extract_unflattened = function(variable) {
     draws <- self$draws(variable = variable)
-    if (variable == "y_sol") {
+    if (variable == "y_sol_gq") {
       stanvar_dim <- self$dim_odesol()
     } else {
       stanvar_dim <- self$dim(variable = variable)
@@ -329,7 +329,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' `num_draws` is the total number of draws and `N` is the number of
   #' time points and `D` is the number of ODE system dimensions.
   extract_odesol = function() {
-    arr <- self$extract_unflattened(variable = "y_sol")
+    arr <- self$extract_unflattened(variable = "y_sol_gq")
     internal_assert_len(dim(arr), 3, "extract_odesol_unflattened")
     return(arr)
   },

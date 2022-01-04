@@ -138,7 +138,7 @@ stan_param <- function(decl, prior_code = "") {
 #'
 #' @param decl The Stan variable declaration for the quantity.
 #'  Must be an object that inherits from [StanDeclaration].
-#' @param origin Must be either `"data"`, `"param"`, or `"model"`.
+#' @param origin Must be either `"data"`, `"parameters"`, or `"model"`.
 #' These correspond to the `transformed data`, `transformed parameters`, and
 #' `generated quantities` blocks, respectively.
 #' @param code A string of Stan code that defines how the quantity is

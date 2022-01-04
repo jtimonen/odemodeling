@@ -52,7 +52,7 @@ is_tparam <- function(x) {
   if (!is_t) {
     return(FALSE)
   }
-  x$origin == "param"
+  x$origin == "parameters"
 }
 
 # Is generated quantitity

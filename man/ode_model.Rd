@@ -65,7 +65,7 @@ These will go to different blocks of the 'Stan' model code so that
 \item \link{StanParameter}s go to \code{parameters}
 \item \link{StanTransformation}s with origin \code{"data"} go to
 \verb{transformed data}
-\item \link{StanTransformation}s with origin \code{"param"} go to
+\item \link{StanTransformation}s with origin \code{"parameters"} go to
 \verb{transformed parameters}
 \item \link{StanTransformation}s with origin \code{"model"} go to
 \verb{generated quantities}

@@ -1,9 +1,6 @@
-SEED <- 555
+# Setup -------------------------------------------------------------------
 
-# Create models
-prior <- example_ode_model(compile = F, prior_only = TRUE)
-prior$reinit()
-post <- example_ode_model()
+SEED <- 555
 
 # Create data
 num_tp <- 15
@@ -19,6 +16,17 @@ dat <- list(
   delta = 0.001,
   I_data = matrix(1, num_tp, G)
 )
+
+
+# Model compilation -------------------------------------------------------
+
+# Create models
+prior <- example_ode_model(compile = F, prior_only = TRUE)
+prior$reinit()
+post <- example_ode_model()
+
+
+# Prior sampling ----------------------------------------------------------
 
 # Sample from prior
 fit <- prior$sample(
@@ -58,26 +66,25 @@ test_that("plotting ODE solutions works", {
   expect_s3_class(plt, "ggplot")
 })
 
+# Posterior sampling ------------------------------------------------------
+
+post_fit <- post$sample(
+  t0 = t0, t = t,
+  data = dat,
+  iter_warmup = 10, iter_sampling = 10, chains = 2, refresh = 0,
+  init = 0, step_size = 0.1,
+  seed = SEED,
+  solver = bdf(abs_tol = 1e-4, rel_tol = 1e-4, max_num_steps = 1e3)
+)
+
 test_that("posterior sampling works", {
   expect_true(post$has_likelihood)
-
-  # Posterior sampling
-  post_fit <- post$sample(
-    t0 = t0, t = t,
-    data = dat,
-    iter_warmup = 10, iter_sampling = 10, chains = 2, refresh = 0,
-    init = 0, step_size = 0.1,
-    seed = SEED,
-    solver = bdf(abs_tol = 1e-4, rel_tol = 1e-4, max_num_steps = 1e3)
-  )
-
   idx <- 7
   y_sol <- post_fit$extract_odesol()[idx, , ]
   I_gen <- post_fit$extract_unflattened(variable = "I_gen")[idx, , ]
   expect_true(is(post_fit, "OdeModelMCMC"))
   expect_equal(dim(y_sol), c(15, 6))
   expect_equal(dim(I_gen), c(15, 3))
-  expect_equal(dim(post_fit$draws("log_lik")), c(10, 1, 1))
   expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
 })
 
@@ -95,6 +102,9 @@ test_that("posterior sampling using many configurations works", {
   expect_length(res$times$grand_total, 4)
   unlink("results", recursive = TRUE)
 })
+
+
+# Generating quantities ---------------------------------------------------
 
 test_that("generating quantities works", {
   expect_error(
@@ -139,17 +149,18 @@ test_that("workflow works", {
   post_sims[[2]] <- sfun(solver = bdf())
   post_sims[[3]] <- sfun(solver = adams())
   post_sims[[4]] <- sfun(solver = ckrk())
-  post_sims[[5]] <- sfun(solver = euler())
-  post_sims[[6]] <- sfun(solver = midpoint())
-  post_sims[[7]] <- sfun(solver = rk4())
+  post_sims[[5]] <- sfun(solver = euler(num_steps = 30))
+  post_sims[[6]] <- sfun(solver = midpoint(num_steps = 30))
+  post_sims[[7]] <- sfun(solver = rk4(num_steps = 30))
+  N <- length(t)
   for (a in post_sims) {
     expect_output(print(a), "An object of class OdeModelGQ")
     idx <- 7
     y_sol <- a$extract_odesol()[idx, , ]
     I_gen <- a$extract_unflattened(variable = "I_gen")[idx, , ]
     expect_true(is(a, "OdeModelGQ"))
-    expect_equal(dim(y_sol), c(4, 6))
-    expect_equal(dim(I_gen), c(4, 3))
+    expect_equal(dim(y_sol), c(N, 6))
+    expect_equal(dim(I_gen), c(N, 3))
     expect_equal(a$get_t0(), 0.0)
     expect_equal(dim(post_fit$loglik()), c(10, 2, 1))
   }

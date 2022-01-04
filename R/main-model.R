@@ -18,7 +18,7 @@
 #'   \item [StanParameter]s go to `parameters`
 #'   \item [StanTransformation]s with origin `"data"` go to
 #'   `transformed data`
-#'   \item [StanTransformation]s with origin `"param"` go to
+#'   \item [StanTransformation]s with origin `"parameters"` go to
 #'   `transformed parameters`
 #'   \item [StanTransformation]s with origin `"model"` go to
 #'   `generated quantities`
@@ -80,7 +80,7 @@ ode_model <- function(N,
   if (has_loglik) {
     loglik_add_signature <- generate_add_signature(loglik_vars, FALSE)
     loglik_add_args <- generate_add_signature(loglik_vars, TRUE)
-    loglik_args <- append_to_signature("y_sol", loglik_add_args)
+    loglik_args <- append_to_signature("y_sol_tpar", loglik_add_args)
   } else {
     loglik_add_signature <- ""
     loglik_add_args <- ""
@@ -100,24 +100,33 @@ ode_model <- function(N,
   )
   D <- get_dims(odefun_init)[[1]]
   if (!has_loglik) {
-    y_sol_origin <- "model"
+    y_sol_gq <- stan_transform(
+      decl = stan_vector_array("y_sol_gq", dims = list(N), length = D),
+      origin = "model",
+      code = paste0("y_sol_gq = solve_ode(", solve_ode_args, ");")
+    )
   } else {
-    y_sol_origin <- "param"
+    y_sol_tpar <- stan_transform(
+      decl = stan_vector_array("y_sol_tpar", dims = list(N), length = D),
+      origin = "parameters",
+      code = paste0("y_sol_tpar = solve_ode(", solve_ode_args, ");")
+    )
+    y_sol_gq <- stan_transform(
+      decl = stan_vector_array("y_sol_gq", dims = list(N), length = D),
+      origin = "model",
+      code = paste0("{\n y_sol_gq = y_sol_tpar;  \n}")
+    )
     log_lik <- stan_transform(
       decl = stan_var("log_lik", "real"),
-      origin = "param",
+      origin = "parameters",
       code = paste0("log_lik = log_likelihood(", loglik_args, ");")
     )
   }
-  y_sol <- stan_transform(
-    decl = stan_vector_array("y_sol", dims = list(N), length = D),
-    origin = y_sol_origin,
-    code = paste0("y_sol = solve_ode(", solve_ode_args, ");")
-  )
+
   if (!has_loglik) {
-    other_vars_add <- list(y_sol)
+    other_vars_add <- list(y_sol_gq)
   } else {
-    other_vars_add <- list(y_sol, log_lik)
+    other_vars_add <- list(y_sol_tpar, y_sol_gq, log_lik)
   }
 
   other_vars <- c(other_vars_add, other_vars)

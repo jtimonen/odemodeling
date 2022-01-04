@@ -68,6 +68,6 @@ test_that("stan_transform() works correctly for gq", {
 test_that("stan_param() works correctly for transformed param", {
   # Scalar parameter
   b <- stan_var("beta")
-  y <- stan_transform(b, origin = "param", code = "beta = alpha + 1;")
+  y <- stan_transform(b, origin = "parameters", code = "beta = alpha + 1;")
   expect_output(print(y), "Transformed parameter:")
 })

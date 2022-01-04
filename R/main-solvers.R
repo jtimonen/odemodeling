@@ -71,7 +71,7 @@ euler <- function(num_steps = 1) {
   FixedNumStepsOdeSolver$new(name = "euler", num_steps = num_steps)
 }
 
-#' @describeIn odesolvers Create an explcit midpoint solver
+#' @describeIn odesolvers Create an explicit midpoint solver
 #' ([FixedNumStepsOdeSolver])
 #' @export
 midpoint <- function(num_steps = 1) {

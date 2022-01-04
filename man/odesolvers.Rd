@@ -60,7 +60,7 @@ steps between consequent output time points
 \item \code{euler}: Create a forward Euler solver
 (\link{FixedNumStepsOdeSolver})
 
-\item \code{midpoint}: Create an explcit midpoint solver
+\item \code{midpoint}: Create an explicit midpoint solver
 (\link{FixedNumStepsOdeSolver})
 
 \item \code{rk4}: Create an RK4 solver (\link{FixedNumStepsOdeSolver})

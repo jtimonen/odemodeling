@@ -4,11 +4,20 @@
 \alias{compare_odefits}
 \alias{max_abs_odesol_diff}
 \alias{max_abs_loglik_diff}
+\alias{log_ratios}
+\alias{psis_relative_eff}
+\alias{psis}
 \title{Compare two objects that contain ODE solutions and ODE model likelihoods}
 \usage{
 max_abs_odesol_diff(x, y)
 
 max_abs_loglik_diff(x, y)
+
+log_ratios(x, y)
+
+psis_relative_eff(x, y)
+
+psis(x, y)
 }
 \arguments{
 \item{x}{An object of class \link{OdeModelMCMC} or \link{OdeModelGQ}.}
@@ -21,9 +30,18 @@ Compare two objects that contain ODE solutions and ODE model likelihoods
 \section{Functions}{
 \itemize{
 \item \code{max_abs_odesol_diff}: Compute maximum absolute difference in
-ODE solutions
+ODE solutions of \code{x} and \code{y}.
 
 \item \code{max_abs_loglik_diff}: Compute maximum absolute differences in
-log likelihoods
+log likelihoods of \code{x} and \code{y}.
+
+\item \code{log_ratios}: Compute log likelihood ratios (on log scale),
+i.e. just \code{x$loglik() - y$loglik()}.
+
+\item \code{psis_relative_eff}: Compute relative efficiency needed for PSIS,
+using \code{\link[loo:relative_eff]{loo::relative_eff()}}.
+
+\item \code{psis}: Call \code{\link[loo:psis]{loo::psis()}} using the log likelihoods
+from \code{x} and \code{y}.
 }}
 

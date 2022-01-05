@@ -46,8 +46,8 @@ object.
 \item See the \verb{$simulate()} method of the \link{OdeModelMCMC} class.
 \item See methods of the \link{OdeModelGQ} class for studying the returned
 object.
-\item Different ODE model simulations and fits can be compared
-using \code{\link[=max_abs_odesol_diff]{max_abs_odesol_diff()}} and \code{\link[=max_abs_loglik_diff]{max_abs_loglik_diff()}}.
+\item See \code{\link{compare_odefits}} for functions to compare
+different ODE model simulations and fits.
 }
 }
 

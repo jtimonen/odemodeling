@@ -169,6 +169,16 @@ test_that("workflow works", {
     expect_equal(dim(I_gen), c(N, 3))
     expect_equal(a$get_t0(), 0.0)
     expect_equal(dim(a$loglik()), c(10, 2, 1))
+
+    # PSIS works
+    expect_warning(
+      {
+        is <- psis(post_fit, a)
+      },
+      "Not enough tail samples"
+    )
+    expect_equal(names(is), c("log_weights", "diagnostics"))
+    expect_equal(length(is$log_weights), 20) # 10 * 2
   }
 
   # Simulation actually gives different result for each solver

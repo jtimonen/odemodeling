@@ -1,6 +1,6 @@
 # Setup -------------------------------------------------------------------
 
-SEED <- 555
+SEED <- 353
 
 # Create data
 num_tp <- 15
@@ -68,13 +68,14 @@ test_that("plotting ODE solutions works", {
 
 # Posterior sampling ------------------------------------------------------
 
+post_fit_solver <- bdf(abs_tol = 1e-4, rel_tol = 1e-4, max_num_steps = 1e3)
 post_fit <- post$sample(
   t0 = t0, t = t,
   data = dat,
   iter_warmup = 10, iter_sampling = 10, chains = 2, refresh = 0,
   init = 0, step_size = 0.1,
   seed = SEED,
-  solver = bdf(abs_tol = 1e-4, rel_tol = 1e-4, max_num_steps = 1e3)
+  solver = post_fit_solver
 )
 
 test_that("posterior sampling works", {
@@ -175,4 +176,11 @@ test_that("workflow works", {
     expect_gt(d1, 1e-10)
     expect_gt(d2, 1e-10)
   }
+
+  # Simulation with the same solver as during sampling
+  post_sim_same <- sfun(post_fit_solver)
+  d1 <- max_abs_loglik_diff(post_fit, post_sim_same)
+  d2 <- max_abs_odesol_diff(post_fit, post_sim_same)
+  expect_lt(d1, 1e-9) # should be 0 but CSV conversion messes this up
+  expect_lt(d2, 1e-9) # should be 0 but CSV conversion messes this up
 })

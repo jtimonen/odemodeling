@@ -28,7 +28,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' (will be deepcopied).
   #' @param ode_dim ODE system dimension variable (will be deepcopied).
   initialize = function(has_likelihood, stanmodel, sig_figs, t_dim, ode_dim) {
-    checkmate::assert_integerish(sig_figs, lower = 3)
+    checkmate::assert_integerish(sig_figs, lower = 3, upper = 18)
     checkmate::assert_class(t_dim, "StanDimension")
     checkmate::assert_class(ode_dim, "StanDimension")
     self$has_likelihood <- has_likelihood

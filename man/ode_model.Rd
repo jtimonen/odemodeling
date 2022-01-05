@@ -14,7 +14,7 @@ ode_model(
   other_vars = list(),
   verbose = FALSE,
   compile = TRUE,
-  sig_figs = 12
+  sig_figs = 18
 )
 }
 \arguments{

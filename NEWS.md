@@ -1,7 +1,6 @@
-
 # Early development versions
 
-# odemodeling 0.0.7
+# odemodeling 0.0.8
 
   * Includes `ode_model()` for creating models.
   * Includes `stan_var()`, `stan_param()` etc. for model specification.
@@ -16,5 +15,5 @@
    classes are for example `$extract_unflattened()`, `$extract_odesol()`, 
    `$plot_odesol()`, `$dim()` and `$dim_odesol()`.
   * Implements some comparison functions between `OdeModelMCMC` and 
-  `OdeModelGQ` objects, such as `max_abs_odesol_diff()` and
-  `max_abs_loglik_diff()`.
+  `OdeModelGQ` objects, such as `log_ratios()`, `psis()`, 
+  `max_abs_odesol_diff()` and `max_abs_loglik_diff()`.

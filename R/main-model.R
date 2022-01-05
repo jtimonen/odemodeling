@@ -41,7 +41,7 @@
 #' @param sig_figs Number of significant figures to use in all 'CmdStan'
 #' calls.
 #' @return An object of class [OdeModel].
-#' @family setup functions
+#' @family model constructor functions
 ode_model <- function(N,
                       odefun_vars = list(),
                       odefun_body = "",

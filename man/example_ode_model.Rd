@@ -18,7 +18,7 @@ An object of class \code{OdeModel}.
 Create an example ODE model
 }
 \seealso{
-Other setup functions: 
+Other model constructor functions: 
 \code{\link{ode_model}()}
 }
-\concept{setup functions}
+\concept{model constructor functions}

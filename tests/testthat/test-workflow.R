@@ -135,16 +135,18 @@ test_that("generating quantities works", {
 })
 
 
-test_that("workflow works", {
-  sfun <- function(solver) {
-    post_fit$simulate(
-      t0 = t0, t = t,
-      data = dat,
-      seed = SEED,
-      solver = solver
-    )
-  }
+# Workflow ----------------------------------------------------------------
 
+sfun <- function(solver) {
+  post_fit$simulate(
+    t0 = t0, t = t,
+    data = dat,
+    seed = SEED,
+    solver = solver
+  )
+}
+
+test_that("workflow works", {
   post_sims <- list()
   post_sims[[1]] <- sfun(solver = rk45())
   post_sims[[2]] <- sfun(solver = bdf())
@@ -176,8 +178,9 @@ test_that("workflow works", {
     expect_gt(d1, 1e-10)
     expect_gt(d2, 1e-10)
   }
+})
 
-  # Simulation with the same solver as during sampling
+test_that("sim with same solver as during sampling gives same output", {
   post_sim_same <- sfun(post_fit_solver)
   d1 <- max_abs_loglik_diff(post_fit, post_sim_same)
   d2 <- max_abs_odesol_diff(post_fit, post_sim_same)

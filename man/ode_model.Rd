@@ -72,7 +72,7 @@ These will go to different blocks of the 'Stan' model code so that
 }
 }
 \seealso{
-Other setup functions: 
+Other model constructor functions: 
 \code{\link{example_ode_model}()}
 }
-\concept{setup functions}
+\concept{model constructor functions}

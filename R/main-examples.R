@@ -4,7 +4,7 @@
 #' @param prior_only Create a prior-only version of the model?
 #' @param ... Additional arguments to [ode_model()].
 #' @return An object of class `OdeModel`.
-#' @family setup functions
+#' @family model constructor functions
 example_ode_model <- function(prior_only = FALSE, ...) {
   example_ode_model_gsir(prior_only, ...)
 }

@@ -9,5 +9,5 @@ test_that("model with only prior sampling (no ODE solving) can be created", {
   expect_output(par$print())
   expect_output(gq$print())
   code <- generate_stancode_prior(odefun_vars, list(), other_vars, FALSE)
-  expect_equal(nchar(code$code), 64)
+  expect_gt(nchar(code$code), 30)
 })

@@ -11,11 +11,11 @@ in memory in case \code{cmdstanr_fit} gets corrupted (for example
 if the CSV files that it reads the data from are destroyed).
 }
 \seealso{
-Other Model fit classes.: 
+Other model fit classes: 
 \code{\link{OdeModelGQ}},
 \code{\link{OdeModelMCMC}}
 }
-\concept{Model fit classes.}
+\concept{model fit classes}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

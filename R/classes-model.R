@@ -1,7 +1,9 @@
 #' An ODE model (R6 class)
 #'
 #' @export
-#' @description An ODE model (R6 class)
+#' @description An ODE model (R6 class). Users are not meant to instantiate
+#' objects of this class directly, instead use the [ode_model()] function
+#' to create models.
 #' @field has_likelihood Is there a likelihood function?
 #' @field stanmodel An object of class `StanModelWithCode`.
 #' @field odemodeling_version of the package used to create the model
@@ -59,7 +61,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @description
   #' Print information about the model
   print = function() {
-    cat("An object of class OdeModel. Type ?OdeModel for help. \n", sep = "")
+    cat(class_info("OdeModel"), "\n")
     cat(" * ODE dimension: ")
     self$ode_dim$print()
     cat(" * Time points array dimension: ")
@@ -163,7 +165,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
         chains = chains,
         ...
       )
-      cat("Saving OdeModelMCMC object to ", fn, "\n", sep = "")
+      cat("Saving result object to ", fn, "\n", sep = "")
       saveRDS(fit, file = fn)
       FN <- c(FN, fn)
       t_total <- fit$time()$chains$total

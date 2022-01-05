@@ -1,3 +1,13 @@
+# Short class info as string
+class_info <- function(class_name) {
+  info <- paste0("An object of class ", class_name, ".")
+  if (interactive()) {
+    info <- paste0(info, " Type ?", class_name, " for help.")
+  }
+  return(info)
+}
+
+
 # Internal assertion that should never fail
 internal_assert_len <- function(vec, expected, source) {
   if (length(vec) != expected) {

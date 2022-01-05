@@ -3,17 +3,20 @@
 #' An ODE model MCMC fit (R6 class)
 #'
 #' @description Used for holding the output of the `$sample()` method  of the
-#' [OdeModel] class.
+#' [OdeModel] class. Users are not meant to instantiate
+#' objects of this class directly.
 #' @export
-#' @family Model fit classes.
+#' @family model fit classes
+#' @seealso For more useful methods, see the methods inherited from
+#' [OdeModelFit].
 OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
   inherit = OdeModelFit,
   public = list(
 
     #' @description
-    #' Print information about the fit
+    #' Print information about the object.
     print = function() {
-      cat("An object of class OdeModelMCMC. Type ?OdeModelMCMC for help.\n")
+      cat(class_info("OdeModelMCMC"), "\n")
       cat(self$info())
       invisible(self)
     },
@@ -86,17 +89,20 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 #' An ODE model GQ fit (R6 class)
 #'
 #' @description Used for holding the output of the `$simulate()`
-#' method of the [OdeModelMCMC] class.
+#' method of the [OdeModelMCMC] class. Users are not meant to instantiate
+#' objects of this class directly.
 #' @export
-#' @family Model fit classes.
+#' @family model fit classes
+#' @seealso For more useful methods, see the methods inherited from
+#' [OdeModelFit].
 OdeModelGQ <- R6::R6Class("OdeModelGQ",
   inherit = OdeModelFit,
   public = list(
 
     #' @description
-    #' Print information about the object
+    #' Print information about the object.
     print = function() {
-      cat("An object of class OdeModelGQ. Type ?OdeModelGQ for help.\n")
+      cat(class_info("OdeModelGQ"), "\n")
       cat(self$info())
       invisible(self)
     }
@@ -133,7 +139,7 @@ OdeModelGQ <- R6::R6Class("OdeModelGQ",
 #' method of `cmdstanr_fit`.
 #' @field setup_time Time it took to call `$initialize()` when the
 #' [OdeModelFit] object was created (in seconds).
-#' @family Model fit classes.
+#' @family model fit classes
 OdeModelFit <- R6::R6Class("OdeModelFit", list(
   model = NULL,
   t0 = NULL,

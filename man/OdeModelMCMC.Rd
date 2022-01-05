@@ -5,14 +5,18 @@
 \title{An ODE model MCMC fit (R6 class)}
 \description{
 Used for holding the output of the \verb{$sample()} method  of the
-\link{OdeModel} class.
+\link{OdeModel} class. Users are not meant to instantiate
+objects of this class directly.
 }
 \seealso{
-Other Model fit classes.: 
+For more useful methods, see the methods inherited from
+\link{OdeModelFit}.
+
+Other model fit classes: 
 \code{\link{OdeModelFit}},
 \code{\link{OdeModelGQ}}
 }
-\concept{Model fit classes.}
+\concept{model fit classes}
 \section{Super class}{
 \code{\link[odemodeling:OdeModelFit]{odemodeling::OdeModelFit}} -> \code{OdeModelMCMC}
 }
@@ -55,7 +59,7 @@ Other Model fit classes.:
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
-Print information about the fit
+Print information about the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$print()}\if{html}{\out{</div>}}
 }

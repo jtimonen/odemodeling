@@ -4,7 +4,9 @@
 \alias{OdeModel}
 \title{An ODE model (R6 class)}
 \description{
-An ODE model (R6 class)
+An ODE model (R6 class). Users are not meant to instantiate
+objects of this class directly, instead use the \code{\link[=ode_model]{ode_model()}} function
+to create models.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

@@ -6,7 +6,7 @@ R-package for building and fitting Bayesian ODE models in Stan.
 
 ##  Installation
 
-* Install `cmdstanr` following the instructions [here](https://mc-stan.org/cmdstanr/)
+* Install `cmdstanr` following the instructions [here](https://mc-stan.org/cmdstanr/).
 * Install `odemodeling` using
 
 ```r

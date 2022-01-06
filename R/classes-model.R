@@ -251,10 +251,24 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
       }
       nams
     },
+    dim_names = function() {
+      self$names_of("dims")
+    },
     data_names = function() {
       nam1 <- self$names_of("dims")
       nam2 <- self$names_of("data")
       unique(c(nam1, nam2))
+    },
+    needed_additional_data_names = function() {
+      # Fields that are automatically added
+      auto <- c(
+        "abs_tol", "rel_tol", "max_num_steps",
+        "num_steps", "solver"
+      )
+      # Fields that  user needs to  give
+      needed <- setdiff(self$data_names(), self$dim_names())
+      needed <- setdiff(needed, auto)
+      setdiff(needed, c("t", "t0"))
     },
     param_names = function(inc_transformed = FALSE) {
       nam <- self$names_of("params")
@@ -268,11 +282,15 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     },
     data_check = function(data) {
       checkmate::assert_list(data)
-      needed <- self$data_names()
+      needed <- self$needed_additional_data_names()
       given <- names(data)
+      needed_str <- paste0("{", paste(needed, collapse = ", "), "}")
       for (name in needed) {
         if (!(name %in% given)) {
-          stop(paste0(name, " is missing from the data list!"))
+          msg <- paste0(name, " is missing from the additional data list, ")
+          msg <- paste0(msg, "which needs to have the following names: ")
+          msg <- paste0(msg, needed_str)
+          stop(msg)
         }
       }
       TRUE

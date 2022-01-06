@@ -17,7 +17,7 @@ bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
 
 adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
 
-ckrk(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
+ckrk(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06)
 
 euler(num_steps = 1)
 

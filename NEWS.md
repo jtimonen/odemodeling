@@ -1,6 +1,6 @@
 # Early development versions
 
-# odemodeling 0.0.9
+# odemodeling 0.0.10
 
   * Includes `ode_model()` for creating models.
   * Includes `stan_var()`, `stan_param()` etc. for model specification.

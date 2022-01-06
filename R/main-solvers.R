@@ -55,7 +55,7 @@ adams <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
 
 #' @describeIn odesolvers  Create a Cash-Karp solver ([AdaptiveOdeSolver]).
 #' @export
-ckrk <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9) {
+ckrk <- function(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6) {
   AdaptiveOdeSolver$new(
     name = "ckrk",
     abs_tol = abs_tol,

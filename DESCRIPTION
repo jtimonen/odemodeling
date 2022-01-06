@@ -1,6 +1,6 @@
 Package: odemodeling
 Title: Building and fitting Bayesian ODE models using Stan
-Version: 0.0.9
+Version: 0.0.10
 Authors@R: 
     person(given = "Juho",
            family = "Timonen",
@@ -26,7 +26,6 @@ Imports:
     loo (>= 2.4.1),
     bayesplot (>= 1.8.0),
     ggplot2 (>= 3.3.5),
-    ggpubr (>= 0.4.0),
     processx (>= 3.5.2)
 Suggests:
     knitr,

@@ -178,7 +178,7 @@ test_that("workflow works", {
       "Not enough tail samples"
     )
     expect_equal(names(is), c("log_weights", "diagnostics"))
-    expect_equal(length(is$log_weights), 20) # 10 * 2
+    expect_equal(length(is$log_weights), 20) # 10 times 2
   }
 
   # Simulation actually gives different result for each solver
@@ -194,6 +194,6 @@ test_that("sim with same solver as during sampling gives same output", {
   post_sim_same <- sfun(post_fit_solver)
   d1 <- max_abs_loglik_diff(post_fit, post_sim_same)
   d2 <- max_abs_odesol_diff(post_fit, post_sim_same)
-  expect_lt(d1, 1e-9) # should be 0 but CSV conversion messes this up
-  expect_lt(d2, 1e-9) # should be 0 but CSV conversion messes this up
+  expect_lt(d1, 1e-6) # should be 0 but CSV conversion messes this up
+  expect_lt(d2, 1e-6) # should be 0 but CSV conversion messes this up
 })

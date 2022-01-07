@@ -1,6 +1,6 @@
 Package: odemodeling
 Title: Building and fitting Bayesian ODE models using Stan
-Version: 0.0.11.9000
+Version: 0.0.12
 Authors@R: 
     person(given = "Juho",
            family = "Timonen",

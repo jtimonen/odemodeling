@@ -1,3 +1,16 @@
+# Add semicolon if not final character of string
+add_semicolon_if_missing <- function(code) {
+  code <- trimws(code)
+  L <- nchar(code)
+  if (L > 0) {
+    last_char <- substr(code, L, L)
+    if (last_char != ";") {
+      code <- paste0(code, ";")
+    }
+  }
+  return(code)
+}
+
 # Short class info as string
 class_info <- function(class_name) {
   info <- paste0("An object of class ", class_name, ".")

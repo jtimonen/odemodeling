@@ -116,21 +116,22 @@ stan_vector_array <- function(name, dims, length, lower = NULL, upper = NULL) {
 #' @param decl The Stan variable declaration from which the parameter is
 #' created. Must be an object that inherits from [StanDeclaration] and
 #' has a real or vector base type.
-#' @param prior_code A string of Stan code that defines the prior for the
-#' parameter. The default is empty string (no prior).
+#' @param prior A string of Stan code that becomes the right-hand side
+#' of the sampling statement that is the prior declaration of the parameter.
+#' The default is empty string (no prior).
 #' @family Stan variable declaration functions
 #' @export
 #' @examples
 #' # Scalar parameter
-#' my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1);")
+#' my_par <- stan_param(stan_var("beta"), "normal(0, 1)")
 #' print(my_par)
 #'
 #' # Vector parameter
 #' my_vec <- stan_vector("alpha", stan_dim("D"), lower = 0)
 #' my_par <- stan_param(my_vec)
 #' print(my_par)
-stan_param <- function(decl, prior_code = "") {
-  StanParameter$new(decl = decl, prior_code = prior_code)
+stan_param <- function(decl, prior = "") {
+  StanParameter$new(decl = decl, prior = prior)
 }
 
 
@@ -143,7 +144,10 @@ stan_param <- function(decl, prior_code = "") {
 #' `generated quantities` blocks, respectively.
 #' @param code A string of Stan code that defines how the quantity is
 #' computed from other variables/parameters.
-#' The default is empty string (no definition).
+#' The default is empty string (no definition). If `code`
+#' doesn't include any assignments (with `=`), it is prepended
+#' with `paste0(decl$name, " = ")`. In this case also a semicolon is
+#' added to the end if it is missing.
 #' @family Stan variable declaration functions
 #' @export
 #' @examples

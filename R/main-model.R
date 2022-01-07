@@ -103,13 +103,13 @@ ode_model <- function(N,
     y_sol_gq <- stan_transform(
       decl = stan_vector_array("y_sol_gq", dims = list(N), length = D),
       origin = "model",
-      code = paste0("y_sol_gq = solve_ode(", solve_ode_args, ");")
+      code = paste0("solve_ode(", solve_ode_args, ")")
     )
   } else {
     y_sol_tpar <- stan_transform(
       decl = stan_vector_array("y_sol_tpar", dims = list(N), length = D),
       origin = "parameters",
-      code = paste0("y_sol_tpar = solve_ode(", solve_ode_args, ");")
+      code = paste0("solve_ode(", solve_ode_args, ")")
     )
     y_sol_gq <- stan_transform(
       decl = stan_vector_array("y_sol_gq", dims = list(N), length = D),
@@ -119,7 +119,7 @@ ode_model <- function(N,
     log_lik_tpar <- stan_transform(
       decl = stan_var("log_lik_tpar", "real"),
       origin = "parameters",
-      code = paste0("log_lik_tpar = log_likelihood(", loglik_args, ");")
+      code = paste0("log_likelihood(", loglik_args, ")")
     )
     log_lik_gq <- stan_transform(
       decl = stan_var("log_lik_gq", "real"),

@@ -16,7 +16,10 @@ These correspond to the \verb{transformed data}, \verb{transformed parameters}, 
 
 \item{code}{A string of Stan code that defines how the quantity is
 computed from other variables/parameters.
-The default is empty string (no definition).}
+The default is empty string (no definition). If \code{code}
+doesn't include any assignments (with \code{=}), it is prepended
+with \code{paste0(decl$name, " = ")}. In this case also a semicolon is
+added to the end if it is missing.}
 }
 \description{
 Create a \link{StanTransformation} object

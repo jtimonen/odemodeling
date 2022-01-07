@@ -4,22 +4,23 @@
 \alias{stan_param}
 \title{Create a \link{StanParameter} object}
 \usage{
-stan_param(decl, prior_code = "")
+stan_param(decl, prior = "")
 }
 \arguments{
 \item{decl}{The Stan variable declaration from which the parameter is
 created. Must be an object that inherits from \link{StanDeclaration} and
 has a real or vector base type.}
 
-\item{prior_code}{A string of Stan code that defines the prior for the
-parameter. The default is empty string (no prior).}
+\item{prior}{A string of Stan code that becomes the right-hand side
+of the sampling statement that is the prior declaration of the parameter.
+The default is empty string (no prior).}
 }
 \description{
 Create a \link{StanParameter} object
 }
 \examples{
 # Scalar parameter
-my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1);")
+my_par <- stan_param(stan_var("beta"), "normal(0, 1)")
 print(my_par)
 
 # Vector parameter

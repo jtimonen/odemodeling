@@ -41,8 +41,8 @@ test_that("stan_vector_array() works correctly", {
 
 test_that("stan_param() works correctly", {
   # Scalar parameter
-  my_par <- stan_param(stan_var("beta"), "beta ~ normal(0, 1);")
-  expect_output(print(my_par), "Prior code:")
+  my_par <- stan_param(stan_var("beta"), "normal(0, 1)")
+  expect_output(print(my_par), "beta ~ normal\\(0, 1\\);")
 
   # # Vector parameter
   my_vec <- stan_vector("alpha", stan_dim("D"), lower = 0)

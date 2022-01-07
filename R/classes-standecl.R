@@ -423,12 +423,16 @@ StanParameter <- R6::R6Class("StanParameter",
     #' Create a [StanParameter] object.
     #'
     #' @param decl The underlying variable.
-    #' @param prior_code Code that defines prior for the parameter.
-    initialize = function(decl, prior_code = "") {
+    #' @param prior 'Stan' code that defines prior for the parameter.
+    initialize = function(decl, prior = "") {
       checkmate::assert_class(decl, "StanDeclaration")
       checkmate::assert_true(decl$can_be_made_parameter())
-      checkmate::assert_string(prior_code, min.chars = 0)
-      code <- trimws(prior_code, which = "right")
+      checkmate::assert_string(prior, min.chars = 0)
+      code <- trimws(prior)
+      code <- add_semicolon_if_missing(code)
+      if (nchar(code) > 0) {
+        code <- paste0(decl$name, " ~ ", code)
+      }
       self$decl <- decl
       self$prior_code <- code
     },
@@ -467,12 +471,22 @@ StanTransformation <- R6::R6Class("StanTransformation",
     #'
     #' @param decl The underlying variable.
     #' @param origin Must be either `"data"`, `"parameters"`, or `"model"`.
-    #' @param code The code that assigns to the declared variable.
+    #' @param code The code that assigns to the declared variable. If this
+    #' doesn't include any assignments (with `=`), the code is prepended
+    #' with `paste0(decl$name, " = ")`. In this case also a semicolon is
+    #' added to the end if it is missing.
     initialize = function(decl, origin = "model", code = "") {
       checkmate::assert_class(decl, "StanDeclaration")
       checkmate::assert_choice(origin, c("data", "parameters", "model"))
       checkmate::assert_string(code, min.chars = 0)
-      code <- trimws(code, which = "right")
+      has_assign <- grepl("=", code, fixed = TRUE)
+      if (has_assign) {
+        code <- trimws(code, which = "right")
+      } else {
+        code <- trimws(code)
+        code <- add_semicolon_if_missing(code)
+        code <- paste0(decl$name, " = ", code)
+      }
       self$decl <- decl
       self$origin <- origin
       self$code <- code

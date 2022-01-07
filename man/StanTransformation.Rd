@@ -43,7 +43,10 @@ Create a \link{StanTransformation} object.
 
 \item{\code{origin}}{Must be either \code{"data"}, \code{"parameters"}, or \code{"model"}.}
 
-\item{\code{code}}{The code that assigns to the declared variable.}
+\item{\code{code}}{The code that assigns to the declared variable. If this
+doesn't include any assignments (with \code{=}), the code is prepended
+with \code{paste0(decl$name, " = ")}. In this case also a semicolon is
+added to the end if it is missing.}
 }
 \if{html}{\out{</div>}}
 }

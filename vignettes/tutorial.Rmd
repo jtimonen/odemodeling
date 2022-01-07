@@ -29,7 +29,7 @@ system dimension is declared as `D` and number of time points as `N`.
 N <- stan_dim("N", lower=1)
 D <- stan_dim("D")
 y0 <- stan_vector("y0", length = D)
-theta <- stan_param(stan_var("theta", lower=0), "theta ~ inv_gamma(5, 1);")
+theta <- stan_param(stan_var("theta", lower=0), "inv_gamma(5, 1)")
 sho_fun_body <- "
   vector[2] dy_dt;
   dy_dt[1] = y[2];

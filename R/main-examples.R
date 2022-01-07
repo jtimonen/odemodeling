@@ -22,9 +22,9 @@ example_ode_model_gsir <- function(prior_only, ...) {
   contacts <- stan_matrix("contacts", G, G) # contact matrix
 
   # ODE function parameters
-  beta <- stan_param(stan_var("beta", lower = 0), "beta ~ normal(2, 1);")
+  beta <- stan_param(stan_var("beta", lower = 0), "normal(2, 1)")
   gamma_decl <- stan_vector("gamma", lower = 0, length = G)
-  gamma <- stan_param(gamma_decl, "gamma ~ normal(0.3, 0.3);")
+  gamma <- stan_param(gamma_decl, "normal(0.3, 0.3)")
 
   # All odefun variables
   odefun_vars <- list(pop_sizes, I0, contacts, beta, gamma)
@@ -50,8 +50,8 @@ example_ode_model_gsir <- function(prior_only, ...) {
   # Observation model parameters phi_inv
   phi_inv_var <- stan_vector("phi_inv", lower = 0, length = G)
   phi_var <- stan_vector("phi", lower = 0, length = G)
-  phi_inv <- stan_param(phi_inv_var, "phi_inv ~ exponential(5);")
-  phi <- stan_transform(phi_var, "parameters", "phi = inv(phi_inv);")
+  phi_inv <- stan_param(phi_inv_var, "exponential(5);")
+  phi <- stan_transform(phi_var, "parameters", "inv(phi_inv);")
 
   # All loglik variables
   loglik_vars <- list(delta, I_data, phi_inv, phi)

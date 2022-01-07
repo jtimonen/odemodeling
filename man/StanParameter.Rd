@@ -31,7 +31,7 @@ A Stan parameter
 \subsection{Method \code{new()}}{
 Create a \link{StanParameter} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StanParameter$new(decl, prior_code = "")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StanParameter$new(decl, prior = "")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -39,7 +39,7 @@ Create a \link{StanParameter} object.
 \describe{
 \item{\code{decl}}{The underlying variable.}
 
-\item{\code{prior_code}}{Code that defines prior for the parameter.}
+\item{\code{prior}}{'Stan' code that defines prior for the parameter.}
 }
 \if{html}{\out{</div>}}
 }

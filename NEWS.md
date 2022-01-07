@@ -1,13 +1,15 @@
-# odemodeling 0.0.12
-
-
-
 # Early development versions
 
+## odemodeling 0.0.12
+  * Change `data vector y0` to `vector y0` in ODE solver function signatures
+  so it is possible to have initial state be parameter.
+  * Add the `name` argument to `example_ode_model()` and add the `tmdd`
+  example.
+  
 ## odemodeling 0.0.11
 
   * Simplifies and makes `stan_param()` and `stan_transform()` less vulnerable
-  to errors
+  to errors.
   * With `ode_model()`, it is now possible to create also a model where 
   `odefun_vars` and `loglik_vars` are empty lists.
   

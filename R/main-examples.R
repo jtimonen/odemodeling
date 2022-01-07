@@ -186,6 +186,7 @@ example_ode_model_tmdd <- function(prior_only, ...) {
     odefun_init = y0,
     loglik_vars = list(sigma_par, P_obs),
     loglik_body = loglik_body,
-    other_vars = list(L0, R0)
+    other_vars = list(L0, R0),
+    ...
   )
 }

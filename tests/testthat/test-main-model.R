@@ -2,6 +2,16 @@ test_that("odemodel creation gives correct message", {
   expect_message(example_ode_model(compile = F), "Not compiling")
 })
 
+test_that("Stan code can be created for gsir example", {
+  gsir <- example_ode_model(name = "gsir", compile = F)
+  expect_true(gsir$has_likelihood)
+})
+
+test_that("Stan code can be created for tmdd example", {
+  tmdd <- example_ode_model(name = "tmdd", compile = F)
+  expect_true(tmdd$has_likelihood)
+})
+
 
 test_that("ode_model() works without any variables", {
   a <- ode_model(

@@ -1,6 +1,15 @@
+
+
 # Early development versions
 
-# odemodeling 0.0.10
+## odemodeling 0.0.11
+
+  * Simplifies and makes `stan_param()` and `stan_transform()` less vulnerable
+  to errors
+  * With `ode_model()`, it is now possible to create also a model where 
+  `odefun_vars` and `loglik_vars` are empty lists.
+  
+## odemodeling 0.0.10
 
   * Includes `ode_model()` for creating models.
   * Includes `stan_var()`, `stan_param()` etc. for model specification.

@@ -10,7 +10,7 @@ R-package for building and fitting Bayesian ODE models in Stan.
 * Install `odemodeling` using
 
 ```r
-devtools::install_github("jtimonen/odemodeling")
+remotes::install_github("jtimonen/odemodeling")
 ```
 
 ## Getting started

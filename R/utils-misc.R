@@ -1,3 +1,12 @@
+# Add leading comma to arguments string
+add_leading_comma <- function(args) {
+  args <- trimws(args)
+  if (nchar(args) > 0) {
+    args <- paste0(", ", args)
+  }
+  return(args)
+}
+
 # Add semicolon if not final character of string
 add_semicolon_if_missing <- function(code) {
   code <- trimws(code)

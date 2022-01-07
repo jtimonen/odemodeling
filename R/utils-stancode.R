@@ -32,6 +32,8 @@ generate_functions_block <- function(odefun_add_sign,
     loglik <- ""
   }
   solvers <- functions_template()
+  odefun_add_sign <- add_leading_comma(odefun_add_sign)
+  odefun_add_args <- add_leading_comma(odefun_add_args)
   solvers <- fill_stancode_part(solvers, odefun_add_sign, "__ODEFUN_SIGN__")
   solvers <- fill_stancode_part(solvers, odefun_add_args, "__ODEFUN_ARGS__")
   code <- generate_block("functions", c(odefun, solvers, loglik))
@@ -40,6 +42,9 @@ generate_functions_block <- function(odefun_add_sign,
 
 # Create additional signature for function
 generate_add_signature <- function(all_vars, argmode) {
+  if (length(all_vars) == 0) {
+    return("")
+  }
   no_add_signature <- function(x) {
     name <- get_name(x)
     is_noadd <- name %in% c("t", "t0", "y0")

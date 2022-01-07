@@ -65,7 +65,13 @@ ode_model <- function(N,
   # Check that odefun_init has correct type and name
   choices_init <- c("StanVector", "StanParameter", "StanTransformation")
   checkmate::assert_multi_class(odefun_init, choices_init)
-  checkmate::assert_true(get_name(odefun_init) == "y0")
+  y0_name <- get_name(odefun_init)
+  if (y0_name != "y0") {
+    stop(
+      "the Stan variable in odefun_init must have name y0! found = ",
+      y0_name
+    )
+  }
 
   # Generating prior or posterior model code?
   has_loglik <- nchar(loglik_body) > 0

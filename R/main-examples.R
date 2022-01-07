@@ -3,11 +3,20 @@
 #' @export
 #' @param prior_only Create a prior-only version of the model?
 #' @param ... Additional arguments to [ode_model()].
+#' @param name Name of model.
 #' @return An object of class `OdeModel`.
 #' @family model constructor functions
-example_ode_model <- function(prior_only = FALSE, ...) {
-  example_ode_model_gsir(prior_only, ...)
+example_ode_model <- function(prior_only = FALSE, name = "gsir", ...) {
+  if (name == "gsir") {
+    m <- example_ode_model_gsir(prior_only, ...)
+  } else if (name == "tmdd") {
+    m <- example_ode_model_tmdd(prior_only, ...)
+  } else {
+    stop("unknown model name!")
+  }
+  return(m)
 }
+
 
 # Example
 example_ode_model_gsir <- function(prior_only, ...) {
@@ -110,5 +119,73 @@ example_ode_model_gsir <- function(prior_only, ...) {
     loglik_body = loglik_body,
     other_vars = list(I_gen),
     ...
+  )
+}
+
+
+# TMDD example
+example_ode_model_tmdd <- function(prior_only, ...) {
+  if (prior_only) {
+    stop("Cannot create this in prior_only mode!")
+  }
+
+  # Dimensions and other data
+  N <- stan_dim("N", lower = 1) # number of time points
+  D <- stan_dim("D", lower = 1) # ODE system dimension
+  L0 <- stan_var("L0", lower = 0) # initial bolus
+  P_obs <- stan_vector("P_obs", length = N) # observations of P
+
+  # Define kinetic parameters and their priors
+  k_par <- list(
+    stan_param(stan_var("k_on", lower = 0), "lognormal(-1, 0.3)"),
+    stan_param(stan_var("k_off", lower = 0), "lognormal(0, 0.3)"),
+    stan_param(stan_var("k_in", lower = 0), "lognormal(0, 0.3)"),
+    stan_param(stan_var("k_out", lower = 0), "lognormal(0, 0.3)"),
+    stan_param(stan_var("k_eL", lower = 0), "lognormal(-1, 0.3)"),
+    stan_param(stan_var("k_eP", lower = 0), "lognormal(-3, 0.3)")
+  )
+
+  # Define noise parameter and its prior
+  sigma_par <- stan_param(stan_var("sigma", lower = 0), "lognormal(1, 0.3)")
+
+  # Define transformed parameters
+  R0 <- stan_transform(stan_var("R0"), "parameters", "k_in/k_out")
+  y0 <- stan_transform(
+    decl = stan_vector("y0", length = D),
+    origin = "parameters",
+    code = "to_vector({L0, R0, 0.0})"
+  )
+
+  # Define ODE system right-hand side
+  odefun_body <- "
+    vector[3] dy_dt; // L, R, P
+    real L = y[1];
+    real R = y[2];
+    real P = y[3];
+    real rem = k_on*L*R - k_off*P;
+    dy_dt[1] = - k_eL*L - rem;
+    dy_dt[2] = k_in - k_out*R - rem;
+    dy_dt[3] = rem - k_eP*P;
+    return dy_dt;
+  "
+
+  # Define log-likelihood function body
+  loglik_body <- "
+    real loglik = 0.0;
+    for(n in 1:N) {
+      loglik += normal_lpdf(P_obs[n] | y_sol[n][3], sigma);
+    }
+    return(loglik);
+  "
+
+  # Return
+  ode_model(
+    N = N,
+    odefun_vars = k_par,
+    odefun_body = odefun_body,
+    odefun_init = y0,
+    loglik_vars = list(sigma_par, P_obs),
+    loglik_body = loglik_body,
+    other_vars = list(L0, R0)
   )
 }

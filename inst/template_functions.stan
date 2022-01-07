@@ -1,6 +1,6 @@
 
   // Euler method
-  array[] vector ode_euler_fixed_num_steps(data vector y0, data real t0,
+  array[] vector ode_euler_fixed_num_steps(vector y0, data real t0,
       data array[] real t, data int num_steps
       __ODEFUN_SIGN__) {
     int N = size(t);
@@ -27,7 +27,7 @@
   }
 
   // Midpoint method
-  array[] vector ode_midpoint_fixed_num_steps(data vector y0, data real t0,
+  array[] vector ode_midpoint_fixed_num_steps(vector y0, data real t0,
       data array[] real t, data int num_steps
       __ODEFUN_SIGN__) {
     int N = size(t);
@@ -58,7 +58,7 @@
   }
 
   // RK4 method
-  array[] vector ode_rk4_fixed_num_steps(data vector y0, data real t0,
+  array[] vector ode_rk4_fixed_num_steps(vector y0, data real t0,
       data array[] real t, data int num_steps
       __ODEFUN_SIGN__) {
     int N = size(t);
@@ -94,7 +94,7 @@
   // Solve ODE
   array[] vector solve_ode(data int solver, data real rel_tol,
       data real abs_tol, data int max_num_steps, data int num_steps,
-      data vector y0, data real t0, data array[] real t
+      vector y0, data real t0, data array[] real t
       __ODEFUN_SIGN__)
   {
     int N = size(t);

@@ -25,7 +25,7 @@ Other model fit classes:
 \itemize{
 \item \href{#method-print}{\code{OdeModelMCMC$print()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelMCMC$cmdstan_init()}}
-\item \href{#method-simulate}{\code{OdeModelMCMC$simulate()}}
+\item \href{#method-gqs}{\code{OdeModelMCMC$gqs()}}
 \item \href{#method-clone}{\code{OdeModelMCMC$clone()}}
 }
 }
@@ -76,15 +76,15 @@ Get used 'CmdStan' init argument.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-simulate"></a>}}
-\if{latex}{\out{\hypertarget{method-simulate}{}}}
-\subsection{Method \code{simulate()}}{
+\if{html}{\out{<a id="method-gqs"></a>}}
+\if{latex}{\out{\hypertarget{method-gqs}{}}}
+\subsection{Method \code{gqs()}}{
 Simulate ODE solutions (and other possible generated quantities
-using) the model and fitted params. If any
+using) the model and fitted params. This If any
 of the arguments are \code{NULL} (default), they are replaced with ones saved
 in the \link{OdeModelMCMC} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$simulate(
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$gqs(
   t0 = NULL,
   t = NULL,
   data = NULL,

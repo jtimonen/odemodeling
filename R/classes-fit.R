@@ -30,7 +30,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
     #' @description
     #' Simulate ODE solutions (and other possible generated quantities
-    #' using) the model and fitted params. If any
+    #' using) the model and fitted params. This If any
     #' of the arguments are `NULL` (default), they are replaced with ones saved
     #' in the [OdeModelMCMC] object.
     #'
@@ -45,12 +45,12 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' @param ... Arguments passed to the `$generate_quantities()` method of the
     #' underlying [cmdstanr::CmdStanModel] object.
     #' @return An object of class [OdeModelGQ].
-    simulate = function(t0 = NULL,
-                        t = NULL,
-                        data = NULL,
-                        solver = NULL,
-                        fitted_params = NULL,
-                        ...) {
+    gqs = function(t0 = NULL,
+                   t = NULL,
+                   data = NULL,
+                   solver = NULL,
+                   fitted_params = NULL,
+                   ...) {
 
       # Handle input
       t0 <- replace_if_null(t0, self$t0)
@@ -59,26 +59,13 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       data <- replace_if_null(data, self$data)
       fitted_params <- replace_if_null(fitted_params, self$draws())
 
-      # Full Stan data
-      model <- self$model
-      sd <- create_standata(model, t0, t, solver)
-      full_data <- c(sd, data)
-
-      # Ru Stan
-      cmdstanr_gq <- model$stanmodel$generate_quantities(
-        fitted_params = fitted_params,
-        data = full_data,
-        sig_figs = model$sig_figs, ...
-      )
-
-      # Return
-      OdeModelGQ$new(
-        model = model,
+      self$model$gqs(
         t0 = t0,
         t = t,
-        solver = solver,
         data = data,
-        cmdstanr_fit = cmdstanr_gq
+        solver = solver,
+        params = fitted_params,
+        ...
       )
     }
   )

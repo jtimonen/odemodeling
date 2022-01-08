@@ -33,6 +33,7 @@ to create models.
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
 \item \href{#method-code}{\code{OdeModel$code()}}
+\item \href{#method-gqs}{\code{OdeModel$gqs()}}
 \item \href{#method-sample}{\code{OdeModel$sample()}}
 \item \href{#method-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
@@ -106,6 +107,39 @@ Get the Stan code of the model.
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$code()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gqs"></a>}}
+\if{latex}{\out{\hypertarget{method-gqs}{}}}
+\subsection{Method \code{gqs()}}{
+Run standalone generated quantities.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$gqs(t0, t, data = list(), solver = rk45(), params = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{t0}}{Initial time.}
+
+\item{\code{t}}{Vector of time points.}
+
+\item{\code{data}}{Additional data.}
+
+\item{\code{solver}}{ODE solver.}
+
+\item{\code{params}}{Equal to the \code{fitted_params} argument  of the
+\verb{$generate_quantities()} method of the underlying
+\link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+
+\item{\code{...}}{Arguments passed to the \verb{$generate_quantities()} method of the
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+An object of class \link{OdeModelGQ}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-sample"></a>}}

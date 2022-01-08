@@ -125,9 +125,6 @@ example_ode_model_gsir <- function(prior_only, ...) {
 
 # TMDD example
 example_ode_model_tmdd <- function(prior_only, ...) {
-  if (prior_only) {
-    stop("Cannot create this in prior_only mode!")
-  }
 
   # Dimensions and other data
   N <- stan_dim("N", lower = 1) # number of time points
@@ -177,6 +174,11 @@ example_ode_model_tmdd <- function(prior_only, ...) {
     }
     return(loglik);
   "
+  loglik_vars <- list(sigma_par, P_obs)
+  if (prior_only) {
+    loglik_body <- ""
+    loglik_vars <- list(sigma_par)
+  }
 
   # Return
   ode_model(
@@ -184,7 +186,7 @@ example_ode_model_tmdd <- function(prior_only, ...) {
     odefun_vars = k_par,
     odefun_body = odefun_body,
     odefun_init = y0,
-    loglik_vars = list(sigma_par, P_obs),
+    loglik_vars = loglik_vars,
     loglik_body = loglik_body,
     other_vars = list(L0, R0),
     ...

@@ -81,6 +81,50 @@ OdeModel <- R6::R6Class("OdeModel", list(
     self$stanmodel$code
   },
 
+  #' @description
+  #' Run standalone generated quantities.
+  #'
+  #' @param t0 Initial time.
+  #' @param t Vector of time points.
+  #' @param data Additional data.
+  #' @param solver ODE solver.
+  #' @param params Equal to the `fitted_params` argument  of the
+  #' `$generate_quantities()` method of the underlying
+  #' [cmdstanr::CmdStanModel] object.
+  #' @param ... Arguments passed to the `$generate_quantities()` method of the
+  #' underlying [cmdstanr::CmdStanModel] object.
+  #' @return An object of class [OdeModelGQ].
+  gqs = function(t0,
+                 t,
+                 data = list(),
+                 solver = rk45(),
+                 params = NULL,
+                 ...) {
+
+    # Full Stan data
+    model <- self
+    sd <- create_standata(model, t0, t, solver)
+    full_data <- c(sd, data)
+
+    # Ru Stan
+    cmdstanr_gq <- model$stanmodel$generate_quantities(
+      fitted_params = params,
+      data = full_data,
+      sig_figs = model$sig_figs,
+      seed = model$seed, ...
+    )
+
+    # Return
+    OdeModelGQ$new(
+      model = model,
+      t0 = t0,
+      t = t,
+      solver = solver,
+      data = data,
+      cmdstanr_fit = cmdstanr_gq
+    )
+  },
+
   #' @description Sample parameters of the model
   #' @param t0 Initial time point.
   #' @param t Vector of time points.
@@ -262,8 +306,7 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     needed_additional_data_names = function() {
       # Fields that are automatically added
       auto <- c(
-        "abs_tol", "rel_tol", "max_num_steps",
-        "num_steps", "solver"
+        "abs_tol", "rel_tol", "max_num_steps", "num_steps", "solver"
       )
       # Fields that  user needs to  give
       needed <- setdiff(self$data_names(), self$dim_names())
@@ -303,6 +346,14 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     generate_quantities = function(data, fitted_params, ...) {
       self$data_check(data)
       mod <- self$get_model()
+      required_params <- self$param_names()
+      found_params <- dimnames(fitted_params)$variable
+      for (j in seq_len(length(required_params))) {
+        checkmate::assert_choice(
+          found_params[j],
+          choices = required_params[j]
+        )
+      }
       mod$generate_quantities(
         fitted_params = fitted_params,
         data = data, ...

@@ -33,6 +33,7 @@ to create models.
 \item \href{#method-reinit}{\code{OdeModel$reinit()}}
 \item \href{#method-print}{\code{OdeModel$print()}}
 \item \href{#method-code}{\code{OdeModel$code()}}
+\item \href{#method-make_params}{\code{OdeModel$make_params()}}
 \item \href{#method-gqs}{\code{OdeModel$gqs()}}
 \item \href{#method-sample}{\code{OdeModel$sample()}}
 \item \href{#method-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
@@ -107,6 +108,28 @@ Get the Stan code of the model.
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$code()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-make_params"></a>}}
+\if{latex}{\out{\hypertarget{method-make_params}{}}}
+\subsection{Method \code{make_params()}}{
+Format a vector into a draws array that can be passed to \verb{$gqs()}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$make_params(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{A a vector with length equal to total number of model
+parameters.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link[posterior:draws_array]{posterior::draws_array} object with only one chain and
+iteration.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gqs"></a>}}

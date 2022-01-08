@@ -105,8 +105,8 @@ in the \link{OdeModelMCMC} object.
 
 \item{\code{solver}}{ODE solver.}
 
-\item{\code{fitted_params}}{Equal to the \code{fitted_params} argument  of the
-\verb{$generate_quantities()} method of the underlying
+\item{\code{fitted_params}}{Will be passed as the \code{fitted_params} argument
+to the \verb{$generate_quantities()} method of the underlying
 \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object. If this is \code{NULL} (default),
 parameter draws of the \link{OdeModelFit} object are used.}
 

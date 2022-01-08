@@ -82,6 +82,22 @@ OdeModel <- R6::R6Class("OdeModel", list(
   },
 
   #' @description
+  #' Format a vector into a draws array that can be passed to `$gqs()`.
+  #' @param x A a vector with length equal to total number of model
+  #' parameters.
+  #' @return A [posterior::draws_array] object with only one chain and
+  #' iteration.
+  make_params = function(x) {
+    params <- self$stanmodel$param_names()
+    L <- length(params)
+    checkmate::assert_numeric(x, len = L)
+    arr <- array(x, dim = c(1, 1, L))
+    darr <- posterior::as_draws_array(arr)
+    dimnames(darr)$variable <- params
+    return(darr)
+  },
+
+  #' @description
   #' Run standalone generated quantities.
   #'
   #' @param t0 Initial time.
@@ -105,13 +121,15 @@ OdeModel <- R6::R6Class("OdeModel", list(
     model <- self
     sd <- create_standata(model, t0, t, solver)
     full_data <- c(sd, data)
+    param_names <- model$stanmodel$param_names()
+    params <- posterior::subset_draws(params, variable = param_names)
 
     # Ru Stan
     cmdstanr_gq <- model$stanmodel$generate_quantities(
       fitted_params = params,
       data = full_data,
       sig_figs = model$sig_figs,
-      seed = model$seed, ...
+      ...
     )
 
     # Return
@@ -346,14 +364,6 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
     generate_quantities = function(data, fitted_params, ...) {
       self$data_check(data)
       mod <- self$get_model()
-      required_params <- self$param_names()
-      found_params <- dimnames(fitted_params)$variable
-      for (j in seq_len(length(required_params))) {
-        checkmate::assert_choice(
-          found_params[j],
-          choices = required_params[j]
-        )
-      }
       mod$generate_quantities(
         fitted_params = fitted_params,
         data = data, ...

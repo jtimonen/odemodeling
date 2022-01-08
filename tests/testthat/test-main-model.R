@@ -19,9 +19,7 @@ test_that("tmdd example can generate quantities", {
   param_names <- c("k_on", "k_off", "k_in", "k_out", "k_eL", "k_eP", "sigma")
   sim_k <- c(0.592, 0.900, 2.212, 0.823, 0.201, 0.024)
   sim_sigma <- 0.3
-  arr <- array(c(sim_k, sim_sigma), dim = c(1, 1, 7))
-  sim_params <- posterior::as_draws_array(arr)
-  dimnames(sim_params)$variable <- param_names
+  sim_params <- tmdd$make_params(c(sim_k, sim_sigma))
 
   # Simulate and plot
   gq <- tmdd$gqs(

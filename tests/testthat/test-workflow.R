@@ -114,13 +114,13 @@ test_that("generating quantities works", {
   )
   tout <- c(1, 2, 3, 5)
   sims <- list()
-  sims[[1]] <- fit$simulate(solver = rk45(), t = tout)
-  sims[[2]] <- fit$simulate(solver = bdf(), t = tout)
-  sims[[3]] <- fit$simulate(solver = adams(), t = tout)
-  sims[[4]] <- fit$simulate(solver = ckrk(), t = tout)
-  sims[[5]] <- fit$simulate(solver = euler(num_steps = 30), t = tout)
-  sims[[6]] <- fit$simulate(solver = midpoint(num_steps = 30), t = tout)
-  sims[[7]] <- fit$simulate(solver = rk4(num_steps = 30), t = tout)
+  sims[[1]] <- fit$gqs(solver = rk45(), t = tout)
+  sims[[2]] <- fit$gqs(solver = bdf(), t = tout)
+  sims[[3]] <- fit$gqs(solver = adams(), t = tout)
+  sims[[4]] <- fit$gqs(solver = ckrk(), t = tout)
+  sims[[5]] <- fit$gqs(solver = euler(num_steps = 30), t = tout)
+  sims[[6]] <- fit$gqs(solver = midpoint(num_steps = 30), t = tout)
+  sims[[7]] <- fit$gqs(solver = rk4(num_steps = 30), t = tout)
   for (a in sims) {
     expect_output(print(a), "An object of class OdeModelGQ")
     idx <- 7
@@ -138,7 +138,7 @@ test_that("generating quantities works", {
 # Workflow ----------------------------------------------------------------
 
 sfun <- function(solver) {
-  post_fit$simulate(
+  post_fit$gqs(
     t0 = t0, t = t,
     data = dat,
     seed = SEED,

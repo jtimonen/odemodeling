@@ -38,8 +38,8 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' @param t Vector of time points.
     #' @param data Additional data.
     #' @param solver ODE solver.
-    #' @param fitted_params Equal to the `fitted_params` argument  of the
-    #' `$generate_quantities()` method of the underlying
+    #' @param fitted_params Will be passed as the `fitted_params` argument
+    #' to the `$generate_quantities()` method of the underlying
     #' [cmdstanr::CmdStanModel] object. If this is `NULL` (default),
     #' parameter draws of the [OdeModelFit] object are used.
     #' @param ... Arguments passed to the `$generate_quantities()` method of the
@@ -57,7 +57,9 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       t <- replace_if_null(t, self$t)
       solver <- replace_if_null(solver, self$solver)
       data <- replace_if_null(data, self$data)
-      fitted_params <- replace_if_null(fitted_params, self$draws())
+      param_names <- self$model$stanmodel$param_names()
+      existing_pars <- self$draws(variable = param_names)
+      fitted_params <- replace_if_null(fitted_params, existing_pars)
 
       self$model$gqs(
         t0 = t0,

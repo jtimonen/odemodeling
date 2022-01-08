@@ -4,9 +4,9 @@
 \alias{OdeModelGQ}
 \title{An ODE model GQ fit (R6 class)}
 \description{
-Used for holding the output of the \verb{$simulate()}
-method of the \link{OdeModelMCMC} class. Users are not meant to instantiate
-objects of this class directly.
+Used for holding the output of the \verb{$gqs()}
+method of the \link{OdeModel} and \link{OdeModelMCMC} class. Users are not meant to
+instantiate objects of this class directly.
 }
 \seealso{
 For more useful methods, see the methods inherited from

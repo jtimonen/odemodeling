@@ -89,7 +89,7 @@ sho_fit_prior$plot_odesol(draw_inds = 45)
 # Using different solvers
 We generate quantities using a different solver and different time points.
 ```{r sho_gq, fig.width=6.5, fig.height=3.2}
-gq <- sho_fit_prior$simulate(solver=bdf(), t = seq(0.5,10,by=0.5))
+gq <- sho_fit_prior$gqs(solver = bdf(), t = seq(0.5, 10, by = 0.5))
 ```
 
 We can again plot ODE solution using one draw like so

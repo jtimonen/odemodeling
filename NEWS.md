@@ -1,5 +1,10 @@
 # Early development versions
 
+## odemodeling 0.0.13
+  * Rename the `$simulate()` method to `$gqs()` and implement it also for
+  `OdeModel`.
+  * Implement the useful `$make_params()` method for `OdeModel`.
+
 ## odemodeling 0.0.12
   * Change `data vector y0` to `vector y0` in ODE solver function signatures
   so it is possible to have initial state be parameter.

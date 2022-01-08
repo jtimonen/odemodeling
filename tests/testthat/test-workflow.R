@@ -109,7 +109,7 @@ test_that("posterior sampling using many configurations works", {
 
 test_that("generating quantities works", {
   expect_error(
-    fit$simulate(t0 = 4.5),
+    fit$gqs(t0 = 4.5),
     "each value in t must be strictly larger than given t0"
   )
   tout <- c(1, 2, 3, 5)

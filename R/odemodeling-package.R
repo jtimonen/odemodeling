@@ -36,7 +36,8 @@
 #' }
 #' @section Additional simulation of ODE systems:
 #' \itemize{
-#'   \item See the `$simulate()` method of the [OdeModelMCMC] class.
+#'   \item See the `$gqs()` method of the [OdeModelMCMC] and [OdeModel]
+#'   classes.
 #'   \item See methods of the [OdeModelGQ] class for studying the returned
 #'   object.
 #'   \item See \code{\link{compare_odefits}} for functions to compare

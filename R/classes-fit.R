@@ -77,9 +77,9 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
 #' An ODE model GQ fit (R6 class)
 #'
-#' @description Used for holding the output of the `$simulate()`
-#' method of the [OdeModelMCMC] class. Users are not meant to instantiate
-#' objects of this class directly.
+#' @description Used for holding the output of the `$gqs()`
+#' method of the [OdeModel] and [OdeModelMCMC] class. Users are not meant to
+#' instantiate objects of this class directly.
 #' @export
 #' @family model fit classes
 #' @seealso For more useful methods, see the methods inherited from

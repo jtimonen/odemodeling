@@ -43,7 +43,8 @@ object.
 \section{Additional simulation of ODE systems}{
 
 \itemize{
-\item See the \verb{$simulate()} method of the \link{OdeModelMCMC} class.
+\item See the \verb{$gqs()} method of the \link{OdeModelMCMC} and \link{OdeModel}
+classes.
 \item See methods of the \link{OdeModelGQ} class for studying the returned
 object.
 \item See \code{\link{compare_odefits}} for functions to compare

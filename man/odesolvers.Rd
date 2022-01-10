@@ -11,13 +11,13 @@
 \alias{rk4}
 \title{Creating ODE solvers}
 \usage{
-rk45(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06)
+rk45(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06, tol = NULL)
 
-bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
+bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09, tol = NULL)
 
-adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09)
+adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09, tol = NULL)
 
-ckrk(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06)
+ckrk(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06, tol = NULL)
 
 euler(num_steps = 1)
 
@@ -26,12 +26,17 @@ midpoint(num_steps = 1)
 rk4(num_steps = 1)
 }
 \arguments{
-\item{abs_tol}{Absolute tolerance (only for \link{AdaptiveOdeSolver}s).}
+\item{abs_tol}{Absolute tolerance (only for \link{AdaptiveOdeSolver}s). Will
+be replaced by \code{tol} if it is not \code{NULL}.}
 
-\item{rel_tol}{Relative tolerance (only for \link{AdaptiveOdeSolver}s).}
+\item{rel_tol}{Relative tolerance (only for \link{AdaptiveOdeSolver}s). Will
+be replaced by \code{tol} if it is not \code{NULL}.}
 
 \item{max_num_steps}{Maximum number of steps between output time
 points (only for \link{AdaptiveOdeSolver}s).}
+
+\item{tol}{Can be used to set both \code{abs_tol} and \code{rel_tol} to same value.
+Have no effect if \code{NULL} (default).}
 
 \item{num_steps}{The number of steps between output time points (only for
 \link{FixedNumStepsOdeSolver}s).}

@@ -29,7 +29,6 @@ class_info <- function(class_name) {
   return(info)
 }
 
-
 # Internal assertion that should never fail
 internal_assert_len <- function(vec, expected, source) {
   if (length(vec) != expected) {

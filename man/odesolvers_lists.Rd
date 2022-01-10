@@ -4,17 +4,25 @@
 \alias{odesolvers_lists}
 \alias{rk45_list}
 \alias{bdf_list}
+\alias{midpoint_list}
+\alias{rk4_list}
 \title{Creating lists of ODE solvers}
 \usage{
 rk45_list(tols, max_num_steps = 1e+06)
 
-bdf_list(tols, max_num_steps = 1e+06)
+bdf_list(tols, max_num_steps = 1e+09)
+
+midpoint_list(num_steps)
+
+rk4_list(num_steps)
 }
 \arguments{
 \item{tols}{A vector of length \code{L} of tolerance values.}
 
 \item{max_num_steps}{Maximum number of steps between output time
 points (one number, same for all solvers in the output list).}
+
+\item{num_steps}{A vector of length \code{L} of step amounts.}
 }
 \description{
 These constructors can be used for creating the \code{solvers}
@@ -28,5 +36,11 @@ tolerances.
 
 \item \code{bdf_list}: Create a list of BDF solvers with
 different tolerances.
+
+\item \code{midpoint_list}: Create a list of explicit midpoint
+solvers with different fixed number of steps.
+
+\item \code{rk4_list}: Create a list of RK4
+solvers with different fixed number of steps.
 }}
 

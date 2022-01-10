@@ -20,6 +20,14 @@ create_standata <- function(model, t0, t, solver) {
   )
 }
 
+# Replace single_tol by tol if it is not NULL
+replace_tol <- function(single_tol, tol) {
+  if (!is.null(tol)) {
+    single_tol <- tol
+  }
+  single_tol
+}
+
 # Return y if x is NULL, else return x
 replace_if_null <- function(x, y) {
   if (is.null(x)) {

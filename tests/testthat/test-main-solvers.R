@@ -130,3 +130,25 @@ test_that("bdf_list() works correctly", {
     expect_equal(s$max_num_steps, mns)
   }
 })
+
+test_that("midpoint_list() works correctly", {
+  ns <- c(3:5)
+  a <- midpoint_list(ns)
+  expect_equal(length(a), 3)
+  for (j in seq_len(3)) {
+    s <- a[[j]]
+    expect_equal(s$name, "midpoint")
+    expect_equal(s$num_steps, ns[j])
+  }
+})
+
+test_that("rk4_list() works correctly", {
+  ns <- c(9:10)
+  a <- rk4_list(ns)
+  expect_equal(length(a), 2)
+  for (j in seq_len(2)) {
+    s <- a[[j]]
+    expect_equal(s$name, "rk4")
+    expect_equal(s$num_steps, ns[j])
+  }
+})

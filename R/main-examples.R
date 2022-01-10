@@ -3,14 +3,24 @@
 #' @export
 #' @param prior_only Create a prior-only version of the model?
 #' @param ... Additional arguments to [ode_model()].
-#' @param name Name of model.
+#' @param name Name of model. Must be one of  the following:
+#' \itemize{
+#'   \item `"gsir"` - age-stratified SIR model
+#'   \item `"tmdd"` - target-mediated drug transmission model
+#'   \item `"lv"` - Lotka-Volterra model
+#' }
 #' @return An object of class `OdeModel`.
 #' @family model constructor functions
-example_ode_model <- function(prior_only = FALSE, name = "gsir", ...) {
+example_ode_model <- function(name, prior_only = FALSE, ...) {
+  choices <- c("gsir", "tmdd", "lv")
+  checkmate::assert_string(name)
+  checkmate::assert_choice(name, choices)
   if (name == "gsir") {
     m <- example_ode_model_gsir(prior_only, ...)
   } else if (name == "tmdd") {
     m <- example_ode_model_tmdd(prior_only, ...)
+  } else if (name == "lv") {
+    m <- example_ode_model_lv(prior_only, ...)
   } else {
     stop("unknown model name!")
   }
@@ -18,7 +28,7 @@ example_ode_model <- function(prior_only = FALSE, name = "gsir", ...) {
 }
 
 
-# Example
+# Group-stratified SIR example model
 example_ode_model_gsir <- function(prior_only, ...) {
 
   # Time points
@@ -123,7 +133,7 @@ example_ode_model_gsir <- function(prior_only, ...) {
 }
 
 
-# TMDD example
+# TMDD example model
 example_ode_model_tmdd <- function(prior_only, ...) {
 
   # Dimensions and other data
@@ -189,6 +199,81 @@ example_ode_model_tmdd <- function(prior_only, ...) {
     loglik_vars = loglik_vars,
     loglik_body = loglik_body,
     other_vars = list(L0, R0),
+    ...
+  )
+}
+
+
+# Lotka-Volterra example model
+example_ode_model_lv <- function(prior_only = FALSE, ...) {
+
+  # Dimensions and other data
+  N <- stan_dim("N", lower = 1) # number of time points
+  D <- stan_dim("D", lower = 1) # ODE system dimension
+  y_obs <- stan_vector_array("y_obs", length = D, dims = list(N))
+  y_obs_init <- stan_vector("y_obs_init", length = D)
+
+  # Define ODE system parameters and their priors
+  lv_par <- list(
+    stan_param(stan_var("alpha", lower = 0), "normal(1, 0.5)"),
+    stan_param(stan_var("beta", lower = 0), "normal(0.05, 0.05)"),
+    stan_param(stan_var("gamma", lower = 0), "normal(1, 0.5)"),
+    stan_param(stan_var("delta", lower = 0), "normal(0.05, 0.05)")
+  )
+
+  # Define noise parameter and its prior
+  sigma_par <- stan_param(
+    stan_vector("sigma", lower = 0, length = D),
+    "lognormal(-1, 1)"
+  )
+
+  # Define initial point as parameter and its prior
+  y0_par <- stan_param(
+    stan_vector("y0", length = D, lower = 0),
+    "lognormal(log(10), 1)"
+  )
+
+  # Initial point on log scale
+  log_y0 <- stan_transform(
+    stan_vector("log_y0", length = D),
+    "parameters",
+    "log(y0)"
+  )
+
+  # Define ODE system right-hand side
+  odefun_body <- "
+    real u = y[1]; // predator
+    real v = y[2]; // prey
+    real du_dt = (alpha - beta * v) * u;
+    real dv_dt = (-gamma + delta * u) * v;
+    return to_vector({du_dt, dv_dt});
+  "
+
+  # Define log-likelihood function body
+  loglik_body <- "
+    real loglik = lognormal_lpdf(y_obs_init | log_y0, sigma);
+    for(n in 1:N) {
+      loglik += lognormal_lpdf(y_obs[n] | log(y_sol[n]), sigma);
+    }
+    return(loglik);
+  "
+
+  # Set loglik depending on whether creating only prior model
+  if (prior_only) {
+    loglik_body <- ""
+    loglik_vars <- list(log_y0, sigma_par)
+  } else {
+    loglik_vars <- list(log_y0, sigma_par, y_obs, y_obs_init)
+  }
+
+  # Return
+  odemodeling::ode_model(
+    N = N,
+    odefun_vars = lv_par,
+    odefun_body = odefun_body,
+    odefun_init = y0_par,
+    loglik_vars = loglik_vars,
+    loglik_body = loglik_body,
     ...
   )
 }

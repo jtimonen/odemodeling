@@ -83,11 +83,21 @@ OdeModel <- R6::R6Class("OdeModel", list(
 
   #' @description
   #' Format a vector into a draws array that can be passed to `$gqs()`.
+  #' Currently works only for models with only scalar parameters.
   #' @param x A a vector with length equal to total number of model
   #' parameters.
   #' @return A [posterior::draws_array] object with only one chain and
   #' iteration.
   make_params = function(x) {
+    param_dims <- lapply(x$stanmodel$params, get_dims)
+    for (pdim in param_dims) {
+      if (length(pdim) > 0) {
+        stop(
+          "make_params currently works only for models with only",
+          " scalar parameters"
+        )
+      }
+    }
     params <- self$stanmodel$param_names()
     L <- length(params)
     checkmate::assert_numeric(x, len = L)
@@ -182,8 +192,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #'
   #' @export
   #' @param solvers List of ODE solvers (possibly the same solver with
-  #' different configurations). See [rk45_list()] and [bdf_list()]
-  #' for creating this.
+  #' different configurations). See [odesolvers_list] for creating this.
   #' @param t0 Initial time point.
   #' @param t Vector of time points.
   #' @param data Other needed data as a list.
@@ -240,9 +249,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
     times <- list(warmup = WT, sampling = ST, total = TT, grand_total = GT)
 
     # Return
-    list(
-      times = times, files = FN, solver = solver
-    )
+    list(times = times, files = FN, solver = solver)
   }
 ))
 

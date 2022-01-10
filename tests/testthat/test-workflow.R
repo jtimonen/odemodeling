@@ -21,9 +21,9 @@ dat <- list(
 # Model compilation -------------------------------------------------------
 
 # Create models
-prior <- example_ode_model(compile = F, prior_only = TRUE)
+prior <- example_ode_model(name = "gsir", compile = F, prior_only = TRUE)
 prior$reinit()
-post <- example_ode_model()
+post <- example_ode_model("gsir")
 
 
 # Prior sampling ----------------------------------------------------------

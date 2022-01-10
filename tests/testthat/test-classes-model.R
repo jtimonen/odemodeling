@@ -1,4 +1,4 @@
-a <- example_ode_model(compile = F)
+a <- example_ode_model(name = "gsir", compile = F)
 
 test_that("OdeModel methods work correctly", {
   expect_error(a$assert_stanfile_exists(), "Model not initialized")

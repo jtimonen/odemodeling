@@ -4,12 +4,17 @@
 \alias{example_ode_model}
 \title{Create an example ODE model}
 \usage{
-example_ode_model(prior_only = FALSE, name = "gsir", ...)
+example_ode_model(name, prior_only = FALSE, ...)
 }
 \arguments{
-\item{prior_only}{Create a prior-only version of the model?}
+\item{name}{Name of model. Must be one of  the following:
+\itemize{
+\item \code{"gsir"} - age-stratified SIR model
+\item \code{"tmdd"} - target-mediated drug transmission model
+\item \code{"lv"} - Lotka-Volterra model
+}}
 
-\item{name}{Name of model.}
+\item{prior_only}{Create a prior-only version of the model?}
 
 \item{...}{Additional arguments to \code{\link[=ode_model]{ode_model()}}.}
 }

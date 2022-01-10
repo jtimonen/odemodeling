@@ -114,6 +114,7 @@ Get the Stan code of the model.
 \if{latex}{\out{\hypertarget{method-make_params}{}}}
 \subsection{Method \code{make_params()}}{
 Format a vector into a draws array that can be passed to \verb{$gqs()}.
+Currently works only for models with only scalar parameters.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModel$make_params(x)}\if{html}{\out{</div>}}
 }
@@ -216,8 +217,7 @@ configurations
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{solvers}}{List of ODE solvers (possibly the same solver with
-different configurations). See \code{\link[=rk45_list]{rk45_list()}} and \code{\link[=bdf_list]{bdf_list()}}
-for creating this.}
+different configurations). See \link{odesolvers_list} for creating this.}
 
 \item{\code{t0}}{Initial time point.}
 

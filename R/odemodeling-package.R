@@ -45,3 +45,16 @@
 #' }
 #'
 NULL
+
+
+#' Hudson Bay Company lynx and hare pelt collection data (1900-1920)
+#'
+#' @format A data frame with 21 rows and 3 variables:
+#' \describe{
+#'   \item{year}{collection year}
+#'   \item{lynx}{number of lynx pelts collected (in 1000's)}
+#'   \item{hare}{number of hare pelts collected (in 1000's)}
+#' }
+#' @source \url{https://www.math.tamu.edu/~phoward/m442/modbasics.pdf},
+#' downloaded 10th Jan, 2021.
+"lynxhare"

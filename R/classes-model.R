@@ -89,7 +89,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' @return A [posterior::draws_array] object with only one chain and
   #' iteration.
   make_params = function(x) {
-    param_dims <- lapply(x$stanmodel$params, get_dims)
+    param_dims <- lapply(self$stanmodel$params, get_dims)
     for (pdim in param_dims) {
       if (length(pdim) > 0) {
         stop(

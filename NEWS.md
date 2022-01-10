@@ -1,5 +1,10 @@
+
 # Early development versions
 
+## odemodeling 0.0.14
+  * Includes `lynxhare` data.
+  * Adds Lotka-Volterra model to example models.
+  
 ## odemodeling 0.0.13
   * Renames the `$simulate()` method to `$gqs()` and implement it also for
   `OdeModel`.

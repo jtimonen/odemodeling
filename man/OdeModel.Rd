@@ -217,7 +217,8 @@ configurations
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{solvers}}{List of ODE solvers (possibly the same solver with
-different configurations). See \link{odesolvers_list} for creating this.}
+different configurations). See \code{\link{odesolvers_lists}} for
+creating this.}
 
 \item{\code{t0}}{Initial time point.}
 

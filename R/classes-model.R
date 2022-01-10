@@ -192,7 +192,8 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #'
   #' @export
   #' @param solvers List of ODE solvers (possibly the same solver with
-  #' different configurations). See [odesolvers_list] for creating this.
+  #' different configurations). See \code{\link{odesolvers_lists}} for
+  #' creating this.
   #' @param t0 Initial time point.
   #' @param t Vector of time points.
   #' @param data Other needed data as a list.

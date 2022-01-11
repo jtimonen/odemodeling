@@ -330,6 +330,22 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
+  #' Extract quantiles of the ODE solutions in an unflattened base \R array
+  #' format.
+  #' @param p Percentile. A number between 0 and 1. For example `p=0.5`
+  #' corresponds to median.
+  #' @return A base \R array of dimension `c(N, D)` where `N` is the number of
+  #' time points and `D` is the number of ODE system dimensions.
+  extract_odesol_quantile = function(p) {
+    checkmate::assert_number(p, lower = 0, upper = 1)
+    get_q <- function(x) {
+      stats::quantile(x, probs = p)
+    }
+    ysol <- self$extract_odesol() # num_draws x num_timepoints x num_dims
+    apply(ysol, c(2, 3), get_q)
+  },
+
+  #' @description
   #' Extract the log likelihood using each parameter draw.
   #' @return A [posterior::draws_array].
   loglik = function() {
@@ -346,8 +362,10 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' to for example [ggplot2::ggplot()].
   #' @param draw_inds If this is not `NULL`, returns ode solutions
   #' corresponding only to given draws.
+  #' @param ydim_names Names of the ODE dimensioins. If `NULL`, these
+  #' are automatically set as `"y1"`, `"y2"`, etc.
   #' @return A `data.frame`.
-  extract_odesol_df = function(draw_inds = NULL) {
+  extract_odesol_df = function(draw_inds = NULL, ydim_names = NULL) {
     arr <- self$extract_odesol()
     num_draws <- dim(arr)[1]
     N <- dim(arr)[2]
@@ -355,7 +373,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     ysol <- as.vector(arr)
     idx <- as.factor(rep(c(1:num_draws), N * D))
     t <- rep(rep(self$get_t(), D), each = num_draws)
-    YDIM <- paste0("y", c(1:D))
+    YDIM <- create_ydim_names(ydim_names, D)
     ydim <- as.factor(rep(rep(YDIM, each = N), each = num_draws))
     df <- data.frame(idx, t, ydim, ysol)
     if (!is.null(draw_inds)) {
@@ -367,16 +385,49 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
+  #' Extract (quantiles of) the marginal distribution of ODE solutions in a
+  #' data frame format that is easy to pass as data
+  #' to for example [ggplot2::ggplot()].
+  #' @param probs The percentile values. A numeric vector where all values
+  #' are between 0 and 1.
+  #' @param ydim_names Names of the ODE dimensioins. If `NULL`, these
+  #' are automatically set as `"y1"`, `"y2"`, etc.
+  #' @return A `data.frame`.
+  extract_odesol_df_dist = function(probs = c(0.1, 0.5, 0.9),
+                                    ydim_names = NULL) {
+    checkmate::assert_numeric(probs, lower = 0, upper = 1, min.len = 1)
+    J <- length(probs)
+    dims <- self$dim_odesol()
+    N <- dims[1]
+    D <- dims[2]
+    df_quant <- NULL
+    for (j in seq_len(J)) {
+      a <- self$extract_odesol_quantile(p = probs[j])
+      df_quant <- cbind(df_quant, as.vector(a))
+    }
+    t <- self$get_t()
+    t <- rep(t, D)
+    YDIM <- create_ydim_names(ydim_names, D)
+    ydim <- rep(YDIM, each = N)
+    df <- data.frame(t, as.factor(ydim))
+    df <- cbind(df, df_quant)
+    colnames(df) <- c("t", "ydim", probs)
+    return(df)
+  },
+
+  #' @description
   #' A quick way to plot the ODE solutions.
   #'
   #' @param draw_inds If this numeric and positive, plots ODE solutions
   #' corresponding only to given draws. If this is `0`, all draws are plotted.
   #' If this is `NULL`, a random subset of at most 100 draws are plotted.
-  #' @param linealpha line alpha
-  #' @param linecolor line color
+  #' @param alpha line alpha
+  #' @param color line color
   #' @return A `ggplot` object.
-  plot_odesol = function(draw_inds = NULL, linealpha = 0.75,
-                         linecolor = "firebrick") {
+  plot_odesol = function(draw_inds = NULL, alpha = 0.75,
+                         color = "firebrick") {
+    linealpha <- alpha
+    linecolor <- color
     num_draws <- self$ndraws()
     if (!is.null(draw_inds)) {
       if (length(draw_inds) == 1) {
@@ -394,6 +445,23 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
       draw_inds <- sample.int(num_draws, 100, replace = FALSE)
     }
     df <- self$extract_odesol_df(draw_inds = draw_inds)
+    wf <- as.formula(". ~ ydim")
+    aesth <- aes_string(x = "t", y = "ysol", group = "idx")
+    ggplot(df, aesth) +
+      geom_line(alpha = linealpha, color = linecolor) +
+      facet_wrap(wf) +
+      ylab("ODE solution")
+  },
+
+  #' @description
+  #' A quick way to plot the marginal distribution of ODE solutions at
+  #' each time point.
+  #'
+  #' @param alpha color alpha
+  #' @param color color
+  #' @return A `ggplot` object.
+  plot_odesol_dist = function(alpha = 0.75, color = "firebrick") {
+    df <- self$extract_odesol_df()
     wf <- as.formula(". ~ ydim")
     aesth <- aes_string(x = "t", y = "ysol", group = "idx")
     ggplot(df, aesth) +

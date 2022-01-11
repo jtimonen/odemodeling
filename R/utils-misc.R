@@ -1,3 +1,14 @@
+# Name ODE dimensions
+create_ydim_names <- function(names, D) {
+  if (is.null(names)) {
+    out <- paste0("y", c(1:D))
+  } else {
+    checkmate::assert_character(names, len = D)
+    out <- names
+  }
+  return(out)
+}
+
 # Add leading comma to arguments string
 add_leading_comma <- function(args) {
   args <- trimws(args)

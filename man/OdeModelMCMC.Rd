@@ -40,6 +40,8 @@ Other model fit classes:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="draws_size">}\href{../../odemodeling/html/OdeModelFit.html#method-draws_size}{\code{odemodeling::OdeModelFit$draws_size()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol}{\code{odemodeling::OdeModelFit$extract_odesol()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df}{\code{odemodeling::OdeModelFit$extract_odesol_df()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df_dist">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df_dist}{\code{odemodeling::OdeModelFit$extract_odesol_df_dist()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_quantile">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_quantile}{\code{odemodeling::OdeModelFit$extract_odesol_quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_unflattened">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_unflattened}{\code{odemodeling::OdeModelFit$extract_unflattened()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t}{\code{odemodeling::OdeModelFit$get_t()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t0">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t0}{\code{odemodeling::OdeModelFit$get_t0()}}\out{</span>}
@@ -50,6 +52,7 @@ Other model fit classes:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="ndraws">}\href{../../odemodeling/html/OdeModelFit.html#method-ndraws}{\code{odemodeling::OdeModelFit$ndraws()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="niterations">}\href{../../odemodeling/html/OdeModelFit.html#method-niterations}{\code{odemodeling::OdeModelFit$niterations()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-plot_odesol}{\code{odemodeling::OdeModelFit$plot_odesol()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol_dist">}\href{../../odemodeling/html/OdeModelFit.html#method-plot_odesol_dist}{\code{odemodeling::OdeModelFit$plot_odesol_dist()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="summary">}\href{../../odemodeling/html/OdeModelFit.html#method-summary}{\code{odemodeling::OdeModelFit$summary()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="time">}\href{../../odemodeling/html/OdeModelFit.html#method-time}{\code{odemodeling::OdeModelFit$time()}}\out{</span>}
 }

@@ -431,7 +431,12 @@ A \code{data.frame}.
 \subsection{Method \code{plot_odesol()}}{
 A quick way to plot the ODE solutions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$plot_odesol(draw_inds = NULL, alpha = 0.75, color = "firebrick")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$plot_odesol(
+  draw_inds = NULL,
+  alpha = 0.75,
+  color = "firebrick",
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -444,6 +449,8 @@ If this is \code{NULL}, a random subset of at most 100 draws are plotted.}
 \item{\code{alpha}}{line alpha}
 
 \item{\code{color}}{line color}
+
+\item{\code{...}}{other arguments passed to \code{extract_odesol_df}}
 }
 \if{html}{\out{</div>}}
 }
@@ -458,15 +465,27 @@ A \code{ggplot} object.
 A quick way to plot the marginal distribution of ODE solutions at
 each time point.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$plot_odesol_dist(alpha = 0.75, color = "firebrick")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$plot_odesol_dist(
+  p = 0.8,
+  alpha = 0.75,
+  color = "firebrick",
+  fill_color = "firebrick",
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{alpha}}{color alpha}
+\item{\code{p}}{Which percentage central interval to plot?}
 
-\item{\code{color}}{color}
+\item{\code{alpha}}{fill alpha}
+
+\item{\code{color}}{line color}
+
+\item{\code{fill_color}}{fill color}
+
+\item{\code{...}}{other arguments passed to \code{extract_odesol_df_dist}}
 }
 \if{html}{\out{</div>}}
 }

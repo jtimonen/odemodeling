@@ -6,30 +6,38 @@ dat <- lynxhare
 N <- nrow(dat) - 1
 t <- dat$year[2:(N + 1)]
 t0 <- dat$year[1]
+y_obs <- cbind(dat$hare[2:(N + 1)], dat$lynx[2:(N + 1)])
+y_obs_init <- c(dat$hare[1], dat$lynx[1])
+add_data <- list(
+  y_obs = y_obs,
+  y_obs_init = y_obs_init,
+  D = 2
+)
 
 # Model compilation -------------------------------------------------------
 
-lv <- example_ode_model(name = "lv", prior_only = TRUE)
+lv <- example_ode_model(name = "lv", prior_only = FALSE)
 
 test_that("Lotka-Volterra example can be created", {
-  expect_false(lv$has_likelihood)
+  expect_true(lv$has_likelihood)
   expect_error(
     lv$make_params(c(1, 2)),
     "currently works only for models with only scalar parameters"
   )
 })
 
-# Prior sampling ----------------------------------------------------------
+# Sampling ----------------------------------------------------------------
 
-# Sample from prior
+# Sample from posterior
 fit <- lv$sample(
-  t0 = t0, t = t, data = list(D = 2),
-  iter_warmup = 1000, iter_sampling = 1000, chains = 1, refresh = 0,
-  seed = SEED
+  t0 = t0, t = t, data = add_data,
+  iter_warmup = 100, iter_sampling = 100, chains = 1, refresh = 0,
+  seed = SEED, solver = midpoint(4), init = 0, step_size = 0.1,
+  show_messages = FALSE
 )
 
-test_that("prior sampling works", {
-  expect_false(lv$has_likelihood)
+test_that("sampling works", {
+  expect_true(lv$has_likelihood)
   expect_true(is(fit, "OdeModelMCMC"))
   expect_output(fit$print())
   expect_gt(fit$setup_time, 0.0)
@@ -38,8 +46,7 @@ test_that("prior sampling works", {
   expect_gt(nchar(fit$cmdstan_version()), 5)
   expect_true(fit$model$assert_stanfile_exists())
   expect_equal(fit$cmdstan_seed(), SEED)
-  expect_equal(fit$cmdstan_init(), 2)
-  expect_error(fit$loglik(), "model has no likelihood function specified")
+  expect_equal(fit$cmdstan_init(), 0)
 })
 
 test_that("plotting ODE solutions works", {
@@ -52,4 +59,21 @@ test_that("plotting ODE solutions works", {
 test_that("extracting ODE solutions quantiles works", {
   df <- fit$extract_odesol_df_dist()
   expect_equal(dim(df), c(40, 5))
+})
+
+test_that("plotting ODE solutions distributions works", {
+  plt <- fit$plot_odesol_dist(p = 0.5, ydim_names = c("foo", "bar"))
+  expect_s3_class(plt, "ggplot")
+})
+
+test_that("plotting on a denser set of time points works", {
+  t_dense <- seq(1901, 1920, by = 0.1)
+  add_data_dense <- list(
+    y_obs_init = add_data$y_obs_init,
+    y_obs = matrix(0, length(t_dense), 2), # dummy
+    D = 2
+  )
+  gq <- fit$gqs(t = t_dense, data = add_data_dense)
+  plt <- gq$plot_odesol_dist(p = 0.8)
+  expect_s3_class(plt, "ggplot")
 })

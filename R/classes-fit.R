@@ -423,9 +423,10 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' If this is `NULL`, a random subset of at most 100 draws are plotted.
   #' @param alpha line alpha
   #' @param color line color
+  #' @param ... other arguments passed to `extract_odesol_df`
   #' @return A `ggplot` object.
   plot_odesol = function(draw_inds = NULL, alpha = 0.75,
-                         color = "firebrick") {
+                         color = "firebrick", ...) {
     linealpha <- alpha
     linecolor <- color
     num_draws <- self$ndraws()
@@ -444,7 +445,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
       )
       draw_inds <- sample.int(num_draws, 100, replace = FALSE)
     }
-    df <- self$extract_odesol_df(draw_inds = draw_inds)
+    df <- self$extract_odesol_df(draw_inds = draw_inds, ...)
     wf <- as.formula(". ~ ydim")
     aesth <- aes_string(x = "t", y = "ysol", group = "idx")
     ggplot(df, aesth) +
@@ -457,15 +458,28 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' A quick way to plot the marginal distribution of ODE solutions at
   #' each time point.
   #'
-  #' @param alpha color alpha
-  #' @param color color
+  #' @param p Which percentage central interval to plot?
+  #' @param alpha fill alpha
+  #' @param color line color
+  #' @param fill_color fill color
+  #' @param ... other arguments passed to `extract_odesol_df_dist`
   #' @return A `ggplot` object.
-  plot_odesol_dist = function(alpha = 0.75, color = "firebrick") {
-    df <- self$extract_odesol_df()
+  plot_odesol_dist = function(p = 0.8,
+                              alpha = 0.75, color = "firebrick",
+                              fill_color = "firebrick", ...) {
+    x <- 1 - p
+    msg <- paste0("plotting medians and ", 100 * p, "% central intervals")
+    message(msg)
+    probs <- c(x / 2, 0.5, 1 - x / 2)
+    df <- self$extract_odesol_df_dist(probs, ...)
+    colnames(df)[3:5] <- c("lower", "median", "upper")
     wf <- as.formula(". ~ ydim")
-    aesth <- aes_string(x = "t", y = "ysol", group = "idx")
+    aesth <- aes_string(
+      x = "t", y = "median", ymin = "lower", ymax = "upper"
+    )
     ggplot(df, aesth) +
-      geom_line(alpha = linealpha, color = linecolor) +
+      geom_line(alpha = 1, color = color) +
+      geom_ribbon(fill = fill_color, alpha = alpha) +
       facet_wrap(wf) +
       ylab("ODE solution")
   }

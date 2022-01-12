@@ -202,4 +202,9 @@ test_that("sim with same solver as during sampling gives same output", {
 test_that("reliability check works", {
   solvers <- bdf_list(tols = 10^(-6:-9))
   rel <- post_fit$reliability(solvers = solvers, force = TRUE)
+  met <- rel$metrics
+  expect_equal(dim(met), c(length(solvers), 5))
+  nams <- c("pareto_k", "n_eff", "r_eff", "mad_loglik", "mad_odesol")
+  expect_equal(colnames(met), nams)
+  unlink("results", recursive = TRUE) # purge results directory
 })

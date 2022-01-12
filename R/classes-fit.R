@@ -182,6 +182,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       }
       metrics <- data.frame(metrics)
       colnames(metrics) <- names(rel_met)
+      rownames(metrics) <- NULL
 
       # Return
       list(times = GT, solvers = solvers, files = FN, metrics = metrics)

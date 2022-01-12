@@ -9,7 +9,7 @@
 \alias{psis}
 \title{Compare two objects that contain ODE solutions and ODE model likelihoods}
 \usage{
-max_abs_odesol_diff(x, y)
+max_abs_odesol_diff(x, y, include_y0 = TRUE)
 
 max_abs_loglik_diff(x, y)
 
@@ -23,6 +23,8 @@ psis(x, y)
 \item{x}{An object of class \link{OdeModelMCMC} or \link{OdeModelGQ}.}
 
 \item{y}{An object of class \link{OdeModelMCMC} or \link{OdeModelGQ}.}
+
+\item{include_y0}{Should the ODE initial state be included in computations?}
 }
 \description{
 Compare two objects that contain ODE solutions and ODE model likelihoods

@@ -147,8 +147,8 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' @param force If this is `TRUE`, the procedure is continued for all
     #' given solvers even if it is found that some early stage that results
     #' are not reliable.
-    #' @param ... Additional arguments passed to the `$gqs()` method of the
-    #' underlying [cmdstanr::CmdStanModel] object.
+    #' @param ... Additional arguments passed to the `$generate_quantities()`
+    #' method of the underlying [cmdstanr::CmdStanModel] object.
     #' @return A named list.
     reliability = function(solvers,
                            savedir = "results",
@@ -156,7 +156,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
                            force = FALSE,
                            ...) {
       if (!force) {
-        stop("force=FALSE is not implemented yet!")
+        stop("Set for force=TRUE if you want to call this!")
       }
       model <- self
       create_dir_if_not_exist(savedir)
@@ -165,25 +165,30 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       IS <- list()
       FN <- c()
       GT <- rep(0.0, L)
+      metrics <- NULL
       for (j in seq_len(L)) {
         solver <- solvers[[j]]
         conf_str <- solver$to_string()
         cat("==============================================================\n")
         cat(" (", number_string(j), ") GQ with: ", conf_str, "\n", sep = "")
+        fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
         gq <- self$gqs(solver = solver, ...)
         cat("Saving result object to ", fn, "\n", sep = "")
         saveRDS(gq, file = fn)
         FN <- c(FN, fn)
         GT[j] <- gq$time()$total
-        is <- psis(self, gq)
-        IS <- c(IS, is)
+        rel_met <- compute_reliability_metrics(self, gq)
+        metrics <- rbind(metrics, rel_met)
       }
+      metrics <- data.frame(metrics)
+      colnames(metrics) <- names(rel_met)
 
       # Return
-      list(times = GT, solvers = solvers, files = FN, psis = IS)
+      list(times = GT, solvers = solvers, files = FN, metrics = metrics)
     }
   )
 )
+
 
 # OdeModelGQ --------------------------------------------------------------
 

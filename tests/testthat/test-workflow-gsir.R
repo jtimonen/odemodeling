@@ -147,7 +147,7 @@ sfun <- function(solver) {
   )
 }
 
-test_that("workflow works", {
+test_that("psis works", {
   post_sims <- list()
   post_sims[[1]] <- sfun(solver = rk45())
   post_sims[[2]] <- sfun(solver = bdf())
@@ -197,4 +197,9 @@ test_that("sim with same solver as during sampling gives same output", {
   d2 <- max_abs_odesol_diff(post_fit, post_sim_same)
   expect_lt(d1, 1e-6) # should be 0 but CSV conversion messes this up
   expect_lt(d2, 1e-6) # should be 0 but CSV conversion messes this up
+})
+
+test_that("reliability check works", {
+  solvers <- bdf_list(tols = 10^(-6:-9))
+  rel <- post_fit$reliability(solvers = solvers, force = TRUE)
 })

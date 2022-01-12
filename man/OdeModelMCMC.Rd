@@ -203,8 +203,8 @@ creating this.}
 given solvers even if it is found that some early stage that results
 are not reliable.}
 
-\item{\code{...}}{Additional arguments passed to the \verb{$gqs()} method of the
-underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+\item{\code{...}}{Additional arguments passed to the \verb{$generate_quantities()}
+method of the underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
 }
 \if{html}{\out{</div>}}
 }

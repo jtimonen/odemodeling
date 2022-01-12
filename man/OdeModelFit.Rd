@@ -72,6 +72,7 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
 \item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
 \item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-extract_y0}{\code{OdeModelFit$extract_y0()}}
 \item \href{#method-extract_odesol_quantile}{\code{OdeModelFit$extract_odesol_quantile()}}
 \item \href{#method-loglik}{\code{OdeModelFit$loglik()}}
 \item \href{#method-extract_odesol_df}{\code{OdeModelFit$extract_odesol_df()}}
@@ -242,11 +243,19 @@ A string.
 \subsection{Method \code{get_t()}}{
 Get timepoints where the model was fitted.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_t()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_t(include_t0 = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{include_t0}}{Should the initial time point be included?}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-A numeric vector.
+A numeric vector of length \code{N}. If \code{include_t0} is \code{TRUE}, length
+will be \code{N+1}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -328,23 +337,47 @@ obtained as \code{self$dim(variable)}.
 Extract the ODE solutions using each parameter draw, in an
 unflattened base \R array format.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol(include_y0 = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{include_y0}}{Should the initial state be included?}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 A base \R array of dimension \code{c(num_draws, N, D)} where
 \code{num_draws} is the total number of draws and \code{N} is the number of
-time points and \code{D} is the number of ODE system dimensions.
+time points and \code{D} is the number of ODE system dimensions. If
+\code{include_y0} is \code{TRUE}, then the \code{N} dimension grows to \code{N+1}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-extract_y0"></a>}}
+\if{latex}{\out{\hypertarget{method-extract_y0}{}}}
+\subsection{Method \code{extract_y0()}}{
+Extract the ODE initial states using each parameter draw, in a
+base \R array format.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_y0()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base \R array of dimension \code{c(num_draws, D)} where
+\code{num_draws} is the total number of draws and \code{D} is the number of ODE
+system dimensions.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-extract_odesol_quantile"></a>}}
 \if{latex}{\out{\hypertarget{method-extract_odesol_quantile}{}}}
 \subsection{Method \code{extract_odesol_quantile()}}{
-Extract quantiles of the ODE solutions in an unflattened base \R array
+Extract quantiles of the ODE solutions in a base \R array
 format.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_quantile(p)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_quantile(p, include_y0 = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -352,12 +385,15 @@ format.
 \describe{
 \item{\code{p}}{Percentile. A number between 0 and 1. For example \code{p=0.5}
 corresponds to median.}
+
+\item{\code{include_y0}}{Should the initial state be included?}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A base \R array of dimension \code{c(N, D)} where \code{N} is the number of
-time points and \code{D} is the number of ODE system dimensions.
+time points and \code{D} is the number of ODE system dimensions. If
+\code{include_y0} is \code{TRUE}, then the \code{N} dimension grows to \code{N+1}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -381,7 +417,11 @@ Extract the ODE solutions using each parameter draw, in a
 flattened data frame format that is easy to pass as data
 to for example \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_df(draw_inds = NULL, ydim_names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_df(
+  draw_inds = NULL,
+  include_y0 = FALSE,
+  ydim_names = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -389,6 +429,8 @@ to for example \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 \describe{
 \item{\code{draw_inds}}{If this is not \code{NULL}, returns ode solutions
 corresponding only to given draws.}
+
+\item{\code{include_y0}}{Should the initial state be included?}
 
 \item{\code{ydim_names}}{Names of the ODE dimensioins. If \code{NULL}, these
 are automatically set as \code{"y1"}, \code{"y2"}, etc.}
@@ -407,7 +449,11 @@ Extract (quantiles of) the marginal distribution of ODE solutions in a
 data frame format that is easy to pass as data
 to for example \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_df_dist(probs = c(0.1, 0.5, 0.9), ydim_names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$extract_odesol_df_dist(
+  probs = c(0.1, 0.5, 0.9),
+  include_y0 = FALSE,
+  ydim_names = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -415,6 +461,8 @@ to for example \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 \describe{
 \item{\code{probs}}{The percentile values. A numeric vector where all values
 are between 0 and 1.}
+
+\item{\code{include_y0}}{Should the initial state be included?}
 
 \item{\code{ydim_names}}{Names of the ODE dimensioins. If \code{NULL}, these
 are automatically set as \code{"y1"}, \code{"y2"}, etc.}

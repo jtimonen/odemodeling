@@ -19,6 +19,7 @@ RoxygenNote: 7.1.2
 SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Imports: 
     methods,
+    abind (>= 1.0),
     cmdstanr (>= 0.4.0),
     checkmate (>= 2.0.0),
     posterior (>= 1.1.0),

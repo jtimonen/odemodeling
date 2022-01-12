@@ -261,10 +261,16 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
 
   #' @description
   #' Get timepoints where the model was fitted.
-  #'
-  #' @return A numeric vector.
-  get_t = function() {
-    self$t
+  #' @param include_t0 Should the initial time point be included?
+  #' @return A numeric vector of length `N`. If `include_t0` is `TRUE`, length
+  #' will be `N+1`.
+  get_t = function(include_t0 = FALSE) {
+    t <- self$t
+    if (include_t0) {
+      t0 <- self$get_t0()
+      t <- c(t0, t)
+    }
+    t
   },
 
   #' @description
@@ -320,28 +326,50 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @description
   #' Extract the ODE solutions using each parameter draw, in an
   #' unflattened base \R array format.
+  #' @param include_y0 Should the initial state be included?
   #' @return A base \R array of dimension `c(num_draws, N, D)` where
   #' `num_draws` is the total number of draws and `N` is the number of
-  #' time points and `D` is the number of ODE system dimensions.
-  extract_odesol = function() {
+  #' time points and `D` is the number of ODE system dimensions. If
+  #' `include_y0` is `TRUE`, then the `N` dimension grows to `N+1`.
+  extract_odesol = function(include_y0 = FALSE) {
     arr <- self$extract_unflattened(variable = "y_sol_gq")
     internal_assert_len(dim(arr), 3, "extract_odesol_unflattened")
+    if (include_y0) {
+      y0 <- self$extract_y0()
+      dims <- dim(y0)
+      y0 <- array(y0, dim = c(dims[1], 1, dims[2]))
+      arr <- abind::abind(y0, arr, along = 2)
+    }
+    arr
+  },
+
+  #' @description
+  #' Extract the ODE initial states using each parameter draw, in a
+  #' base \R array format.
+  #' @return A base \R array of dimension `c(num_draws, D)` where
+  #' `num_draws` is the total number of draws and `D` is the number of ODE
+  #' system dimensions.
+  extract_y0 = function() {
+    arr <- self$extract_unflattened(variable = "y0_gq")
     return(arr)
   },
 
   #' @description
-  #' Extract quantiles of the ODE solutions in an unflattened base \R array
+  #' Extract quantiles of the ODE solutions in a base \R array
   #' format.
   #' @param p Percentile. A number between 0 and 1. For example `p=0.5`
   #' corresponds to median.
+  #' @param include_y0 Should the initial state be included?
   #' @return A base \R array of dimension `c(N, D)` where `N` is the number of
-  #' time points and `D` is the number of ODE system dimensions.
-  extract_odesol_quantile = function(p) {
+  #' time points and `D` is the number of ODE system dimensions. If
+  #' `include_y0` is `TRUE`, then the `N` dimension grows to `N+1`.
+  extract_odesol_quantile = function(p, include_y0 = FALSE) {
     checkmate::assert_number(p, lower = 0, upper = 1)
     get_q <- function(x) {
       stats::quantile(x, probs = p)
     }
-    ysol <- self$extract_odesol() # num_draws x num_timepoints x num_dims
+    ysol <- self$extract_odesol(include_y0 = include_y0)
+    # ysol has shape num_draws x num_timepoints x num_dims
     apply(ysol, c(2, 3), get_q)
   },
 
@@ -362,17 +390,21 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' to for example [ggplot2::ggplot()].
   #' @param draw_inds If this is not `NULL`, returns ode solutions
   #' corresponding only to given draws.
+  #' @param include_y0 Should the initial state be included?
   #' @param ydim_names Names of the ODE dimensioins. If `NULL`, these
   #' are automatically set as `"y1"`, `"y2"`, etc.
   #' @return A `data.frame`.
-  extract_odesol_df = function(draw_inds = NULL, ydim_names = NULL) {
-    arr <- self$extract_odesol()
+  extract_odesol_df = function(draw_inds = NULL,
+                               include_y0 = FALSE,
+                               ydim_names = NULL) {
+    arr <- self$extract_odesol(include_y0 = include_y0)
     num_draws <- dim(arr)[1]
     N <- dim(arr)[2]
     D <- dim(arr)[3]
     ysol <- as.vector(arr)
     idx <- as.factor(rep(c(1:num_draws), N * D))
-    t <- rep(rep(self$get_t(), D), each = num_draws)
+    t <- self$get_t(include_t0 = include_y0)
+    t <- rep(rep(t, D), each = num_draws)
     YDIM <- create_ydim_names(ydim_names, D)
     ydim <- as.factor(rep(rep(YDIM, each = N), each = num_draws))
     df <- data.frame(idx, t, ydim, ysol)
@@ -390,23 +422,26 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' to for example [ggplot2::ggplot()].
   #' @param probs The percentile values. A numeric vector where all values
   #' are between 0 and 1.
+  #' @param include_y0 Should the initial state be included?
   #' @param ydim_names Names of the ODE dimensioins. If `NULL`, these
   #' are automatically set as `"y1"`, `"y2"`, etc.
   #' @return A `data.frame`.
   extract_odesol_df_dist = function(probs = c(0.1, 0.5, 0.9),
+                                    include_y0 = FALSE,
                                     ydim_names = NULL) {
     checkmate::assert_numeric(probs, lower = 0, upper = 1, min.len = 1)
     J <- length(probs)
     dims <- self$dim_odesol()
-    N <- dims[1]
     D <- dims[2]
+    t <- self$get_t(include_t0 = include_y0)
+    N <- length(t)
+    t <- rep(t, D)
     df_quant <- NULL
     for (j in seq_len(J)) {
-      a <- self$extract_odesol_quantile(p = probs[j])
+      a <- self$extract_odesol_quantile(p = probs[j], include_y0 = include_y0)
       df_quant <- cbind(df_quant, as.vector(a))
     }
-    t <- self$get_t()
-    t <- rep(t, D)
+
     YDIM <- create_ydim_names(ydim_names, D)
     ydim <- rep(YDIM, each = N)
     df <- data.frame(t, as.factor(ydim))

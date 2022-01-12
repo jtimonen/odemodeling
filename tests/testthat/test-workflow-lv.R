@@ -39,6 +39,7 @@ fit <- lv$sample(
 test_that("sampling works", {
   expect_true(lv$has_likelihood)
   expect_true(is(fit, "OdeModelMCMC"))
+  expect_equal(dim(fit$extract_y0()), c(100, 2))
   expect_output(fit$print())
   expect_gt(fit$setup_time, 0.0)
   expect_gt(fit$time()$total, 0.0)
@@ -56,14 +57,25 @@ test_that("plotting ODE solutions works", {
   expect_s3_class(plt, "ggplot")
 })
 
+test_that("extracting t and t0 works correctly", {
+  x <- fit$get_t()
+  y <- fit$get_t(include_t0 = TRUE)
+  expect_equal(length(y), length(x) + 1)
+})
+
 test_that("extracting ODE solutions quantiles works", {
-  df <- fit$extract_odesol_df_dist()
-  expect_equal(dim(df), c(40, 5))
+  df1 <- fit$extract_odesol_df_dist()
+  df2 <- fit$extract_odesol_df_dist(include_y0 = TRUE)
+  expect_equal(dim(df1), c(40, 5))
+  expect_equal(dim(df2), c(42, 5))
 })
 
 test_that("plotting ODE solutions distributions works", {
-  plt <- fit$plot_odesol_dist(p = 0.5, ydim_names = c("foo", "bar"))
-  expect_s3_class(plt, "ggplot")
+  yn <- c("foo", "bar")
+  plt1 <- fit$plot_odesol_dist(ydim_names = yn)
+  plt2 <- fit$plot_odesol_dist(ydim_names = yn, include_y0 = TRUE)
+  expect_s3_class(plt1, "ggplot")
+  expect_s3_class(plt2, "ggplot")
 })
 
 test_that("plotting on a denser set of time points works", {

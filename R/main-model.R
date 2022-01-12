@@ -130,14 +130,23 @@ ode_model <- function(N,
     log_lik_gq <- stan_transform(
       decl = stan_var("log_lik_gq", "real"),
       origin = "model",
-      code = paste0("{\n log_lik_gq = log_lik_tpar; \n}")
+      code = "{\n log_lik_gq = log_lik_tpar; \n}"
     )
   }
 
+  # Add y0 as a generated quantity too, so its easy to extract from results
+  y0_gq <- stan_transform(
+    stan_vector("y0_gq", length = D),
+    origin = "model",
+    code = "{\n y0_gq = y0; \n}"
+  )
+
   if (!has_loglik) {
-    other_vars_add <- list(y_sol_gq)
+    other_vars_add <- list(y_sol_gq, y0_gq)
   } else {
-    other_vars_add <- list(y_sol_tpar, y_sol_gq, log_lik_tpar, log_lik_gq)
+    other_vars_add <- list(
+      y_sol_tpar, y_sol_gq, y0_gq, log_lik_tpar, log_lik_gq
+    )
   }
 
   other_vars <- c(other_vars_add, other_vars)

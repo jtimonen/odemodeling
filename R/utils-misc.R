@@ -1,3 +1,12 @@
+# Create directory if it doesn't exist
+create_dir_if_not_exist <- function(dir) {
+  if (!dir.exists(dir)) {
+    message("directory '", dir, "' doesn't exist, creating it")
+    dir.create(dir)
+  }
+  invisible(dir)
+}
+
 # Name ODE dimensions
 create_ydim_names <- function(names, D) {
   if (is.null(names)) {

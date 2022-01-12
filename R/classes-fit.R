@@ -69,6 +69,118 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         params = fitted_params,
         ...
       )
+    },
+
+    #' @description
+    #' Sample parameters of the ODE model using many different ODE solver
+    #' configurations
+    #'
+    #' @param solvers List of ODE solvers (possibly the same solver with
+    #' different configurations). See \code{\link{odesolvers_lists}} for
+    #' creating this.
+    #' @param t0 Initial time point.
+    #' @param t Vector of time points.
+    #' @param data Other needed data as a list.
+    #' @param savedir Directory where results are saved.
+    #' @param basename Base name for saved files.
+    #' @param chains Number of MCMC chains.
+    #' @param ... Additional arguments passed to the `$sample()` method of the
+    #' underlying [cmdstanr::CmdStanModel] object.
+    #' @return A named list.
+    sample_manyconf = function(solvers,
+                               t0,
+                               t,
+                               data = list(),
+                               savedir = "results",
+                               basename = "odemcmc",
+                               chains = 4,
+                               ...) {
+      model <- self
+      create_dir_if_not_exist(savedir)
+      checkmate::assert_list(solvers, "OdeSolver")
+      L <- length(solvers)
+      WT <- matrix(0.0, L, chains)
+      ST <- matrix(0.0, L, chains)
+      TT <- matrix(0.0, L, chains)
+      FN <- c()
+      GT <- rep(0.0, L)
+      for (j in seq_len(L)) {
+        solver <- solvers[[j]]
+        conf_str <- solver$to_string()
+        cat("==============================================================\n")
+        ns_j <- number_string(j)
+        cat(" (", ns_j, ") Sampling with: ", conf_str, "\n", sep = "")
+        fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
+        fit <- model$sample(
+          t0 = t0,
+          t = t,
+          data  = data,
+          solver = solver,
+          chains = chains,
+          ...
+        )
+        cat("Saving result object to ", fn, "\n", sep = "")
+        saveRDS(fit, file = fn)
+        FN <- c(FN, fn)
+        t_total <- fit$time()$chains$total
+        gt <- fit$time()$total
+        GT[j] <- gt
+        WT[j, ] <- fit$time()$chains$warmup
+        ST[j, ] <- fit$time()$chains$sampling
+        TT[j, ] <- t_total
+      }
+      times <- list(warmup = WT, sampling = ST, total = TT, grand_total = GT)
+
+      # Return
+      list(times = times, solvers = solvers, files = FN)
+    },
+
+    #' @description
+    #' Study reliability of results by running standalone generated
+    #' quantities using more accurate ODE solver configurations
+    #'
+    #' @param solvers List of ODE solvers (possibly the same solver with
+    #' more accurate configurations). See \code{\link{odesolvers_lists}} for
+    #' creating this.
+    #' @param savedir Directory where results are saved.
+    #' @param basename Base name for saved files.
+    #' @param force If this is `TRUE`, the procedure is continued for all
+    #' given solvers even if it is found that some early stage that results
+    #' are not reliable.
+    #' @param ... Additional arguments passed to the `$gqs()` method of the
+    #' underlying [cmdstanr::CmdStanModel] object.
+    #' @return A named list.
+    reliability = function(solvers,
+                           savedir = "results",
+                           basename = "odegq",
+                           force = FALSE,
+                           ...) {
+      if (!force) {
+        stop("force=FALSE is not implemented yet!")
+      }
+      model <- self
+      create_dir_if_not_exist(savedir)
+      checkmate::assert_list(solvers, "OdeSolver")
+      L <- length(solvers)
+      IS <- list()
+      FN <- c()
+      GT <- rep(0.0, L)
+      for (j in seq_len(L)) {
+        solver <- solvers[[j]]
+        conf_str <- solver$to_string()
+        cat("==============================================================\n")
+        cat(" (", number_string(j), ") GQ with: ", conf_str, "\n", sep = "")
+        gq <- self$gqs(solver = solver, ...)
+        cat("Saving result object to ", fn, "\n", sep = "")
+        saveRDS(gq, file = fn)
+        FN <- c(FN, fn)
+        GT[j] <- gq$time()$total
+        is <- psis(self, gq)
+        IS <- c(IS, is)
+      }
+
+      # Return
+      list(times = GT, solvers = solvers, files = FN, psis = IS)
     }
   )
 )

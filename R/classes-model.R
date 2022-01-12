@@ -190,7 +190,6 @@ OdeModel <- R6::R6Class("OdeModel", list(
   #' Sample parameters of the ODE model using many different ODE solver
   #' configurations
   #'
-  #' @export
   #' @param solvers List of ODE solvers (possibly the same solver with
   #' different configurations). See \code{\link{odesolvers_lists}} for
   #' creating this.
@@ -227,7 +226,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
       solver <- solvers[[j]]
       conf_str <- solver$to_string()
       cat("=================================================================\n")
-      cat(" (", j, ") Sampling with: ", conf_str, "\n", sep = "")
+      cat(" (", number_string(j), ") Sampling with: ", conf_str, "\n", sep = "")
       fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
       fit <- model$sample(
         t0 = t0,
@@ -250,7 +249,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
     times <- list(warmup = WT, sampling = ST, total = TT, grand_total = GT)
 
     # Return
-    list(times = times, files = FN, solver = solver)
+    list(times = times, solvers = solvers, files = FN)
   }
 ))
 

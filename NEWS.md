@@ -1,8 +1,11 @@
-# odemodeling 0.0.15
-
-
 # Early development versions
 
+## odemodeling 0.0.16
+  * Fixes the output of the `$sample_manyconf()` method of `OdeModel` class.
+  * Adds the `compute_reliability_metrics()` function.
+  * Adds an initial version of a `$reliability()` method for the
+  `OdeModelMCMC` class.
+  
 ## odemodeling 0.0.15
   * Adds more result extraction and plotting methods for `OdeModelFit`s.
   * Makes it easier to extract initial state `y0` always in the same format,

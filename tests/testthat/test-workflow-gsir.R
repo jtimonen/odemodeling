@@ -201,7 +201,13 @@ test_that("sim with same solver as during sampling gives same output", {
 
 test_that("reliability check works", {
   solvers <- bdf_list(tols = 10^(-6:-9))
-  rel <- post_fit$reliability(solvers = solvers, force = TRUE)
+  expect_warning(
+    {
+      rel <- post_fit$reliability(solvers = solvers, force = TRUE)
+    },
+    "Some Pareto k diagnostic values are too high"
+  )
+
   met <- rel$metrics
   expect_equal(dim(met), c(length(solvers), 5))
   nams <- c("pareto_k", "n_eff", "r_eff", "mad_loglik", "mad_odesol")

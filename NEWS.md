@@ -1,6 +1,13 @@
+# odemodeling 0.0.15
+
 
 # Early development versions
 
+## odemodeling 0.0.15
+  * Adds more result extraction and plotting methods for `OdeModelFit`s.
+  * Makes it easier to extract initial state `y0` always in the same format,
+  no matter if it is a parameter, data, or transformation.
+  
 ## odemodeling 0.0.14
   * Includes `lynxhare` data.
   * Adds Lotka-Volterra model to example models.

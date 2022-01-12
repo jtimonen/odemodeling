@@ -78,11 +78,16 @@ ys <- sho_fit_prior$extract_odesol_df()
 
 We can plot ODE solutions like so
 ```{r sho_fit_view_ode2, fig.width=6.5, fig.height=3.2}
-sho_fit_prior$plot_odesol(linealpha = 0.3)
+sho_fit_prior$plot_odesol(alpha = 0.3)
+```
+
+We can plot the distribution of ODE solutions like so
+```{r sho_fit_view_ode3, fig.width=6.5, fig.height=3.2}
+sho_fit_prior$plot_odesol_dist(include_y0 = TRUE)
 ```
 
 We can plot ODE solution using one draw like so
-```{r sho_fit_view_ode3, fig.width=6.5, fig.height=3.2}
+```{r sho_fit_view_ode4, fig.width=6.5, fig.height=3.2}
 sho_fit_prior$plot_odesol(draw_inds = 45)
 ```
 

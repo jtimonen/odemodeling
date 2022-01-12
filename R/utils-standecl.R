@@ -3,27 +3,23 @@
 
 # Get decl
 get_decl <- function(x) {
+  ok <- c("StanDeclaration", "StanParameter", "StanTransformation")
+  checkmate::assert_multi_class(x, classes = ok)
   if (is(x, "StanDeclaration")) {
     return(x)
-  } else if (is(x, "StanParameter")) {
-    return(x$decl)
-  } else if (is(x, "StanTransformation")) {
-    return(x$decl)
   } else {
-    stop("Invalid type for get_decl().")
+    return(x$decl)
   }
 }
 
 # Get name
 get_name <- function(x) {
+  ok <- c("StanDeclaration", "StanParameter", "StanTransformation")
+  checkmate::assert_multi_class(x, classes = ok)
   if (is(x, "StanDeclaration")) {
     return(x$name)
-  } else if (is(x, "StanParameter")) {
-    return(x$decl$name)
-  } else if (is(x, "StanTransformation")) {
-    return(x$decl$name)
   } else {
-    stop("Invalid type for get_decl().")
+    return(x$decl$name)
   }
 }
 

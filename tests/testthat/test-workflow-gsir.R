@@ -200,7 +200,8 @@ test_that("sim with same solver as during sampling gives same output", {
 })
 
 test_that("reliability check works", {
-  solvers <- bdf_list(tols = 10^(-6:-9))
+  log_tols <- c(-6:-9)
+  solvers <- bdf_list(tols = 10^log_tols)
   expect_warning(
     {
       rel <- post_fit$reliability(solvers = solvers, force = TRUE)

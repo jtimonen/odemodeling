@@ -1,9 +1,12 @@
 # Early development versions
 
+## odemodeling 0.0.17
+  * Removes accidentally duplicated code and improves test coverage.
+
 ## odemodeling 0.0.16
   * Fixes the output of the `$sample_manyconf()` method of `OdeModel` class.
   * Adds the `compute_reliability_metrics()` function.
-  * Adds an initial version of a `$reliability()` method for the
+  * Adds an initial version of the `$reliability()` method for the
   `OdeModelMCMC` class.
   
 ## odemodeling 0.0.15

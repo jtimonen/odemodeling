@@ -32,7 +32,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' Simulate ODE solutions (and other possible generated quantities
     #' using) the model and fitted params. This If any
     #' of the arguments are `NULL` (default), they are replaced with ones saved
-    #' in the [OdeModelMCMC] object.
+    #' in the [OdeModelFit] object.
     #'
     #' @param t0 Initial time.
     #' @param t Vector of time points.
@@ -69,6 +69,70 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         params = fitted_params,
         ...
       )
+    },
+
+    #' @description
+    #' Study reliability of results by running standalone generated
+    #' quantities using more accurate ODE solver configurations
+    #'
+    #' @param solvers List of ODE solvers (possibly the same solver with
+    #' more accurate configurations). See \code{\link{odesolvers_lists}} for
+    #' creating this.
+    #' @param savedir Directory where results are saved.
+    #' @param basename Base name for saved files.
+    #' @param force If this is `TRUE`, the procedure is continued for all
+    #' given solvers even if it is found that some early stage that results
+    #' are not reliable.
+    #' @param ... Additional arguments passed to the `$generate_quantities()`
+    #' method of the underlying [cmdstanr::CmdStanModel] object.
+    #' @return A named list.
+    reliability = function(solvers,
+                           savedir = "results",
+                           basename = "odegq",
+                           force = FALSE,
+                           ...) {
+      if (!force) {
+        stop("Set force=TRUE if you want to call this!")
+      }
+      create_dir_if_not_exist(savedir)
+      checkmate::assert_list(solvers, "OdeSolver")
+      L <- length(solvers)
+      IS <- list()
+      FN <- c()
+      GT <- rep(0.0, L)
+      metrics <- NULL
+
+      # Base configuration
+      cat("Running GQ using sampling-time configuration.\n")
+      base_gq <- self$gqs(...) # everything will be computed against this
+
+      # Other configurations
+      for (j in seq_len(L)) {
+        solver <- solvers[[j]]
+        conf_str <- solver$to_string()
+        cat("==============================================================\n")
+        cat(" (", number_string(j), ") Running GQ with: ",
+          conf_str, "\n",
+          sep = ""
+        )
+        fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
+        gq <- self$gqs(solver = solver, ...)
+        cat("Saving result object to ", fn, "\n", sep = "")
+        saveRDS(gq, file = fn)
+        FN <- c(FN, fn)
+        GT[j] <- gq$time()$total
+        rel_met <- compute_reliability_metrics(base_gq, gq)
+        metrics <- rbind(metrics, rel_met)
+      }
+      metrics <- data.frame(metrics)
+      colnames(metrics) <- names(rel_met)
+      rownames(metrics) <- NULL
+
+      # Return
+      list(
+        times = GT, solvers = solvers, files = FN, metrics = metrics,
+        base_gq = base_gq
+      )
     }
   )
 )
@@ -95,59 +159,6 @@ OdeModelGQ <- R6::R6Class("OdeModelGQ",
       cat(class_info("OdeModelGQ"), "\n")
       cat(self$info())
       invisible(self)
-    },
-
-    #' @description
-    #' Study reliability of results by running standalone generated
-    #' quantities using more accurate ODE solver configurations
-    #'
-    #' @param solvers List of ODE solvers (possibly the same solver with
-    #' more accurate configurations). See \code{\link{odesolvers_lists}} for
-    #' creating this.
-    #' @param savedir Directory where results are saved.
-    #' @param basename Base name for saved files.
-    #' @param force If this is `TRUE`, the procedure is continued for all
-    #' given solvers even if it is found that some early stage that results
-    #' are not reliable.
-    #' @param ... Additional arguments passed to the `$generate_quantities()`
-    #' method of the underlying [cmdstanr::CmdStanModel] object.
-    #' @return A named list.
-    reliability = function(solvers,
-                           savedir = "results",
-                           basename = "odegq",
-                           force = FALSE,
-                           ...) {
-      if (!force) {
-        stop("Set force=TRUE if you want to call this!")
-      }
-      model <- self
-      create_dir_if_not_exist(savedir)
-      checkmate::assert_list(solvers, "OdeSolver")
-      L <- length(solvers)
-      IS <- list()
-      FN <- c()
-      GT <- rep(0.0, L)
-      metrics <- NULL
-      for (j in seq_len(L)) {
-        solver <- solvers[[j]]
-        conf_str <- solver$to_string()
-        cat("==============================================================\n")
-        cat(" (", number_string(j), ") GQ with: ", conf_str, "\n", sep = "")
-        fn <- file.path(savedir, paste0(basename, "_", j, ".rds"))
-        gq <- self$gqs(solver = solver, ...)
-        cat("Saving result object to ", fn, "\n", sep = "")
-        saveRDS(gq, file = fn)
-        FN <- c(FN, fn)
-        GT[j] <- gq$time()$total
-        rel_met <- compute_reliability_metrics(self, gq)
-        metrics <- rbind(metrics, rel_met)
-      }
-      metrics <- data.frame(metrics)
-      colnames(metrics) <- names(rel_met)
-      rownames(metrics) <- NULL
-
-      # Return
-      list(times = GT, solvers = solvers, files = FN, metrics = metrics)
     }
   )
 )
@@ -289,13 +300,6 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get size of the draws object in Mb.
-  #' @return A string.
-  draws_size = function() {
-    format(object.size(self$draws), "Mb")
-  },
-
-  #' @description
   #' Get used 'CmdStan' rng seed.
   cmdstan_seed = function() {
     md <- self$cmdstanr_metadata
@@ -314,7 +318,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   },
 
   #' @description
-  #' Get timepoints where the model was fitted.
+  #' Get time points where the model was fitted.
   #' @param include_t0 Should the initial time point be included?
   #' @return A numeric vector of length `N`. If `include_t0` is `TRUE`, length
   #' will be `N+1`.

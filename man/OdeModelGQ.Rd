@@ -24,7 +24,6 @@ Other model fit classes:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-print}{\code{OdeModelGQ$print()}}
-\item \href{#method-reliability}{\code{OdeModelGQ$reliability()}}
 \item \href{#method-clone}{\code{OdeModelGQ$clone()}}
 }
 }
@@ -36,7 +35,6 @@ Other model fit classes:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim">}\href{../../odemodeling/html/OdeModelFit.html#method-dim}{\code{odemodeling::OdeModelFit$dim()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-dim_odesol}{\code{odemodeling::OdeModelFit$dim_odesol()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="draws">}\href{../../odemodeling/html/OdeModelFit.html#method-draws}{\code{odemodeling::OdeModelFit$draws()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="draws_size">}\href{../../odemodeling/html/OdeModelFit.html#method-draws_size}{\code{odemodeling::OdeModelFit$draws_size()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol}{\code{odemodeling::OdeModelFit$extract_odesol()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df}{\code{odemodeling::OdeModelFit$extract_odesol_df()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df_dist">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df_dist}{\code{odemodeling::OdeModelFit$extract_odesol_df_dist()}}\out{</span>}
@@ -67,46 +65,6 @@ Print information about the object.
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelGQ$print()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reliability"></a>}}
-\if{latex}{\out{\hypertarget{method-reliability}{}}}
-\subsection{Method \code{reliability()}}{
-Study reliability of results by running standalone generated
-quantities using more accurate ODE solver configurations
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelGQ$reliability(
-  solvers,
-  savedir = "results",
-  basename = "odegq",
-  force = FALSE,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{solvers}}{List of ODE solvers (possibly the same solver with
-more accurate configurations). See \code{\link{odesolvers_lists}} for
-creating this.}
-
-\item{\code{savedir}}{Directory where results are saved.}
-
-\item{\code{basename}}{Base name for saved files.}
-
-\item{\code{force}}{If this is \code{TRUE}, the procedure is continued for all
-given solvers even if it is found that some early stage that results
-are not reliable.}
-
-\item{\code{...}}{Additional arguments passed to the \verb{$generate_quantities()}
-method of the underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A named list.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

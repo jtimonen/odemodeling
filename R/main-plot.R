@@ -100,8 +100,12 @@ plot_metric.create_plot <- function(confs, values, conf_name, metric_name,
   } else {
     plt <- plt + scale_x_continuous(breaks = confs)
   }
+  if (log10) {
+    plt <- plt + theme(
+      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)
+    )
+  }
   plt + theme(
-    axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
     panel.grid.minor = element_blank()
   )
 }

@@ -63,7 +63,6 @@ method of \code{cmdstanr_fit}.}
 \item \href{#method-niterations}{\code{OdeModelFit$niterations()}}
 \item \href{#method-nchains}{\code{OdeModelFit$nchains()}}
 \item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
-\item \href{#method-draws_size}{\code{OdeModelFit$draws_size()}}
 \item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
 \item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
 \item \href{#method-get_t}{\code{OdeModelFit$get_t()}}
@@ -202,19 +201,6 @@ Get total number of post-warmup draws.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-draws_size"></a>}}
-\if{latex}{\out{\hypertarget{method-draws_size}{}}}
-\subsection{Method \code{draws_size()}}{
-Get size of the draws object in Mb.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$draws_size()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A string.
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cmdstan_seed"></a>}}
 \if{latex}{\out{\hypertarget{method-cmdstan_seed}{}}}
 \subsection{Method \code{cmdstan_seed()}}{
@@ -241,7 +227,7 @@ A string.
 \if{html}{\out{<a id="method-get_t"></a>}}
 \if{latex}{\out{\hypertarget{method-get_t}{}}}
 \subsection{Method \code{get_t()}}{
-Get timepoints where the model was fitted.
+Get time points where the model was fitted.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelFit$get_t(include_t0 = FALSE)}\if{html}{\out{</div>}}
 }

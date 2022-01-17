@@ -7,6 +7,7 @@
 \alias{log_ratios}
 \alias{psis_relative_eff}
 \alias{psis}
+\alias{compute_reliability_metrics}
 \title{Compare two objects that contain ODE solutions and ODE model likelihoods}
 \usage{
 max_abs_odesol_diff(x, y, include_y0 = TRUE)
@@ -18,6 +19,8 @@ log_ratios(x, y)
 psis_relative_eff(x, y)
 
 psis(x, y)
+
+compute_reliability_metrics(x, y)
 }
 \arguments{
 \item{x}{An object of class \link{OdeModelMCMC} or \link{OdeModelGQ}.}
@@ -25,6 +28,9 @@ psis(x, y)
 \item{y}{An object of class \link{OdeModelMCMC} or \link{OdeModelGQ}.}
 
 \item{include_y0}{Should the ODE initial state be included in computations?}
+}
+\value{
+A named numeric vector.
 }
 \description{
 Compare two objects that contain ODE solutions and ODE model likelihoods
@@ -45,5 +51,7 @@ using \code{\link[loo:relative_eff]{loo::relative_eff()}}.
 
 \item \code{psis}: Call \code{\link[loo:psis]{loo::psis()}} using the log likelihoods
 from \code{x} and \code{y}.
+
+\item \code{compute_reliability_metrics}: Compute all metrics.
 }}
 

@@ -63,21 +63,18 @@ psis <- function(x, y) {
   loo::psis(log_ratios = x, r_eff = r_eff)
 }
 
-#' Compute reliability metrics
-#'
+#' @describeIn compare_odefits Compute all metrics.
 #' @export
-#' @param mcmc An object of class [OdeModelMCMC].
-#' @param gq An object of class [OdeModelGQ].
 #' @return A named numeric vector.
-compute_reliability_metrics <- function(mcmc, gq) {
-  checkmate::assert_class(mcmc, "OdeModelMCMC")
-  checkmate::assert_class(gq, "OdeModelGQ")
-  is <- psis(mcmc, gq)
-  r_eff <- psis_relative_eff(mcmc, gq)
+compute_reliability_metrics <- function(x, y) {
+  checkmate::assert_class(x, "OdeModelFit")
+  checkmate::assert_class(y, "OdeModelFit")
+  is <- psis(x, y)
+  r_eff <- psis_relative_eff(x, y)
   pdiag <- is$diagnostics
   pd <- c(pdiag$pareto_k, pdiag$n_eff, r_eff)
-  mad_loglik <- max_abs_loglik_diff(mcmc, gq)
-  mad_odesol <- max_abs_odesol_diff(mcmc, gq)
+  mad_loglik <- max_abs_loglik_diff(x, y)
+  mad_odesol <- max_abs_odesol_diff(x, y)
   met <- c(pd, mad_loglik, mad_odesol)
   internal_assert_len(met, 5, "compute_reliability_metrics")
   names(met) <- c("pareto_k", "n_eff", "r_eff", "mad_loglik", "mad_odesol")

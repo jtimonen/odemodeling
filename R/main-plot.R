@@ -76,7 +76,9 @@ plot_mad <- function(reliability, tols = NULL, num_steps = NULL,
 
 # Edit x label
 add_inv_tol_xlab <- function(plt) {
-  plt + xlab(expression(tol^{-1}))
+  plt + xlab(expression(tol^{
+    -1
+  }))
 }
 
 # Plotting helper function

@@ -69,6 +69,32 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         params = fitted_params,
         ...
       )
+    }
+  )
+)
+
+
+# OdeModelGQ --------------------------------------------------------------
+
+#' An ODE model GQ fit (R6 class)
+#'
+#' @description Used for holding the output of the `$gqs()`
+#' method of the [OdeModel] and [OdeModelMCMC] class. Users are not meant to
+#' instantiate objects of this class directly.
+#' @export
+#' @family model fit classes
+#' @seealso For more useful methods, see the methods inherited from
+#' [OdeModelFit].
+OdeModelGQ <- R6::R6Class("OdeModelGQ",
+  inherit = OdeModelFit,
+  public = list(
+
+    #' @description
+    #' Print information about the object.
+    print = function() {
+      cat(class_info("OdeModelGQ"), "\n")
+      cat(self$info())
+      invisible(self)
     },
 
     #' @description
@@ -92,7 +118,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
                            force = FALSE,
                            ...) {
       if (!force) {
-        stop("Set for force=TRUE if you want to call this!")
+        stop("Set force=TRUE if you want to call this!")
       }
       model <- self
       create_dir_if_not_exist(savedir)
@@ -122,32 +148,6 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
       # Return
       list(times = GT, solvers = solvers, files = FN, metrics = metrics)
-    }
-  )
-)
-
-
-# OdeModelGQ --------------------------------------------------------------
-
-#' An ODE model GQ fit (R6 class)
-#'
-#' @description Used for holding the output of the `$gqs()`
-#' method of the [OdeModel] and [OdeModelMCMC] class. Users are not meant to
-#' instantiate objects of this class directly.
-#' @export
-#' @family model fit classes
-#' @seealso For more useful methods, see the methods inherited from
-#' [OdeModelFit].
-OdeModelGQ <- R6::R6Class("OdeModelGQ",
-  inherit = OdeModelFit,
-  public = list(
-
-    #' @description
-    #' Print information about the object.
-    print = function() {
-      cat(class_info("OdeModelGQ"), "\n")
-      cat(self$info())
-      invisible(self)
     }
   )
 )

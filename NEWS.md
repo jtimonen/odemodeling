@@ -1,5 +1,10 @@
 # Early development versions
 
+## odemodeling 0.0.20
+  * Edits the `$reliability()` method for the `OdeModelMCMC` class so that
+  it only ever compares `OdeModelGQ` objects due to possible
+  i/o information loss.
+  
 ## odemodeling 0.0.19
   * Only internal improvements in tests.
   

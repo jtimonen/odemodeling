@@ -43,7 +43,6 @@ test_that("sampling works", {
   expect_output(fit$print())
   expect_gt(fit$setup_time, 0.0)
   expect_gt(fit$time()$total, 0.0)
-  expect_gt(nchar(fit$draws_size()), 2)
   expect_gt(nchar(fit$cmdstan_version()), 5)
   expect_true(fit$model$assert_stanfile_exists())
   expect_equal(fit$cmdstan_seed(), SEED)

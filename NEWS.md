@@ -1,5 +1,8 @@
 # Early development versions
 
+## odemodeling 0.0.19
+  * Only internal improvements in tests.
+  
 ## odemodeling 0.0.18
   * Adds `plot_metric()` and other plotting functions.
 

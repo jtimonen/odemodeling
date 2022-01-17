@@ -219,7 +219,7 @@ test_that("reliability check works", {
   tols <- 10^log_tols
   plots <- list()
   plots[[1]] <- plot_mad(rel, tols = tols, loglik = T)
-  plots[[2]] <- plot_mad(rel, tols = tols, loglik = T)
+  plots[[2]] <- plot_mad(rel, tols = tols, loglik = F)
   plots[[3]] <- plot_pareto_k(rel, tols = tols)
   plots[[4]] <- plot_r_eff(rel, tols = tols)
   plots[[5]] <- plot_metric(rel$times, "time", tols = tols)
@@ -227,4 +227,14 @@ test_that("reliability check works", {
   for (j in seq_len(L)) {
     expect_s3_class(plots[[j]], "ggplot")
   }
+
+  # Expect errors
+  expect_error(
+    plot_mad(rel, tols = tols, num_steps = tols),
+    "either tols or num_steps must be NULL"
+  )
+  expect_error(
+    plot_mad(rel),
+    "either tols or num_steps must not be NULL"
+  )
 })

@@ -223,7 +223,8 @@ test_that("reliability check works", {
   plots[[3]] <- plot_pareto_k(rel, tols = tols)
   plots[[4]] <- plot_r_eff(rel, tols = tols)
   plots[[5]] <- plot_metric(rel$times, "time", tols = tols)
-  for (j in 1:length(plots)) {
+  L <- length(plots)
+  for (j in seq_len(L)) {
     expect_s3_class(plots[[j]], "ggplot")
   }
 })

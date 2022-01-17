@@ -214,4 +214,16 @@ test_that("reliability check works", {
   nams <- c("pareto_k", "n_eff", "r_eff", "mad_loglik", "mad_odesol")
   expect_equal(colnames(met), nams)
   unlink("results", recursive = TRUE) # purge results directory
+
+  # Plots
+  tols <- 10^log_tols
+  plots <- list()
+  plots[[1]] <- plot_mad(rel, tols = tols, loglik = T)
+  plots[[2]] <- plot_mad(rel, tols = tols, loglik = T)
+  plots[[3]] <- plot_pareto_k(rel, tols = tols)
+  plots[[4]] <- plot_r_eff(rel, tols = tols)
+  plots[[5]] <- plot_metric(rel$times, "time", tols = tols)
+  for (j in 1:length(plots)) {
+    expect_s3_class(plots[[j]], "ggplot")
+  }
 })

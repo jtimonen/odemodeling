@@ -46,7 +46,7 @@ plot_pareto_k <- function(reliability, tols = NULL, num_steps = NULL) {
   plt <- plot_metric(values, "pareto_k", tols, num_steps)
   plt <- plt + geom_hline(yintercept = 0.5, lty = 2, color = "firebrick3")
   plt <- plt + geom_hline(yintercept = 0.7, lty = 2, color = "steelblue")
-  plt <- plt + ylab("Pareto-k")
+  plt + ylab("Pareto-k")
 }
 
 #' @describeIn plot_metric Plot relative efficiency.
@@ -54,7 +54,7 @@ plot_pareto_k <- function(reliability, tols = NULL, num_steps = NULL) {
 plot_r_eff <- function(reliability, tols = NULL, num_steps = NULL) {
   values <- reliability$metrics[, "pareto_k"]
   plt <- plot_metric(values, "r_eff", tols, num_steps)
-  plt <- plt + ylab("Relative efficiency")
+  plt + ylab("Relative efficiency")
 }
 
 #' @describeIn plot_metric Plot maximum absolute difference.
@@ -64,13 +64,14 @@ plot_r_eff <- function(reliability, tols = NULL, num_steps = NULL) {
 #' @export
 plot_mad <- function(reliability, tols = NULL, num_steps = NULL,
                      loglik = FALSE) {
-  name <- "mad_odesol"
   if (loglik) {
     name <- "mad_loglik"
+  } else {
+    name <- "mad_odesol"
   }
   values <- reliability$metrics[, name]
-  plt <- plot_metric(metrics, name, tols, num_steps)
-  plt <- plt + ylab(name)
+  plt <- plot_metric(values, name, tols, num_steps)
+  plt + ylab(name)
 }
 
 

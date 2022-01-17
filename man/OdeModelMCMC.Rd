@@ -115,8 +115,8 @@ to the \verb{$generate_quantities()} method of the underlying
 \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object. If this is \code{NULL} (default),
 parameter draws of the \link{OdeModelFit} object are used.}
 
-\item{\code{...}}{Arguments passed to the \verb{$generate_quantities()} method of the
-underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+\item{\code{...}}{Arguments passed to the \verb{$generate_quantities()} method of
+the underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
 }
 \if{html}{\out{</div>}}
 }

@@ -42,8 +42,8 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' to the `$generate_quantities()` method of the underlying
     #' [cmdstanr::CmdStanModel] object. If this is `NULL` (default),
     #' parameter draws of the [OdeModelFit] object are used.
-    #' @param ... Arguments passed to the `$generate_quantities()` method of the
-    #' underlying [cmdstanr::CmdStanModel] object.
+    #' @param ... Arguments passed to the `$generate_quantities()` method of
+    #' the underlying [cmdstanr::CmdStanModel] object.
     #' @return An object of class [OdeModelGQ].
     gqs = function(t0 = NULL,
                    t = NULL,

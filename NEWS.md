@@ -1,5 +1,8 @@
 # Early development versions
 
+## odemodeling 0.0.21
+  * Fix a bug in `plot_r_eff()` which plotted the wrong metric.
+  
 ## odemodeling 0.0.20
   * Edits the `$reliability()` method for the `OdeModelMCMC` class so that
   it only ever compares `OdeModelGQ` objects due to possible

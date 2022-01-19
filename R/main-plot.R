@@ -52,7 +52,7 @@ plot_pareto_k <- function(reliability, tols = NULL, num_steps = NULL) {
 #' @describeIn plot_metric Plot relative efficiency.
 #' @export
 plot_r_eff <- function(reliability, tols = NULL, num_steps = NULL) {
-  values <- reliability$metrics[, "pareto_k"]
+  values <- reliability$metrics[, "r_eff"]
   plt <- plot_metric(values, "r_eff", tols, num_steps)
   plt + ylab("Relative efficiency")
 }

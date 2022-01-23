@@ -10,7 +10,7 @@ generate_stancode_prior <- function(odefun_vars, loglik_vars, other_vars,
 
   data_b <- generate_data_block(all_decls, list()) # just dimensions
   pars_b <- generate_params_block(params)
-  tpars_b <- generate_transform_block("transformed parameters", tparams)
+  tpars_b <- generate_transform_block("transformed parameters", tparams, TRUE)
   model_b <- generate_model_block(params, prior_mode = TRUE)
   code <- paste(data_b, pars_b, tpars_b, model_b, sep = "\n")
   code <- autoformat_stancode(code)
@@ -106,7 +106,17 @@ generate_data_block <- function(all_decls, data) {
 }
 
 # Create a transform block (transformed data, transformed params, or gq)
-generate_transform_block <- function(name, transforms) {
+generate_transform_block <- function(name, transforms, reorder) {
+  is_ysol_tpar <- function(x) x$decl$name == "y_sol_tpar"
+  is_loglik_tpar <- function(x) x$decl$name == "log_lik_tpar"
+  if (reorder) {
+    i1 <- which(sapply(transforms, is_ysol_tpar) == TRUE)
+    i2 <- which(sapply(transforms, is_loglik_tpar) == TRUE)
+    L <- length(transforms)
+    i_first <- setdiff(seq_len(L), c(i1, i2))
+    transforms <- c(transforms[i_first], transforms[i1], transforms[i2])
+  }
+
   decls <- lapply(transforms, get_decl)
   codes <- paste(lapply(transforms, get_code), collapse = "\n")
   decls <- generate_var_declarations(decls)

@@ -162,11 +162,11 @@ ode_model <- function(N,
   tparams <- all_vars[sapply(all_vars, is_tparam)]
   gqs <- all_vars[sapply(all_vars, is_gq)]
   data_b <- generate_data_block(all_decls, data)
-  tdata_b <- generate_transform_block("transformed data", tdata)
+  tdata_b <- generate_transform_block("transformed data", tdata, FALSE)
   pars_b <- generate_params_block(params)
-  tpars_b <- generate_transform_block("transformed parameters", tparams)
+  tpars_b <- generate_transform_block("transformed parameters", tparams, TRUE)
   model_b <- generate_model_block(params, prior_mode = !has_loglik)
-  gq_b <- generate_transform_block("generated quantities", gqs)
+  gq_b <- generate_transform_block("generated quantities", gqs, FALSE)
 
   # Functions block
   funs_b <- generate_functions_block(

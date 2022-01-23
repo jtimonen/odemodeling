@@ -1,5 +1,9 @@
 # Early development versions
 
+## odemodeling 0.0.22
+  * Fixes the order of transformed parameters so that the ODE solution is 
+  always second last and log likelihood last.
+  
 ## odemodeling 0.0.21
   * Fix a bug in `plot_r_eff()` which plotted the wrong metric.
   

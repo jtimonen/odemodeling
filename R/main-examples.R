@@ -1,6 +1,5 @@
 #' Create an example ODE model
 #'
-#' @export
 #' @param prior_only Create a prior-only version of the model?
 #' @param ... Additional arguments to [ode_model()].
 #' @param name Name of model. Must be one of  the following:

@@ -1,16 +1,16 @@
 Package: odemodeling
-Title: Building and fitting Bayesian ODE models using Stan
-Version: 0.0.22
+Title: Building, fitting, and validating Bayesian ODE models in 'Stan'
+Version: 0.1.0
 Authors@R: 
     person(given = "Juho",
            family = "Timonen",
            role = c("aut", "cre"),
            email = "juho.timonen@iki.fi",
            comment = c(ORCID = "0000-0003-2341-6765"))
-Description: Building and fitting models with different numerical
-    solvers using Stan. Includes efficient tuning and validation of
-    numerical solvers using Pareto-smoothed importance sampling (PSIS) and
-    its diagnostics.
+Description: Building and fitting ordinary differential equation (ODE)
+    models with different numerical solvers in 'Stan'. Designed for efficient
+    validation of the accuracy of numerical solvers in the Bayesian context.
+    Using Pareto-smoothed importance sampling (PSIS) and its diagnostics.
 License: BSD_3_clause + file LICENCE
 Encoding: UTF-8
 LazyData: true
@@ -35,4 +35,4 @@ Suggests:
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)

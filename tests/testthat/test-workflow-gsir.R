@@ -203,10 +203,21 @@ test_that("reliability check works", {
   solvers <- bdf_list(tols = 10^log_tols)
   expect_warning(
     {
-      rel <- post_fit$reliability(solvers = solvers, force = TRUE)
+      rel_norecomp <- post_fit$reliability(
+        solvers = solvers,
+        recompute_loglik = F
+      )
     },
     "Some Pareto k diagnostic values are too high"
   )
+  expect_warning(
+    {
+      rel <- post_fit$reliability(solvers = solvers)
+    },
+    "Some Pareto k diagnostic values are too high"
+  )
+  expect_true(rel$recompute_loglik)
+  expect_true(!rel_norecomp$recompute_loglik)
 
   met <- rel$metrics
   expect_equal(dim(met), c(length(solvers), 5))

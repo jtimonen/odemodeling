@@ -75,27 +75,25 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
     #' Study reliability of results by running standalone generated
     #' quantities using more accurate ODE solver configurations
     #'
-    #' @param solvers List of ODE solvers (possibly the same solver with
-    #' more accurate configurations). See \code{\link{odesolvers_lists}} for
-    #' creating this.
+    #' @param solvers List of ODE solvers (should be the same solver as used
+    #' during MCMC, but with increasingly more accurate configurations).
+    #' See \code{\link{odesolvers_lists}} for creating this.
     #' @param savedir Directory where results are saved.
     #' @param basename Base name for saved files.
-    #' @param force If this is `TRUE`, the procedure is continued for all
-    #' given solvers even if it is found that some early stage that results
-    #' are not reliable.
+    #' @param recompute_loglik Should the log-likelihoods corresponding to
+    #' solver configuration used during MCMC be recomputed?
     #' @param ... Additional arguments passed to the `$generate_quantities()`
     #' method of the underlying [cmdstanr::CmdStanModel] object.
     #' @return A named list.
     reliability = function(solvers,
                            savedir = "results",
                            basename = "odegq",
-                           force = FALSE,
+                           recompute_loglik = TRUE,
                            ...) {
-      if (!force) {
-        stop("Set force=TRUE if you want to call this!")
-      }
       create_dir_if_not_exist(savedir)
       checkmate::assert_list(solvers, "OdeSolver")
+      # TODO: add assertion that checks that the solvers are increasing
+      # in accuracy?
       L <- length(solvers)
       IS <- list()
       FN <- c()
@@ -103,8 +101,13 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       metrics <- NULL
 
       # Base configuration
-      cat("Running GQ using sampling-time configuration.\n")
-      base_gq <- self$gqs(...) # everything will be computed against this
+      if (recompute_loglik) {
+        cat("Running GQ using MCMC-time configuration.\n")
+        base <- self$gqs(...) # everything will be computed against this
+      } else {
+        cat("Not running GQ using MCMC-time configuration.\n")
+        base <- self
+      }
 
       # Other configurations
       for (j in seq_len(L)) {
@@ -121,7 +124,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
         saveRDS(gq, file = fn)
         FN <- c(FN, fn)
         GT[j] <- gq$time()$total
-        rel_met <- compute_reliability_metrics(base_gq, gq)
+        rel_met <- compute_reliability_metrics(base, gq)
         metrics <- rbind(metrics, rel_met)
       }
       metrics <- data.frame(metrics)
@@ -131,7 +134,7 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
       # Return
       list(
         times = GT, solvers = solvers, files = FN, metrics = metrics,
-        base_gq = base_gq
+        base = base, recompute_loglik = recompute_loglik
       )
     }
   )

@@ -1,3 +1,16 @@
+# Version 0.1
+
+## odemodeling 0.1.0
+
+  * Exposes the `$reliability()` method for the `OdeModelMCMC` class. Adds a
+  `recompute_loglik` argument for it.
+  * Improves the tutorial vignette.
+  * A feature that is still missing is ability to create 
+  `stan_transform`s
+  that both depend on the ODE solution AND have effect on model likelihood.
+  This is because transformed parameters block is created so that
+  the ODE solution is always second last and log likelihood last.
+  
 # Early development versions
 
 ## odemodeling 0.0.22

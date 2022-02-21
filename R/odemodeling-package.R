@@ -1,9 +1,9 @@
 #' The 'odemodeling' package
 #'
-#' @description Building and fitting models with different numerical
-#' solvers using Stan. Includes efficient tuning and validation of
-#' numerical solvers using Pareto-smoothed importance sampling (PSIS) and
-#' its diagnostics.
+#' @description Building and fitting ordinary differential equation (ODE)
+#' models with different numerical solvers in 'Stan'. Designed for efficient
+#' validation of the accuracy of numerical solvers in the Bayesian context.
+#' Using Pareto-smoothed importance sampling (PSIS) and its diagnostics.
 #'
 #' @docType package
 #' @name odemodeling-package
@@ -43,6 +43,8 @@
 #'   \item See \code{\link{compare_odefits}} for functions to compare
 #'   different ODE model simulations and fits.
 #' }
+#' @section Tutorial:
+#' See the tutorial vignette.
 #'
 NULL
 

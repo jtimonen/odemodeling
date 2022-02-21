@@ -10,16 +10,21 @@ R-package for building and fitting Bayesian ODE models in Stan.
 * Install `odemodeling` using
 
 ```r
-remotes::install_github("jtimonen/odemodeling")
+remotes::install_github("jtimonen/odemodeling", build_vignettes = TRUE)
 ```
+
+Building the vignette takes around one minute. You can skip it with `build_vignettes = FALSE`.
 
 ## Getting started
 
-The package is under development. You can get started with
+If you built the vignette, you can view it using
 
+```r
+browseVignettes("odemodeling")
+```
+
+That is perhaps the best place to start. More detailed info is in documentation, that you can view with
 ```r
 library(odemodeling)
 ?odemodeling
 ```
-
-and studying the shown documentation.

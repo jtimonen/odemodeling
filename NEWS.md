@@ -1,3 +1,10 @@
+# Version 0.2
+
+## odemodeling 0.2.0
+  * Adds the `$diagnose()` method for the `OdeModel` class.
+  * Stores the results of `diagnose` and `stansummary`in the
+  `OdeModelMCMC` class instances.
+
 # Version 0.1
 
 ## odemodeling 0.1.0

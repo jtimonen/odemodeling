@@ -20,9 +20,21 @@ Other model fit classes:
 \section{Super class}{
 \code{\link[odemodeling:OdeModelFit]{odemodeling::OdeModelFit}} -> \code{OdeModelMCMC}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{cmdstan_diagnostics}}{Output of the \code{diagnose} program of 'CmdStan'.}
+
+\item{\code{cmdstan_summary}}{Output of the \code{stansummary} program of 'CmdStan'.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-print_diagnostics}{\code{OdeModelMCMC$print_diagnostics()}}
+\item \href{#method-print_summary}{\code{OdeModelMCMC$print_summary()}}
+\item \href{#method-new}{\code{OdeModelMCMC$new()}}
 \item \href{#method-print}{\code{OdeModelMCMC$print()}}
 \item \href{#method-cmdstan_init}{\code{OdeModelMCMC$cmdstan_init()}}
 \item \href{#method-gqs}{\code{OdeModelMCMC$gqs()}}
@@ -47,7 +59,6 @@ Other model fit classes:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t}{\code{odemodeling::OdeModelFit$get_t()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t0">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t0}{\code{odemodeling::OdeModelFit$get_t0()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="info">}\href{../../odemodeling/html/OdeModelFit.html#method-info}{\code{odemodeling::OdeModelFit$info()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="initialize">}\href{../../odemodeling/html/OdeModelFit.html#method-initialize}{\code{odemodeling::OdeModelFit$initialize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="loglik">}\href{../../odemodeling/html/OdeModelFit.html#method-loglik}{\code{odemodeling::OdeModelFit$loglik()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="nchains">}\href{../../odemodeling/html/OdeModelFit.html#method-nchains}{\code{odemodeling::OdeModelFit$nchains()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="ndraws">}\href{../../odemodeling/html/OdeModelFit.html#method-ndraws}{\code{odemodeling::OdeModelFit$ndraws()}}\out{</span>}
@@ -58,6 +69,66 @@ Other model fit classes:
 \item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="time">}\href{../../odemodeling/html/OdeModelFit.html#method-time}{\code{odemodeling::OdeModelFit$time()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print_diagnostics"></a>}}
+\if{latex}{\out{\hypertarget{method-print_diagnostics}{}}}
+\subsection{Method \code{print_diagnostics()}}{
+Print the 'stdout' of 'CmdStan' diagnostics.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$print_diagnostics()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print_summary"></a>}}
+\if{latex}{\out{\hypertarget{method-print_summary}{}}}
+\subsection{Method \code{print_summary()}}{
+Print the 'stdout' of 'CmdStan' summary.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$print_summary()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Create an \link{OdeModelMCMC} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$new(
+  model,
+  t0,
+  t,
+  solver,
+  data,
+  cmdstanr_fit,
+  cmdstan_diagnostics,
+  cmdstan_summary
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{model}}{An object of class \link{OdeModel} (will be deepcopied).}
+
+\item{\code{t0}}{Used initial time.}
+
+\item{\code{t}}{Used time points.}
+
+\item{\code{solver}}{Used solver. An object of class \link{OdeSolver}.}
+
+\item{\code{data}}{Given additional data.}
+
+\item{\code{cmdstanr_fit}}{A \link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC} object.}
+
+\item{\code{cmdstan_diagnostics}}{Output of the \code{diagnose} program of 'CmdStan'.}
+
+\item{\code{cmdstan_summary}}{Output of the \code{stansummary} program of 'CmdStan'.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

@@ -47,6 +47,17 @@ test_that("sampling works", {
   expect_true(fit$model$assert_stanfile_exists())
   expect_equal(fit$cmdstan_seed(), SEED)
   expect_equal(fit$cmdstan_init(), 0)
+  expect_output(fit$print_diagnostics())
+  expect_output(fit$print_summary())
+})
+
+test_that("diagnose works", {
+  diags <- lv$diagnose(
+    t0 = t0, t = t, data = add_data, solver = midpoint(4), init = 0,
+    epsilon = 1e-6
+  )
+  expect_equal(names(diags), c("gradients", "lp"))
+  expect_true(all(diags$gradients$error < 1e-6))
 })
 
 test_that("plotting ODE solutions works", {

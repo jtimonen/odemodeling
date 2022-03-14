@@ -36,6 +36,7 @@ to create models.
 \item \href{#method-make_params}{\code{OdeModel$make_params()}}
 \item \href{#method-gqs}{\code{OdeModel$gqs()}}
 \item \href{#method-sample}{\code{OdeModel$sample()}}
+\item \href{#method-diagnose}{\code{OdeModel$diagnose()}}
 \item \href{#method-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
 \item \href{#method-clone}{\code{OdeModel$clone()}}
 }
@@ -192,6 +193,47 @@ underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
 }
 \subsection{Returns}{
 An object of class \link{OdeModelMCMC}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-diagnose"></a>}}
+\if{latex}{\out{\hypertarget{method-diagnose}{}}}
+\subsection{Method \code{diagnose()}}{
+Run a gradient diagnosis
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OdeModel$diagnose(
+  t0,
+  t,
+  data = list(),
+  solver = rk45(),
+  error = Inf,
+  epsilon = 1e-06,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{t0}}{Initial time point.}
+
+\item{\code{t}}{Vector of time points.}
+
+\item{\code{data}}{Other needed data as a list.}
+
+\item{\code{solver}}{An object of class \link{OdeSolver}.}
+
+\item{\code{error}}{Error threshold.}
+
+\item{\code{epsilon}}{Perturbation size.}
+
+\item{\code{...}}{Arguments passed to the \verb{$diagnose()} method of the
+underlying \link[cmdstanr:CmdStanModel]{cmdstanr::CmdStanModel} object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Raw 'Stan' output.
 }
 }
 \if{html}{\out{<hr>}}

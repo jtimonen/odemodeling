@@ -175,6 +175,12 @@ OdeModel <- R6::R6Class("OdeModel", list(
     sm <- self$stanmodel
     cmdstanr_mcmc <- sm$sample(data = full_data, sig_figs = self$sig_figs, ...)
 
+    # Diagnose
+    capture.output({
+      diagnostics <- cmdstanr_mcmc$cmdstan_diagnose()
+      summary <- cmdstanr_mcmc$cmdstan_summary()
+    })
+
     # Return
     OdeModelMCMC$new(
       model = self,
@@ -182,7 +188,43 @@ OdeModel <- R6::R6Class("OdeModel", list(
       t = t,
       solver = solver,
       data = data,
-      cmdstanr_fit = cmdstanr_mcmc
+      cmdstanr_fit = cmdstanr_mcmc,
+      cmdstan_diagnostics = diagnostics,
+      cmdstan_summary = summary
+    )
+  },
+
+  #' @description Run a gradient diagnosis
+  #'
+  #' @param t0 Initial time point.
+  #' @param t Vector of time points.
+  #' @param solver An object of class [OdeSolver].
+  #' @param data Other needed data as a list.
+  #' @param ... Arguments passed to the `$diagnose()` method of the
+  #' underlying [cmdstanr::CmdStanModel] object.
+  #' @param error Error threshold.
+  #' @param epsilon Perturbation size.
+  #' @return Raw 'Stan' output.
+  diagnose = function(t0,
+                      t,
+                      data = list(),
+                      solver = rk45(),
+                      error = Inf,
+                      epsilon = 1e-6,
+                      ...) {
+
+    # Check and handle input
+    sd <- create_standata(self, t0, t, solver)
+    full_data <- c(sd, data)
+
+    # Call Stan model with method 'diagnose'
+    sm <- self$stanmodel
+    d <- sm$diagnose(data = full_data, error = error, epsilon = epsilon, ...)
+
+    # Return
+    list(
+      gradients = d$gradients(),
+      lp = d$lp()
     )
   },
 
@@ -375,6 +417,15 @@ StanModelWithCode <- R6::R6Class("StanModelWithCode",
         fitted_params = fitted_params,
         data = data, ...
       )
+    },
+    diagnose = function(data, ...) {
+      mod <- self$get_model()
+      has_diagnose <- "diagnose" %in% names(mod)
+      if (!has_diagnose) {
+        warning("The used version of CmdStanR doesn't have diagnose().")
+        return(NULL)
+      }
+      mod$diagnose(data = data, ...)
     }
   )
 )

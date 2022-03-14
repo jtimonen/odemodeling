@@ -7,11 +7,45 @@
 #' objects of this class directly.
 #' @export
 #' @family model fit classes
+#' @field cmdstan_diagnostics Output of the `diagnose` program of 'CmdStan'.
+#' @field cmdstan_summary Output of the `stansummary` program of 'CmdStan'.
 #' @seealso For more useful methods, see the methods inherited from
 #' [OdeModelFit].
 OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
   inherit = OdeModelFit,
   public = list(
+    cmdstan_diagnostics = NULL,
+    cmdstan_summary = NULL,
+
+    #' @description
+    #' Print the 'stdout' of 'CmdStan' diagnostics.
+    print_diagnostics = function() {
+      cat(self$cmdstan_diagnostics$stdout)
+    },
+
+    #' @description
+    #' Print the 'stdout' of 'CmdStan' summary.
+    print_summary = function() {
+      cat(self$cmdstan_summary$stdout)
+    },
+
+    #' @description
+    #' Create an [OdeModelMCMC] object.
+    #'
+    #' @param model An object of class [OdeModel] (will be deepcopied).
+    #' @param t0 Used initial time.
+    #' @param t Used time points.
+    #' @param solver Used solver. An object of class [OdeSolver].
+    #' @param data Given additional data.
+    #' @param cmdstanr_fit A [cmdstanr::CmdStanMCMC] object.
+    #' @param cmdstan_diagnostics Output of the `diagnose` program of 'CmdStan'.
+    #' @param cmdstan_summary Output of the `stansummary` program of 'CmdStan'.
+    initialize = function(model, t0, t, solver, data, cmdstanr_fit,
+                          cmdstan_diagnostics, cmdstan_summary) {
+      super$initialize(model, t0, t, solver, data, cmdstanr_fit)
+      self$cmdstan_diagnostics <- cmdstan_diagnostics
+      self$cmdstan_summary <- cmdstan_summary
+    },
 
     #' @description
     #' Print information about the object.
@@ -352,6 +386,15 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' [cmdstanr::CmdStanGQ] object.
   dim = function(variable) {
     dims <- self$cmdstanr_metadata$stan_variable_dims
+    if (is.null(dims)) {
+      dims <- self$cmdstanr_metadata$stan_variable_sizes
+    }
+    if (is.null(dims)) {
+      stop(
+        "Metadata has no field stan_variable_dims or stan_variable_sizes.",
+        " Please report a bug"
+      )
+    }
     dims[[variable]]
   },
 

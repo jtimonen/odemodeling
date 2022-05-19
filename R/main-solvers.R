@@ -19,8 +19,8 @@
 #' Have no effect if `NULL` (default).
 #' @param max_num_steps Maximum number of steps between output time
 #' points (only for [AdaptiveOdeSolver]s).
-#' @param num_steps The number of steps between output time points (only for
-#' [FixedNumStepsOdeSolver]s).
+#' @param num_steps The number of steps between subsequent output time
+#' points (only for [FixedNumStepsOdeSolver]s).
 #' @name odesolvers
 NULL
 
@@ -40,7 +40,7 @@ rk45 <- function(abs_tol = 1e-6, rel_tol = 1e-6, max_num_steps = 1e6,
 
 #' @describeIn odesolvers Create a BDF solver ([AdaptiveOdeSolver])
 #' @export
-bdf <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9,
+bdf <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e8,
                 tol = NULL) {
   abs_tol <- replace_tol(abs_tol, tol)
   rel_tol <- replace_tol(rel_tol, tol)
@@ -54,7 +54,7 @@ bdf <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9,
 
 #' @describeIn odesolvers Create an Adams solver ([AdaptiveOdeSolver])
 #' @export
-adams <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e9,
+adams <- function(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e8,
                   tol = NULL) {
   abs_tol <- replace_tol(abs_tol, tol)
   rel_tol <- replace_tol(rel_tol, tol)
@@ -130,7 +130,7 @@ rk45_list <- function(tols, max_num_steps = 1e6) {
 #' @describeIn odesolvers_lists Create a list of BDF solvers with
 #' different tolerances.
 #' @export
-bdf_list <- function(tols, max_num_steps = 1e9) {
+bdf_list <- function(tols, max_num_steps = 1e8) {
   checkmate::assert_numeric(tols)
   creator <- function(x) {
     bdf(tol = x, max_num_steps = max_num_steps)

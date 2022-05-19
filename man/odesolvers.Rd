@@ -13,9 +13,9 @@
 \usage{
 rk45(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06, tol = NULL)
 
-bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09, tol = NULL)
+bdf(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+08, tol = NULL)
 
-adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+09, tol = NULL)
+adams(abs_tol = 1e-10, rel_tol = 1e-10, max_num_steps = 1e+08, tol = NULL)
 
 ckrk(abs_tol = 1e-06, rel_tol = 1e-06, max_num_steps = 1e+06, tol = NULL)
 
@@ -38,8 +38,8 @@ points (only for \link{AdaptiveOdeSolver}s).}
 \item{tol}{Can be used to set both \code{abs_tol} and \code{rel_tol} to same value.
 Have no effect if \code{NULL} (default).}
 
-\item{num_steps}{The number of steps between output time points (only for
-\link{FixedNumStepsOdeSolver}s).}
+\item{num_steps}{The number of steps between subsequent output time
+points (only for \link{FixedNumStepsOdeSolver}s).}
 }
 \description{
 These constructors should be used for creating the \code{solver}

@@ -10,7 +10,7 @@
 \usage{
 rk45_list(tols, max_num_steps = 1e+06)
 
-bdf_list(tols, max_num_steps = 1e+09)
+bdf_list(tols, max_num_steps = 1e+08)
 
 midpoint_list(num_steps)
 

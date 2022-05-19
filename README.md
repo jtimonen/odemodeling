@@ -2,9 +2,7 @@
 
 [![codecov](https://codecov.io/gh/jtimonen/odemodeling/branch/main/graph/badge.svg?token=YLMK3KO0L0)](https://codecov.io/gh/jtimonen/odemodeling)
 
-R-package for building and fitting Bayesian ODE models in Stan.
-
-The package might still have some sharp corners but:
+R-package for building and fitting Bayesian ODE models in Stan. The package might still have some sharp corners but:
 1. once you have learned how to use it, coding up new ODE models should be faster with it than raw Stan
 2. once you have created a model with it, you can do the fitting using different ODE solvers (adaptive, non-adaptive) without needing to write new Stan code
 3. once you have fitted a model with it, you can 

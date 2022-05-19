@@ -4,6 +4,15 @@
 
 R-package for building and fitting Bayesian ODE models in Stan.
 
+The package might still have some sharp corners but:
+1. once you have learned how to use it, coding up new ODE models should be faster with it than raw Stan
+2. once you have created a model with it, you can do the fitting using different ODE solvers (adaptive, non-adaptive) without needing to write new Stan code
+3. once you have fitted a model with it, you can 
+* quickly visualize the ODE solutions without needing to extract them yourself
+* quickly solve and visualize the ODE solutions using a different solver or at a different set of time points without needing to write new Stan code yourself
+* quickly assess whether the solver used during fitting was accurate enough, or if you need to do the fitting again with a more accurate one (see https://arxiv.org/abs/2205.09059)
+
+
 ##  Installation
 
 * Install `cmdstanr` following the instructions [here](https://mc-stan.org/cmdstanr/).

@@ -1,0 +1,16 @@
+citHeader("To cite odemodeling in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "An importance sampling approach for reliable and efficient inference in Bayesian ordinary differential equation models",
+  author   = "Juho Timonen, Nikolas Siccha, Ben Bales, Harri Lähdesmäki, Aki Vehtari",
+  journal  = "arXiv",
+  url      = "https://arxiv.org/abs/2205.09059",
+  year     = "2022",
+  textVersion = paste(
+  "Juho Timonen, Nikolas Siccha, Ben Bales, Harri Lähdesmäki and Aki Vehtari:",
+  "An importance sampling approach for reliable and efficient inference in Bayesian ordinary differential equation models",
+  "(2022).",
+  "https://arxiv.org/abs/2205.09059"
+  )
+)

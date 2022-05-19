@@ -4,6 +4,8 @@
 #' models with different numerical solvers in 'Stan'. Designed for efficient
 #' validation of the accuracy of numerical solvers in the Bayesian context.
 #' Using Pareto-smoothed importance sampling (PSIS) and its diagnostics.
+#' The package is based on the \code{R6} object oriented system and uses
+#' \code{cmdstanr} as the interface to 'Stan'.
 #'
 #' @docType package
 #' @name odemodeling-package
@@ -45,6 +47,13 @@
 #' }
 #' @section Tutorial:
 #' See the tutorial vignette.
+#' @references
+#' \enumerate{
+#'   \item Timonen, J. et al. (2022).
+#'   \emph{An importance sampling approach for reliable and efficient
+#'   inference in Bayesian ordinary differential equation models}.
+#'   \href{https://arxiv.org/abs/2205.09059}{arXiv}.
+#' }
 #'
 NULL
 

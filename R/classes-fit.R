@@ -107,18 +107,31 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
 
     #' @description
     #' Study reliability of results by running standalone generated
-    #' quantities using more accurate ODE solver configurations
+    #' quantities using more accurate ODE solver configurations.
+    #' See \emph{Timonen, J. et al. (2022)} for description of the method.
+    #' Currently it is the user's responsibility to ensure that \code{solvers}
+    #' is a list of increasingly accurate solvers.
     #'
     #' @param solvers List of ODE solvers (should be the same solver as used
     #' during MCMC, but with increasingly more accurate configurations).
     #' See \code{\link{odesolvers_lists}} for creating this.
-    #' @param savedir Directory where results are saved.
+    #' @param savedir Directory where results are saved. \emph{NOTE:} it might
+    #' be difficult to load the results if you move them to a different place
+    #' afterwards, because the file paths get saved in the output. Improving
+    #' the file handling should be a future improvement.
     #' @param basename Base name for saved files.
     #' @param recompute_loglik Should the log-likelihoods corresponding to
     #' solver configuration used during MCMC be recomputed?
     #' @param ... Additional arguments passed to the `$generate_quantities()`
     #' method of the underlying [cmdstanr::CmdStanModel] object.
     #' @return A named list.
+    #' @references
+    #' \enumerate{
+    #'   \item Timonen, J. et al. (2022).
+    #'   \emph{An importance sampling approach for reliable and efficient
+    #'   inference in Bayesian ordinary differential equation models}.
+    #'   \href{https://arxiv.org/abs/2205.09059}{arXiv}.
+    #' }
     reliability = function(solvers,
                            savedir = "results",
                            basename = "odegq",

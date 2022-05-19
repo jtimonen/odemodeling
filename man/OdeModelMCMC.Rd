@@ -8,6 +8,14 @@ Used for holding the output of the \verb{$sample()} method  of the
 \link{OdeModel} class. Users are not meant to instantiate
 objects of this class directly.
 }
+\references{
+\enumerate{
+\item Timonen, J. et al. (2022).
+\emph{An importance sampling approach for reliable and efficient
+inference in Bayesian ordinary differential equation models}.
+\href{https://arxiv.org/abs/2205.09059}{arXiv}.
+}
+}
 \seealso{
 For more useful methods, see the methods inherited from
 \link{OdeModelFit}.
@@ -199,7 +207,10 @@ An object of class \link{OdeModelGQ}.
 \if{latex}{\out{\hypertarget{method-reliability}{}}}
 \subsection{Method \code{reliability()}}{
 Study reliability of results by running standalone generated
-quantities using more accurate ODE solver configurations
+quantities using more accurate ODE solver configurations.
+See \emph{Timonen, J. et al. (2022)} for description of the method.
+Currently it is the user's responsibility to ensure that \code{solvers}
+is a list of increasingly accurate solvers.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OdeModelMCMC$reliability(
   solvers,
@@ -217,7 +228,10 @@ quantities using more accurate ODE solver configurations
 during MCMC, but with increasingly more accurate configurations).
 See \code{\link{odesolvers_lists}} for creating this.}
 
-\item{\code{savedir}}{Directory where results are saved.}
+\item{\code{savedir}}{Directory where results are saved. \emph{NOTE:} it might
+be difficult to load the results if you move them to a different place
+afterwards, because the file paths get saved in the output. Improving
+the file handling should be a future improvement.}
 
 \item{\code{basename}}{Base name for saved files.}
 

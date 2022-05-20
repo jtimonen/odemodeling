@@ -30,7 +30,7 @@ If you built the vignette, you can view it using
 browseVignettes("odemodeling")
 ```
 
-It will be also made available online [here](https://jtimonen.github.io/). The
+It is also available online [here](https://jtimonen.github.io/om.html). The
 vignette is perhaps the best place to start. More detailed info is in documentation, that you can view with
 ```r
 library(odemodeling)

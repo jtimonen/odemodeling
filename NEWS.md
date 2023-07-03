@@ -1,5 +1,9 @@
 # Version 0.2
 
+## odemodeling 0.2.2
+  * Improves documentation.
+  * Exports `example_ode_model()`.
+  
 ## odemodeling 0.2.0
   * Adds the `$diagnose()` method for the `OdeModel` class.
   * Stores the results of `diagnose` and `stansummary`in the

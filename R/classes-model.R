@@ -126,7 +126,6 @@ OdeModel <- R6::R6Class("OdeModel", list(
                  solver = rk45(),
                  params = NULL,
                  ...) {
-
     # Full Stan data
     model <- self
     sd <- create_standata(model, t0, t, solver)
@@ -166,7 +165,6 @@ OdeModel <- R6::R6Class("OdeModel", list(
                     data = list(),
                     solver = rk45(),
                     ...) {
-
     # Check and handle input
     sd <- create_standata(self, t0, t, solver)
     full_data <- c(sd, data)
@@ -212,7 +210,6 @@ OdeModel <- R6::R6Class("OdeModel", list(
                       error = Inf,
                       epsilon = 1e-6,
                       ...) {
-
     # Check and handle input
     sd <- create_standata(self, t0, t, solver)
     full_data <- c(sd, data)
@@ -273,7 +270,7 @@ OdeModel <- R6::R6Class("OdeModel", list(
       fit <- model$sample(
         t0 = t0,
         t = t,
-        data  = data,
+        data = data,
         solver = solver,
         chains = chains,
         ...

@@ -21,24 +21,24 @@ A Stan variable
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{StanVariable$new()}}
-\item \href{#method-declaration}{\code{StanVariable$declaration()}}
-\item \href{#method-signature}{\code{StanVariable$signature()}}
-\item \href{#method-can_be_made_parameter}{\code{StanVariable$can_be_made_parameter()}}
-\item \href{#method-clone}{\code{StanVariable$clone()}}
+\item \href{#method-StanVariable-new}{\code{StanVariable$new()}}
+\item \href{#method-StanVariable-declaration}{\code{StanVariable$declaration()}}
+\item \href{#method-StanVariable-signature}{\code{StanVariable$signature()}}
+\item \href{#method-StanVariable-can_be_made_parameter}{\code{StanVariable$can_be_made_parameter()}}
+\item \href{#method-StanVariable-clone}{\code{StanVariable$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="get_dims">}\href{../../odemodeling/html/StanDeclaration.html#method-get_dims}{\code{odemodeling::StanDeclaration$get_dims()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print">}\href{../../odemodeling/html/StanDeclaration.html#method-print}{\code{odemodeling::StanDeclaration$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="get_dims"><a href='../../odemodeling/html/StanDeclaration.html#method-StanDeclaration-get_dims'><code>odemodeling::StanDeclaration$get_dims()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print"><a href='../../odemodeling/html/StanDeclaration.html#method-StanDeclaration-print'><code>odemodeling::StanDeclaration$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-StanVariable-new"></a>}}
+\if{latex}{\out{\hypertarget{method-StanVariable-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \link{StanVariable} object.
 \subsection{Usage}{
@@ -60,8 +60,8 @@ Create a \link{StanVariable} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-declaration"></a>}}
-\if{latex}{\out{\hypertarget{method-declaration}{}}}
+\if{html}{\out{<a id="method-StanVariable-declaration"></a>}}
+\if{latex}{\out{\hypertarget{method-StanVariable-declaration}{}}}
 \subsection{Method \code{declaration()}}{
 Create a declaration for the variable
 \subsection{Usage}{
@@ -73,8 +73,8 @@ a string
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-signature"></a>}}
-\if{latex}{\out{\hypertarget{method-signature}{}}}
+\if{html}{\out{<a id="method-StanVariable-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-StanVariable-signature}{}}}
 \subsection{Method \code{signature()}}{
 The variable when used in function signature
 \subsection{Usage}{
@@ -83,8 +83,8 @@ The variable when used in function signature
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-can_be_made_parameter"></a>}}
-\if{latex}{\out{\hypertarget{method-can_be_made_parameter}{}}}
+\if{html}{\out{<a id="method-StanVariable-can_be_made_parameter"></a>}}
+\if{latex}{\out{\hypertarget{method-StanVariable-can_be_made_parameter}{}}}
 \subsection{Method \code{can_be_made_parameter()}}{
 Can the object be made into a parameter?
 \subsection{Usage}{
@@ -93,8 +93,8 @@ Can the object be made into a parameter?
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-StanVariable-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-StanVariable-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

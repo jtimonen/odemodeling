@@ -20,14 +20,14 @@ A Stan parameter
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{StanParameter$new()}}
-\item \href{#method-print}{\code{StanParameter$print()}}
-\item \href{#method-clone}{\code{StanParameter$clone()}}
+\item \href{#method-StanParameter-new}{\code{StanParameter$new()}}
+\item \href{#method-StanParameter-print}{\code{StanParameter$print()}}
+\item \href{#method-StanParameter-clone}{\code{StanParameter$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-StanParameter-new"></a>}}
+\if{latex}{\out{\hypertarget{method-StanParameter-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \link{StanParameter} object.
 \subsection{Usage}{
@@ -45,8 +45,8 @@ Create a \link{StanParameter} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-StanParameter-print"></a>}}
+\if{latex}{\out{\hypertarget{method-StanParameter-print}{}}}
 \subsection{Method \code{print()}}{
 Print
 \subsection{Usage}{
@@ -55,8 +55,8 @@ Print
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-StanParameter-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-StanParameter-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

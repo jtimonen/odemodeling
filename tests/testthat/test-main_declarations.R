@@ -1,4 +1,3 @@
-
 test_that("stan_dim() works correctly", {
   N <- stan_dim("N")
   M <- stan_dim("M", lower = 1, upper = 100)

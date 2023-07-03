@@ -21,22 +21,22 @@ An ODE solver with fixed number of steps
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{FixedNumStepsOdeSolver$new()}}
-\item \href{#method-standata}{\code{FixedNumStepsOdeSolver$standata()}}
-\item \href{#method-to_string}{\code{FixedNumStepsOdeSolver$to_string()}}
-\item \href{#method-clone}{\code{FixedNumStepsOdeSolver$clone()}}
+\item \href{#method-FixedNumStepsOdeSolver-new}{\code{FixedNumStepsOdeSolver$new()}}
+\item \href{#method-FixedNumStepsOdeSolver-standata}{\code{FixedNumStepsOdeSolver$standata()}}
+\item \href{#method-FixedNumStepsOdeSolver-to_string}{\code{FixedNumStepsOdeSolver$to_string()}}
+\item \href{#method-FixedNumStepsOdeSolver-clone}{\code{FixedNumStepsOdeSolver$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeSolver" data-id="print">}\href{../../odemodeling/html/OdeSolver.html#method-print}{\code{odemodeling::OdeSolver$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeSolver" data-id="print"><a href='../../odemodeling/html/OdeSolver.html#method-OdeSolver-print'><code>odemodeling::OdeSolver$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-FixedNumStepsOdeSolver-new"></a>}}
+\if{latex}{\out{\hypertarget{method-FixedNumStepsOdeSolver-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize
 \subsection{Usage}{
@@ -54,8 +54,8 @@ Initialize
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-standata"></a>}}
-\if{latex}{\out{\hypertarget{method-standata}{}}}
+\if{html}{\out{<a id="method-FixedNumStepsOdeSolver-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-FixedNumStepsOdeSolver-standata}{}}}
 \subsection{Method \code{standata()}}{
 Create Stan data fields.
 \subsection{Usage}{
@@ -67,8 +67,8 @@ A list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_string"></a>}}
-\if{latex}{\out{\hypertarget{method-to_string}{}}}
+\if{html}{\out{<a id="method-FixedNumStepsOdeSolver-to_string"></a>}}
+\if{latex}{\out{\hypertarget{method-FixedNumStepsOdeSolver-to_string}{}}}
 \subsection{Method \code{to_string()}}{
 String description of the solver.
 \subsection{Usage}{
@@ -80,8 +80,8 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-FixedNumStepsOdeSolver-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-FixedNumStepsOdeSolver-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

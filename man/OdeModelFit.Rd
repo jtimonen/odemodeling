@@ -55,35 +55,35 @@ method of \code{cmdstanr_fit}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OdeModelFit$new()}}
-\item \href{#method-time}{\code{OdeModelFit$time()}}
-\item \href{#method-info}{\code{OdeModelFit$info()}}
-\item \href{#method-draws}{\code{OdeModelFit$draws()}}
-\item \href{#method-summary}{\code{OdeModelFit$summary()}}
-\item \href{#method-niterations}{\code{OdeModelFit$niterations()}}
-\item \href{#method-nchains}{\code{OdeModelFit$nchains()}}
-\item \href{#method-ndraws}{\code{OdeModelFit$ndraws()}}
-\item \href{#method-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
-\item \href{#method-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
-\item \href{#method-get_t}{\code{OdeModelFit$get_t()}}
-\item \href{#method-get_t0}{\code{OdeModelFit$get_t0()}}
-\item \href{#method-dim}{\code{OdeModelFit$dim()}}
-\item \href{#method-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
-\item \href{#method-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
-\item \href{#method-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
-\item \href{#method-extract_y0}{\code{OdeModelFit$extract_y0()}}
-\item \href{#method-extract_odesol_quantile}{\code{OdeModelFit$extract_odesol_quantile()}}
-\item \href{#method-loglik}{\code{OdeModelFit$loglik()}}
-\item \href{#method-extract_odesol_df}{\code{OdeModelFit$extract_odesol_df()}}
-\item \href{#method-extract_odesol_df_dist}{\code{OdeModelFit$extract_odesol_df_dist()}}
-\item \href{#method-plot_odesol}{\code{OdeModelFit$plot_odesol()}}
-\item \href{#method-plot_odesol_dist}{\code{OdeModelFit$plot_odesol_dist()}}
-\item \href{#method-clone}{\code{OdeModelFit$clone()}}
+\item \href{#method-OdeModelFit-new}{\code{OdeModelFit$new()}}
+\item \href{#method-OdeModelFit-time}{\code{OdeModelFit$time()}}
+\item \href{#method-OdeModelFit-info}{\code{OdeModelFit$info()}}
+\item \href{#method-OdeModelFit-draws}{\code{OdeModelFit$draws()}}
+\item \href{#method-OdeModelFit-summary}{\code{OdeModelFit$summary()}}
+\item \href{#method-OdeModelFit-niterations}{\code{OdeModelFit$niterations()}}
+\item \href{#method-OdeModelFit-nchains}{\code{OdeModelFit$nchains()}}
+\item \href{#method-OdeModelFit-ndraws}{\code{OdeModelFit$ndraws()}}
+\item \href{#method-OdeModelFit-cmdstan_seed}{\code{OdeModelFit$cmdstan_seed()}}
+\item \href{#method-OdeModelFit-cmdstan_version}{\code{OdeModelFit$cmdstan_version()}}
+\item \href{#method-OdeModelFit-get_t}{\code{OdeModelFit$get_t()}}
+\item \href{#method-OdeModelFit-get_t0}{\code{OdeModelFit$get_t0()}}
+\item \href{#method-OdeModelFit-dim}{\code{OdeModelFit$dim()}}
+\item \href{#method-OdeModelFit-dim_odesol}{\code{OdeModelFit$dim_odesol()}}
+\item \href{#method-OdeModelFit-extract_unflattened}{\code{OdeModelFit$extract_unflattened()}}
+\item \href{#method-OdeModelFit-extract_odesol}{\code{OdeModelFit$extract_odesol()}}
+\item \href{#method-OdeModelFit-extract_y0}{\code{OdeModelFit$extract_y0()}}
+\item \href{#method-OdeModelFit-extract_odesol_quantile}{\code{OdeModelFit$extract_odesol_quantile()}}
+\item \href{#method-OdeModelFit-loglik}{\code{OdeModelFit$loglik()}}
+\item \href{#method-OdeModelFit-extract_odesol_df}{\code{OdeModelFit$extract_odesol_df()}}
+\item \href{#method-OdeModelFit-extract_odesol_df_dist}{\code{OdeModelFit$extract_odesol_df_dist()}}
+\item \href{#method-OdeModelFit-plot_odesol}{\code{OdeModelFit$plot_odesol()}}
+\item \href{#method-OdeModelFit-plot_odesol_dist}{\code{OdeModelFit$plot_odesol_dist()}}
+\item \href{#method-OdeModelFit-clone}{\code{OdeModelFit$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-new}{}}}
 \subsection{Method \code{new()}}{
 Create an \link{OdeModelFit} object.
 \subsection{Usage}{
@@ -110,8 +110,8 @@ object (will be deepcopied).}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-time"></a>}}
-\if{latex}{\out{\hypertarget{method-time}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-time"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-time}{}}}
 \subsection{Method \code{time()}}{
 Get time information.
 \subsection{Usage}{
@@ -123,8 +123,8 @@ A list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-info"></a>}}
-\if{latex}{\out{\hypertarget{method-info}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-info"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-info}{}}}
 \subsection{Method \code{info()}}{
 Get various information.
 \subsection{Usage}{
@@ -136,8 +136,8 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-draws"></a>}}
-\if{latex}{\out{\hypertarget{method-draws}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-draws"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-draws}{}}}
 \subsection{Method \code{draws()}}{
 Get draws (parameters and generated quantities).
 \subsection{Usage}{
@@ -158,8 +158,8 @@ A \link[posterior:draws_array]{posterior::draws_array} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-summary}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-summary}{}}}
 \subsection{Method \code{summary()}}{
 Get summary
 \subsection{Usage}{
@@ -171,8 +171,8 @@ A \code{tibble}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-niterations"></a>}}
-\if{latex}{\out{\hypertarget{method-niterations}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-niterations"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-niterations}{}}}
 \subsection{Method \code{niterations()}}{
 Get number of post-warmup iterations per MCMC chain.
 \subsection{Usage}{
@@ -181,8 +181,8 @@ Get number of post-warmup iterations per MCMC chain.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-nchains"></a>}}
-\if{latex}{\out{\hypertarget{method-nchains}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-nchains"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-nchains}{}}}
 \subsection{Method \code{nchains()}}{
 Get number of MCMC chains.
 \subsection{Usage}{
@@ -191,8 +191,8 @@ Get number of MCMC chains.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ndraws"></a>}}
-\if{latex}{\out{\hypertarget{method-ndraws}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-ndraws"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-ndraws}{}}}
 \subsection{Method \code{ndraws()}}{
 Get total number of post-warmup draws.
 \subsection{Usage}{
@@ -201,8 +201,8 @@ Get total number of post-warmup draws.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cmdstan_seed"></a>}}
-\if{latex}{\out{\hypertarget{method-cmdstan_seed}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-cmdstan_seed"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-cmdstan_seed}{}}}
 \subsection{Method \code{cmdstan_seed()}}{
 Get used 'CmdStan' rng seed.
 \subsection{Usage}{
@@ -211,8 +211,8 @@ Get used 'CmdStan' rng seed.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cmdstan_version"></a>}}
-\if{latex}{\out{\hypertarget{method-cmdstan_version}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-cmdstan_version"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-cmdstan_version}{}}}
 \subsection{Method \code{cmdstan_version()}}{
 Get used 'CmdStan' version.
 \subsection{Usage}{
@@ -224,8 +224,8 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_t"></a>}}
-\if{latex}{\out{\hypertarget{method-get_t}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-get_t"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-get_t}{}}}
 \subsection{Method \code{get_t()}}{
 Get time points where the model was fitted.
 \subsection{Usage}{
@@ -245,8 +245,8 @@ will be \code{N+1}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_t0"></a>}}
-\if{latex}{\out{\hypertarget{method-get_t0}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-get_t0"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-get_t0}{}}}
 \subsection{Method \code{get_t0()}}{
 Get used initial time point t0.
 \subsection{Usage}{
@@ -258,8 +258,8 @@ A numeric value.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dim"></a>}}
-\if{latex}{\out{\hypertarget{method-dim}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-dim}{}}}
 \subsection{Method \code{dim()}}{
 Get dimensions of a variable.
 \subsection{Usage}{
@@ -281,8 +281,8 @@ obtained as \code{metadata$stan_variable_dims[[variable]]}, where
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dim_odesol"></a>}}
-\if{latex}{\out{\hypertarget{method-dim_odesol}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-dim_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-dim_odesol}{}}}
 \subsection{Method \code{dim_odesol()}}{
 Extract the dimensions of the ODE solution variable.
 \subsection{Usage}{
@@ -295,8 +295,8 @@ number of time points and second element is the ODE system dimension.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_unflattened"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_unflattened}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_unflattened"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_unflattened}{}}}
 \subsection{Method \code{extract_unflattened()}}{
 Extract array variable draws so that the array is unflattened.
 \subsection{Usage}{
@@ -317,8 +317,8 @@ obtained as \code{self$dim(variable)}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_odesol}{}}}
 \subsection{Method \code{extract_odesol()}}{
 Extract the ODE solutions using each parameter draw, in an
 unflattened base \R array format.
@@ -341,8 +341,8 @@ time points and \code{D} is the number of ODE system dimensions. If
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_y0"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_y0}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_y0"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_y0}{}}}
 \subsection{Method \code{extract_y0()}}{
 Extract the ODE initial states using each parameter draw, in a
 base \R array format.
@@ -357,8 +357,8 @@ system dimensions.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol_quantile"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol_quantile}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_odesol_quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_odesol_quantile}{}}}
 \subsection{Method \code{extract_odesol_quantile()}}{
 Extract quantiles of the ODE solutions in a base \R array
 format.
@@ -383,8 +383,8 @@ time points and \code{D} is the number of ODE system dimensions. If
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-loglik"></a>}}
-\if{latex}{\out{\hypertarget{method-loglik}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-loglik"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-loglik}{}}}
 \subsection{Method \code{loglik()}}{
 Extract the log likelihood using each parameter draw.
 \subsection{Usage}{
@@ -396,8 +396,8 @@ A \link[posterior:draws_array]{posterior::draws_array}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol_df"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol_df}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_odesol_df"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_odesol_df}{}}}
 \subsection{Method \code{extract_odesol_df()}}{
 Extract the ODE solutions using each parameter draw, in a
 flattened data frame format that is easy to pass as data
@@ -428,8 +428,8 @@ A \code{data.frame}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_odesol_df_dist"></a>}}
-\if{latex}{\out{\hypertarget{method-extract_odesol_df_dist}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-extract_odesol_df_dist"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-extract_odesol_df_dist}{}}}
 \subsection{Method \code{extract_odesol_df_dist()}}{
 Extract (quantiles of) the marginal distribution of ODE solutions in a
 data frame format that is easy to pass as data
@@ -460,8 +460,8 @@ A \code{data.frame}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_odesol"></a>}}
-\if{latex}{\out{\hypertarget{method-plot_odesol}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-plot_odesol"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-plot_odesol}{}}}
 \subsection{Method \code{plot_odesol()}}{
 A quick way to plot the ODE solutions.
 \subsection{Usage}{
@@ -493,8 +493,8 @@ A \code{ggplot} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_odesol_dist"></a>}}
-\if{latex}{\out{\hypertarget{method-plot_odesol_dist}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-plot_odesol_dist"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-plot_odesol_dist}{}}}
 \subsection{Method \code{plot_odesol_dist()}}{
 A quick way to plot the marginal distribution of ODE solutions at
 each time point.
@@ -528,8 +528,8 @@ A \code{ggplot} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OdeModelFit-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelFit-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

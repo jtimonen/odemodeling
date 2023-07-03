@@ -9,6 +9,7 @@
 #'   \item `"lv"` - Lotka-Volterra model
 #' }
 #' @return An object of class `OdeModel`.
+#' @export
 #' @family model constructor functions
 example_ode_model <- function(name, prior_only = FALSE, ...) {
   choices <- c("gsir", "tmdd", "lv")
@@ -29,7 +30,6 @@ example_ode_model <- function(name, prior_only = FALSE, ...) {
 
 # Group-stratified SIR example model
 example_ode_model_gsir <- function(prior_only, ...) {
-
   # Time points
   N <- stan_dim("N", lower = 0) # number of timepoints
 
@@ -134,7 +134,6 @@ example_ode_model_gsir <- function(prior_only, ...) {
 
 # TMDD example model
 example_ode_model_tmdd <- function(prior_only, ...) {
-
   # Dimensions and other data
   N <- stan_dim("N", lower = 1) # number of time points
   D <- stan_dim("D", lower = 1) # ODE system dimension
@@ -205,7 +204,6 @@ example_ode_model_tmdd <- function(prior_only, ...) {
 
 # Lotka-Volterra example model
 example_ode_model_lv <- function(prior_only = FALSE, ...) {
-
   # Dimensions and other data
   N <- stan_dim("N", lower = 1) # number of time points
   D <- stan_dim("D", lower = 1) # ODE system dimension

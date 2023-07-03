@@ -55,23 +55,24 @@ We need to
 define the variable for the initial system state  at `t0` as `y0`. The ODE
 system dimension is declared as `D` and number of time points as `N`.
 ```{r sho_dims}
-N <- stan_dim("N", lower=1)
+N <- stan_dim("N", lower = 1)
 D <- stan_dim("D")
 y0 <- stan_vector("y0", length = D)
-k <- stan_param(stan_var("k", lower=0), "inv_gamma(5, 1)")
+k <- stan_param(stan_var("k", lower = 0), "inv_gamma(5, 1)")
 ```
 
 Finally we declare the parameter `k` and its prior.
 ```{r sho_param}
-k <- stan_param(stan_var("k", lower=0), prior = "inv_gamma(5, 1)")
+k <- stan_param(stan_var("k", lower = 0), prior = "inv_gamma(5, 1)")
 ```
 
 The following code creates and compiles the Stan model.
 ```{r sho_create_prior}
 sho <- ode_model(N,
-                 odefun_vars = list(k), 
-                 odefun_body = sho_fun_body,
-                 odefun_init = y0)
+  odefun_vars = list(k),
+  odefun_body = sho_fun_body,
+  odefun_init = y0
+)
 print(sho)
 ```
 As we see, all variables that affect the function $f_{\psi}$ need to be given
@@ -90,8 +91,8 @@ We could call `print(sho$stanmodel)` to see the entire generated Stan model code
 We can sample from the prior distribution of model parameters like so.
 
 ```{r sho_prior_sample}
-sho_fit_prior <- sho$sample( 
-  t0 = 0.0, 
+sho_fit_prior <- sho$sample(
+  t0 = 0.0,
   t = seq(0.1, 10, by = 0.1),
   data = list(y0 = c(1, 0), D = 2),
   refresh = 0,
@@ -134,11 +135,11 @@ We generate quantities using a different `solver` and different output time poin
 the last two take a fixed number of steps and are written in Stan code.
 
 ```{r sho_gq_bdf, fig.width=6.5, fig.height=3.2}
-gq_bdf <- sho_fit_prior$gqs(solver = bdf(tol=1e-4), t = seq(0.5, 10, by = 0.5))
+gq_bdf <- sho_fit_prior$gqs(solver = bdf(tol = 1e-4), t = seq(0.5, 10, by = 0.5))
 ```
 
 ```{r sho_gq_mp, fig.width=6.5, fig.height=3.2}
-gq_mp <- sho_fit_prior$gqs(solver = midpoint(num_steps=4), t = seq(0.5, 10, by = 0.5))
+gq_mp <- sho_fit_prior$gqs(solver = midpoint(num_steps = 4), t = seq(0.5, 10, by = 0.5))
 ```
 
 We can again plot ODE solution using one draw like so
@@ -171,18 +172,19 @@ having to declare them or write Stan code that computes them:
 Here we define as `loglik_vars` a `sigma` which is a noise magnitude parameter, and the data `y1_obs`. Notice that we can also use the `N` variable in `loglik_body`, because it is a dimension (length) of `y1_obs`.
 
 ```{r sho_loglik_vars}
-sigma <- stan_param(stan_var("sigma", lower=0), prior="normal(0, 2)")
-y1_obs <- stan_vector("y1_obs", length=N)
+sigma <- stan_param(stan_var("sigma", lower = 0), prior = "normal(0, 2)")
+y1_obs <- stan_vector("y1_obs", length = N)
 ```
 
 The following code creates and compiles the posterior Stan model.
 ```{r sho_create}
 sho_post <- ode_model(N,
-                 odefun_vars = list(k), 
-                 odefun_body = sho_fun_body,
-                 odefun_init = y0,
-                 loglik_vars = list(sigma, y1_obs),
-                 loglik_body = sho_loglik_body)
+  odefun_vars = list(k),
+  odefun_body = sho_fun_body,
+  odefun_init = y0,
+  loglik_vars = list(sigma, y1_obs),
+  loglik_body = sho_loglik_body
+)
 print(sho_post)
 ```
 
@@ -190,15 +192,17 @@ print(sho_post)
 
 Now if we have some data
 ```{r sho_data}
-y1_obs <- c(0.801, 0.391, 0.321, -0.826, -0.234, -0.663, -0.756, -0.717,
--0.078, -0.083,  0.988, 0.878, 0.300, 0.307, 0.270, -0.464, -0.403,
--0.295, -0.186, 0.158)
+y1_obs <- c(
+  0.801, 0.391, 0.321, -0.826, -0.234, -0.663, -0.756, -0.717,
+  -0.078, -0.083, 0.988, 0.878, 0.300, 0.307, 0.270, -0.464, -0.403,
+  -0.295, -0.186, 0.158
+)
 t_obs <- seq(0.5, 10, by = 0.5)
 ```
 and assume that initial state `y0 = c(1, 0)` is known, we can fit the model
 ```{r sho_fit_post}
-sho_fit_post <- sho_post$sample( 
-  t0 = 0.0, 
+sho_fit_post <- sho_post$sample(
+  t0 = 0.0,
   t = t_obs,
   data = list(y0 = c(1, 0), D = 2, y1_obs = y1_obs),
   refresh = 0,
@@ -209,10 +213,10 @@ sho_fit_post <- sho_post$sample(
 We fit the posterior distribution of ODE solutions against the data
 ```{r sho_post_plot, fig.width=6.5, fig.height=3.2}
 plt <- sho_fit_post$plot_odesol_dist()
-df_data <- data.frame(t_obs, y1_obs, ydim=rep("y1", length(t_obs)))
+df_data <- data.frame(t_obs, y1_obs, ydim = rep("y1", length(t_obs)))
 colnames(df_data) <- c("t", "y", "ydim")
 df_data$ydim <- as.factor(df_data$ydim)
-plt <- plt + geom_point(data=df_data, aes(x=t,y=y), inherit.aes=FALSE)
+plt <- plt + geom_point(data = df_data, aes(x = t, y = y), inherit.aes = FALSE)
 plt
 ```
 
@@ -221,7 +225,7 @@ plt
 Finally we can study whether the solver we used during MCMC (`midpoint(2)`) was accurate enough. This is done by solving the system using increasingly more numbers of steps in
 the solver, and studying different metrics computed using the ODE solutions and corresponding likelihood values.
 ```{r sho_rel}
-solvers <- midpoint_list(c(4,6,8,10,12,14,16,18))
+solvers <- midpoint_list(c(4, 6, 8, 10, 12, 14, 16, 18))
 rel <- sho_fit_post$reliability(solvers = solvers)
 print(rel$metrics)
 unlink("results")

@@ -38,12 +38,12 @@ Either \code{tols} or \code{num_steps} has to be \code{NULL}.
 }
 \section{Functions}{
 \itemize{
-\item \code{plot_metric}: Plot a generic metric.
+\item \code{plot_metric()}: Plot a generic metric.
 
-\item \code{plot_pareto_k}: Plot pareto-k metric.
+\item \code{plot_pareto_k()}: Plot pareto-k metric.
 
-\item \code{plot_r_eff}: Plot relative efficiency.
+\item \code{plot_r_eff()}: Plot relative efficiency.
 
-\item \code{plot_mad}: Plot maximum absolute difference.
+\item \code{plot_mad()}: Plot maximum absolute difference.
+
 }}
-

@@ -1,4 +1,3 @@
-
 #' A Stan variable declaration (an abstract base class)
 #'
 #' @field name name of the variable

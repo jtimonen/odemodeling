@@ -1,4 +1,3 @@
-
 # Create full Stan data for sampling or gq
 create_standata <- function(model, t0, t, solver) {
   checkmate::assert_class(model, "OdeModel")

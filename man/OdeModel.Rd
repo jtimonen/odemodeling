@@ -28,22 +28,22 @@ to create models.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OdeModel$new()}}
-\item \href{#method-assert_stanfile_exists}{\code{OdeModel$assert_stanfile_exists()}}
-\item \href{#method-reinit}{\code{OdeModel$reinit()}}
-\item \href{#method-print}{\code{OdeModel$print()}}
-\item \href{#method-code}{\code{OdeModel$code()}}
-\item \href{#method-make_params}{\code{OdeModel$make_params()}}
-\item \href{#method-gqs}{\code{OdeModel$gqs()}}
-\item \href{#method-sample}{\code{OdeModel$sample()}}
-\item \href{#method-diagnose}{\code{OdeModel$diagnose()}}
-\item \href{#method-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
-\item \href{#method-clone}{\code{OdeModel$clone()}}
+\item \href{#method-OdeModel-new}{\code{OdeModel$new()}}
+\item \href{#method-OdeModel-assert_stanfile_exists}{\code{OdeModel$assert_stanfile_exists()}}
+\item \href{#method-OdeModel-reinit}{\code{OdeModel$reinit()}}
+\item \href{#method-OdeModel-print}{\code{OdeModel$print()}}
+\item \href{#method-OdeModel-code}{\code{OdeModel$code()}}
+\item \href{#method-OdeModel-make_params}{\code{OdeModel$make_params()}}
+\item \href{#method-OdeModel-gqs}{\code{OdeModel$gqs()}}
+\item \href{#method-OdeModel-sample}{\code{OdeModel$sample()}}
+\item \href{#method-OdeModel-diagnose}{\code{OdeModel$diagnose()}}
+\item \href{#method-OdeModel-sample_manyconf}{\code{OdeModel$sample_manyconf()}}
+\item \href{#method-OdeModel-clone}{\code{OdeModel$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OdeModel-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-new}{}}}
 \subsection{Method \code{new()}}{
 Create an \code{OdeModel} object.
 \subsection{Usage}{
@@ -71,8 +71,8 @@ Create an \code{OdeModel} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assert_stanfile_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-assert_stanfile_exists}{}}}
+\if{html}{\out{<a id="method-OdeModel-assert_stanfile_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-assert_stanfile_exists}{}}}
 \subsection{Method \code{assert_stanfile_exists()}}{
 Check that the Stan model has been initialized correctly
 \subsection{Usage}{
@@ -81,8 +81,8 @@ Check that the Stan model has been initialized correctly
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reinit"></a>}}
-\if{latex}{\out{\hypertarget{method-reinit}{}}}
+\if{html}{\out{<a id="method-OdeModel-reinit"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-reinit}{}}}
 \subsection{Method \code{reinit()}}{
 (Re)initialize the Stan model
 \subsection{Usage}{
@@ -91,8 +91,8 @@ Check that the Stan model has been initialized correctly
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OdeModel-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-print}{}}}
 \subsection{Method \code{print()}}{
 Print information about the model
 \subsection{Usage}{
@@ -101,8 +101,8 @@ Print information about the model
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-code"></a>}}
-\if{latex}{\out{\hypertarget{method-code}{}}}
+\if{html}{\out{<a id="method-OdeModel-code"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-code}{}}}
 \subsection{Method \code{code()}}{
 Get the Stan code of the model.
 \subsection{Usage}{
@@ -111,8 +111,8 @@ Get the Stan code of the model.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-make_params"></a>}}
-\if{latex}{\out{\hypertarget{method-make_params}{}}}
+\if{html}{\out{<a id="method-OdeModel-make_params"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-make_params}{}}}
 \subsection{Method \code{make_params()}}{
 Format a vector into a draws array that can be passed to \verb{$gqs()}.
 Currently works only for models with only scalar parameters.
@@ -134,8 +134,8 @@ iteration.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gqs"></a>}}
-\if{latex}{\out{\hypertarget{method-gqs}{}}}
+\if{html}{\out{<a id="method-OdeModel-gqs"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-gqs}{}}}
 \subsection{Method \code{gqs()}}{
 Run standalone generated quantities.
 \subsection{Usage}{
@@ -167,8 +167,8 @@ An object of class \link{OdeModelGQ}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample"></a>}}
-\if{latex}{\out{\hypertarget{method-sample}{}}}
+\if{html}{\out{<a id="method-OdeModel-sample"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-sample}{}}}
 \subsection{Method \code{sample()}}{
 Sample parameters of the model
 \subsection{Usage}{
@@ -196,8 +196,8 @@ An object of class \link{OdeModelMCMC}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-diagnose"></a>}}
-\if{latex}{\out{\hypertarget{method-diagnose}{}}}
+\if{html}{\out{<a id="method-OdeModel-diagnose"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-diagnose}{}}}
 \subsection{Method \code{diagnose()}}{
 Run a gradient diagnosis
 \subsection{Usage}{
@@ -237,8 +237,8 @@ Raw 'Stan' output.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sample_manyconf"></a>}}
-\if{latex}{\out{\hypertarget{method-sample_manyconf}{}}}
+\if{html}{\out{<a id="method-OdeModel-sample_manyconf"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-sample_manyconf}{}}}
 \subsection{Method \code{sample_manyconf()}}{
 Sample parameters of the ODE model using many different ODE solver
 configurations
@@ -284,8 +284,8 @@ A named list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OdeModel-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModel-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

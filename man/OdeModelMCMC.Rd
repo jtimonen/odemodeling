@@ -40,47 +40,47 @@ Other model fit classes:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-print_diagnostics}{\code{OdeModelMCMC$print_diagnostics()}}
-\item \href{#method-print_summary}{\code{OdeModelMCMC$print_summary()}}
-\item \href{#method-new}{\code{OdeModelMCMC$new()}}
-\item \href{#method-print}{\code{OdeModelMCMC$print()}}
-\item \href{#method-cmdstan_init}{\code{OdeModelMCMC$cmdstan_init()}}
-\item \href{#method-gqs}{\code{OdeModelMCMC$gqs()}}
-\item \href{#method-reliability}{\code{OdeModelMCMC$reliability()}}
-\item \href{#method-clone}{\code{OdeModelMCMC$clone()}}
+\item \href{#method-OdeModelMCMC-print_diagnostics}{\code{OdeModelMCMC$print_diagnostics()}}
+\item \href{#method-OdeModelMCMC-print_summary}{\code{OdeModelMCMC$print_summary()}}
+\item \href{#method-OdeModelMCMC-new}{\code{OdeModelMCMC$new()}}
+\item \href{#method-OdeModelMCMC-print}{\code{OdeModelMCMC$print()}}
+\item \href{#method-OdeModelMCMC-cmdstan_init}{\code{OdeModelMCMC$cmdstan_init()}}
+\item \href{#method-OdeModelMCMC-gqs}{\code{OdeModelMCMC$gqs()}}
+\item \href{#method-OdeModelMCMC-reliability}{\code{OdeModelMCMC$reliability()}}
+\item \href{#method-OdeModelMCMC-clone}{\code{OdeModelMCMC$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_seed">}\href{../../odemodeling/html/OdeModelFit.html#method-cmdstan_seed}{\code{odemodeling::OdeModelFit$cmdstan_seed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_version">}\href{../../odemodeling/html/OdeModelFit.html#method-cmdstan_version}{\code{odemodeling::OdeModelFit$cmdstan_version()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim">}\href{../../odemodeling/html/OdeModelFit.html#method-dim}{\code{odemodeling::OdeModelFit$dim()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-dim_odesol}{\code{odemodeling::OdeModelFit$dim_odesol()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="draws">}\href{../../odemodeling/html/OdeModelFit.html#method-draws}{\code{odemodeling::OdeModelFit$draws()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol}{\code{odemodeling::OdeModelFit$extract_odesol()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df}{\code{odemodeling::OdeModelFit$extract_odesol_df()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df_dist">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_df_dist}{\code{odemodeling::OdeModelFit$extract_odesol_df_dist()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_quantile">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_odesol_quantile}{\code{odemodeling::OdeModelFit$extract_odesol_quantile()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_unflattened">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_unflattened}{\code{odemodeling::OdeModelFit$extract_unflattened()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_y0">}\href{../../odemodeling/html/OdeModelFit.html#method-extract_y0}{\code{odemodeling::OdeModelFit$extract_y0()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t}{\code{odemodeling::OdeModelFit$get_t()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t0">}\href{../../odemodeling/html/OdeModelFit.html#method-get_t0}{\code{odemodeling::OdeModelFit$get_t0()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="info">}\href{../../odemodeling/html/OdeModelFit.html#method-info}{\code{odemodeling::OdeModelFit$info()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="loglik">}\href{../../odemodeling/html/OdeModelFit.html#method-loglik}{\code{odemodeling::OdeModelFit$loglik()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="nchains">}\href{../../odemodeling/html/OdeModelFit.html#method-nchains}{\code{odemodeling::OdeModelFit$nchains()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="ndraws">}\href{../../odemodeling/html/OdeModelFit.html#method-ndraws}{\code{odemodeling::OdeModelFit$ndraws()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="niterations">}\href{../../odemodeling/html/OdeModelFit.html#method-niterations}{\code{odemodeling::OdeModelFit$niterations()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol">}\href{../../odemodeling/html/OdeModelFit.html#method-plot_odesol}{\code{odemodeling::OdeModelFit$plot_odesol()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol_dist">}\href{../../odemodeling/html/OdeModelFit.html#method-plot_odesol_dist}{\code{odemodeling::OdeModelFit$plot_odesol_dist()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="summary">}\href{../../odemodeling/html/OdeModelFit.html#method-summary}{\code{odemodeling::OdeModelFit$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="time">}\href{../../odemodeling/html/OdeModelFit.html#method-time}{\code{odemodeling::OdeModelFit$time()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_seed"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-cmdstan_seed'><code>odemodeling::OdeModelFit$cmdstan_seed()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="cmdstan_version"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-cmdstan_version'><code>odemodeling::OdeModelFit$cmdstan_version()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-dim'><code>odemodeling::OdeModelFit$dim()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="dim_odesol"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-dim_odesol'><code>odemodeling::OdeModelFit$dim_odesol()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="draws"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-draws'><code>odemodeling::OdeModelFit$draws()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_odesol'><code>odemodeling::OdeModelFit$extract_odesol()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_odesol_df'><code>odemodeling::OdeModelFit$extract_odesol_df()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_df_dist"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_odesol_df_dist'><code>odemodeling::OdeModelFit$extract_odesol_df_dist()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_odesol_quantile"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_odesol_quantile'><code>odemodeling::OdeModelFit$extract_odesol_quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_unflattened"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_unflattened'><code>odemodeling::OdeModelFit$extract_unflattened()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="extract_y0"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-extract_y0'><code>odemodeling::OdeModelFit$extract_y0()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-get_t'><code>odemodeling::OdeModelFit$get_t()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="get_t0"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-get_t0'><code>odemodeling::OdeModelFit$get_t0()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="info"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-info'><code>odemodeling::OdeModelFit$info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="loglik"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-loglik'><code>odemodeling::OdeModelFit$loglik()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="nchains"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-nchains'><code>odemodeling::OdeModelFit$nchains()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="ndraws"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-ndraws'><code>odemodeling::OdeModelFit$ndraws()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="niterations"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-niterations'><code>odemodeling::OdeModelFit$niterations()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-plot_odesol'><code>odemodeling::OdeModelFit$plot_odesol()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="plot_odesol_dist"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-plot_odesol_dist'><code>odemodeling::OdeModelFit$plot_odesol_dist()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="summary"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-summary'><code>odemodeling::OdeModelFit$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeModelFit" data-id="time"><a href='../../odemodeling/html/OdeModelFit.html#method-OdeModelFit-time'><code>odemodeling::OdeModelFit$time()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print_diagnostics"></a>}}
-\if{latex}{\out{\hypertarget{method-print_diagnostics}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-print_diagnostics"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-print_diagnostics}{}}}
 \subsection{Method \code{print_diagnostics()}}{
 Print the 'stdout' of 'CmdStan' diagnostics.
 \subsection{Usage}{
@@ -89,8 +89,8 @@ Print the 'stdout' of 'CmdStan' diagnostics.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print_summary"></a>}}
-\if{latex}{\out{\hypertarget{method-print_summary}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-print_summary"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-print_summary}{}}}
 \subsection{Method \code{print_summary()}}{
 Print the 'stdout' of 'CmdStan' summary.
 \subsection{Usage}{
@@ -99,8 +99,8 @@ Print the 'stdout' of 'CmdStan' summary.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-new}{}}}
 \subsection{Method \code{new()}}{
 Create an \link{OdeModelMCMC} object.
 \subsection{Usage}{
@@ -139,8 +139,8 @@ Create an \link{OdeModelMCMC} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-print}{}}}
 \subsection{Method \code{print()}}{
 Print information about the object.
 \subsection{Usage}{
@@ -149,8 +149,8 @@ Print information about the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cmdstan_init"></a>}}
-\if{latex}{\out{\hypertarget{method-cmdstan_init}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-cmdstan_init"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-cmdstan_init}{}}}
 \subsection{Method \code{cmdstan_init()}}{
 Get used 'CmdStan' init argument.
 \subsection{Usage}{
@@ -159,8 +159,8 @@ Get used 'CmdStan' init argument.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gqs"></a>}}
-\if{latex}{\out{\hypertarget{method-gqs}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-gqs"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-gqs}{}}}
 \subsection{Method \code{gqs()}}{
 Simulate ODE solutions (and other possible generated quantities
 using) the model and fitted params. This If any
@@ -203,8 +203,8 @@ An object of class \link{OdeModelGQ}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reliability"></a>}}
-\if{latex}{\out{\hypertarget{method-reliability}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-reliability"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-reliability}{}}}
 \subsection{Method \code{reliability()}}{
 Study reliability of results by running standalone generated
 quantities using more accurate ODE solver configurations.
@@ -248,8 +248,8 @@ A named list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OdeModelMCMC-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeModelMCMC-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

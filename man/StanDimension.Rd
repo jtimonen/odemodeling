@@ -14,24 +14,24 @@ A dimension for a Stan vector or array
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{StanDimension$new()}}
-\item \href{#method-declaration}{\code{StanDimension$declaration()}}
-\item \href{#method-signature}{\code{StanDimension$signature()}}
-\item \href{#method-get_dims}{\code{StanDimension$get_dims()}}
-\item \href{#method-clone}{\code{StanDimension$clone()}}
+\item \href{#method-StanDimension-new}{\code{StanDimension$new()}}
+\item \href{#method-StanDimension-declaration}{\code{StanDimension$declaration()}}
+\item \href{#method-StanDimension-signature}{\code{StanDimension$signature()}}
+\item \href{#method-StanDimension-get_dims}{\code{StanDimension$get_dims()}}
+\item \href{#method-StanDimension-clone}{\code{StanDimension$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="can_be_made_parameter">}\href{../../odemodeling/html/StanDeclaration.html#method-can_be_made_parameter}{\code{odemodeling::StanDeclaration$can_be_made_parameter()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print">}\href{../../odemodeling/html/StanDeclaration.html#method-print}{\code{odemodeling::StanDeclaration$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="can_be_made_parameter"><a href='../../odemodeling/html/StanDeclaration.html#method-StanDeclaration-can_be_made_parameter'><code>odemodeling::StanDeclaration$can_be_made_parameter()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="StanDeclaration" data-id="print"><a href='../../odemodeling/html/StanDeclaration.html#method-StanDeclaration-print'><code>odemodeling::StanDeclaration$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-StanDimension-new"></a>}}
+\if{latex}{\out{\hypertarget{method-StanDimension-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \link{StanDimension} object
 \subsection{Usage}{
@@ -51,8 +51,8 @@ Create a \link{StanDimension} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-declaration"></a>}}
-\if{latex}{\out{\hypertarget{method-declaration}{}}}
+\if{html}{\out{<a id="method-StanDimension-declaration"></a>}}
+\if{latex}{\out{\hypertarget{method-StanDimension-declaration}{}}}
 \subsection{Method \code{declaration()}}{
 Create a data block declaration for the dimension.
 \subsection{Usage}{
@@ -61,8 +61,8 @@ Create a data block declaration for the dimension.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-signature"></a>}}
-\if{latex}{\out{\hypertarget{method-signature}{}}}
+\if{html}{\out{<a id="method-StanDimension-signature"></a>}}
+\if{latex}{\out{\hypertarget{method-StanDimension-signature}{}}}
 \subsection{Method \code{signature()}}{
 The variable when used in function signature
 \subsection{Usage}{
@@ -71,8 +71,8 @@ The variable when used in function signature
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dims"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dims}{}}}
+\if{html}{\out{<a id="method-StanDimension-get_dims"></a>}}
+\if{latex}{\out{\hypertarget{method-StanDimension-get_dims}{}}}
 \subsection{Method \code{get_dims()}}{
 Get all declared dimensions related to the object.
 \subsection{Usage}{
@@ -84,8 +84,8 @@ A list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-StanDimension-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-StanDimension-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

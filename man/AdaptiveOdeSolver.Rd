@@ -25,22 +25,22 @@ An ODE solver with adaptive step size
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AdaptiveOdeSolver$new()}}
-\item \href{#method-standata}{\code{AdaptiveOdeSolver$standata()}}
-\item \href{#method-to_string}{\code{AdaptiveOdeSolver$to_string()}}
-\item \href{#method-clone}{\code{AdaptiveOdeSolver$clone()}}
+\item \href{#method-AdaptiveOdeSolver-new}{\code{AdaptiveOdeSolver$new()}}
+\item \href{#method-AdaptiveOdeSolver-standata}{\code{AdaptiveOdeSolver$standata()}}
+\item \href{#method-AdaptiveOdeSolver-to_string}{\code{AdaptiveOdeSolver$to_string()}}
+\item \href{#method-AdaptiveOdeSolver-clone}{\code{AdaptiveOdeSolver$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="odemodeling" data-topic="OdeSolver" data-id="print">}\href{../../odemodeling/html/OdeSolver.html#method-print}{\code{odemodeling::OdeSolver$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="odemodeling" data-topic="OdeSolver" data-id="print"><a href='../../odemodeling/html/OdeSolver.html#method-OdeSolver-print'><code>odemodeling::OdeSolver$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AdaptiveOdeSolver-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AdaptiveOdeSolver-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize
 \subsection{Usage}{
@@ -62,8 +62,8 @@ Initialize
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-standata"></a>}}
-\if{latex}{\out{\hypertarget{method-standata}{}}}
+\if{html}{\out{<a id="method-AdaptiveOdeSolver-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-AdaptiveOdeSolver-standata}{}}}
 \subsection{Method \code{standata()}}{
 Create Stan data fields.
 \subsection{Usage}{
@@ -75,8 +75,8 @@ A list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_string"></a>}}
-\if{latex}{\out{\hypertarget{method-to_string}{}}}
+\if{html}{\out{<a id="method-AdaptiveOdeSolver-to_string"></a>}}
+\if{latex}{\out{\hypertarget{method-AdaptiveOdeSolver-to_string}{}}}
 \subsection{Method \code{to_string()}}{
 String description of the solver.
 \subsection{Usage}{
@@ -88,8 +88,8 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-AdaptiveOdeSolver-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-AdaptiveOdeSolver-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

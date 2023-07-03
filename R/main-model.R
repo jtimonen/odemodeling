@@ -52,7 +52,6 @@ ode_model <- function(N,
                       verbose = FALSE,
                       compile = TRUE,
                       sig_figs = 18) {
-
   # Argument checks
   choices_vars <- c("StanParameter", "StanTransformation", "StanDeclaration")
   checkmate::assert_class(N, "StanDimension")

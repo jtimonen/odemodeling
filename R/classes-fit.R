@@ -85,7 +85,6 @@ OdeModelMCMC <- R6::R6Class("OdeModelMCMC",
                    solver = NULL,
                    fitted_params = NULL,
                    ...) {
-
       # Handle input
       t0 <- replace_if_null(t0, self$t0)
       t <- replace_if_null(t, self$t)

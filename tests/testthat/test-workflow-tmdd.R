@@ -1,5 +1,4 @@
 test_that("tmdd example can generate quantities", {
-
   # Create model
   tmdd <- example_ode_model(name = "tmdd", prior_only = TRUE)
   expect_false(tmdd$has_likelihood)

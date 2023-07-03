@@ -54,20 +54,20 @@ steps between consequent output time points
 }
 \section{Functions}{
 \itemize{
-\item \code{rk45}: Create an RK45 solver (\link{AdaptiveOdeSolver})
+\item \code{rk45()}: Create an RK45 solver (\link{AdaptiveOdeSolver})
 
-\item \code{bdf}: Create a BDF solver (\link{AdaptiveOdeSolver})
+\item \code{bdf()}: Create a BDF solver (\link{AdaptiveOdeSolver})
 
-\item \code{adams}: Create an Adams solver (\link{AdaptiveOdeSolver})
+\item \code{adams()}: Create an Adams solver (\link{AdaptiveOdeSolver})
 
-\item \code{ckrk}: Create a Cash-Karp solver (\link{AdaptiveOdeSolver}).
+\item \code{ckrk()}: Create a Cash-Karp solver (\link{AdaptiveOdeSolver}).
 
-\item \code{euler}: Create a forward Euler solver
+\item \code{euler()}: Create a forward Euler solver
 (\link{FixedNumStepsOdeSolver})
 
-\item \code{midpoint}: Create an explicit midpoint solver
+\item \code{midpoint()}: Create an explicit midpoint solver
 (\link{FixedNumStepsOdeSolver})
 
-\item \code{rk4}: Create an RK4 solver (\link{FixedNumStepsOdeSolver})
+\item \code{rk4()}: Create an RK4 solver (\link{FixedNumStepsOdeSolver})
+
 }}
-

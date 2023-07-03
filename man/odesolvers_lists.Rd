@@ -31,16 +31,16 @@ Each function here returns a list of \link{OdeSolver}s.
 }
 \section{Functions}{
 \itemize{
-\item \code{rk45_list}: Create a list of RK45 solvers with different
+\item \code{rk45_list()}: Create a list of RK45 solvers with different
 tolerances.
 
-\item \code{bdf_list}: Create a list of BDF solvers with
+\item \code{bdf_list()}: Create a list of BDF solvers with
 different tolerances.
 
-\item \code{midpoint_list}: Create a list of explicit midpoint
+\item \code{midpoint_list()}: Create a list of explicit midpoint
 solvers with different fixed number of steps.
 
-\item \code{rk4_list}: Create a list of RK4
+\item \code{rk4_list()}: Create a list of RK4
 solvers with different fixed number of steps.
+
 }}
-

@@ -20,16 +20,16 @@ An ODE solver (an abstract base class)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OdeSolver$new()}}
-\item \href{#method-standata}{\code{OdeSolver$standata()}}
-\item \href{#method-to_string}{\code{OdeSolver$to_string()}}
-\item \href{#method-print}{\code{OdeSolver$print()}}
-\item \href{#method-clone}{\code{OdeSolver$clone()}}
+\item \href{#method-OdeSolver-new}{\code{OdeSolver$new()}}
+\item \href{#method-OdeSolver-standata}{\code{OdeSolver$standata()}}
+\item \href{#method-OdeSolver-to_string}{\code{OdeSolver$to_string()}}
+\item \href{#method-OdeSolver-print}{\code{OdeSolver$print()}}
+\item \href{#method-OdeSolver-clone}{\code{OdeSolver$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OdeSolver-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeSolver-new}{}}}
 \subsection{Method \code{new()}}{
 \code{OdeSolver} is an abstract class that can't be initialized.
 \subsection{Usage}{
@@ -38,8 +38,8 @@ An ODE solver (an abstract base class)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-standata"></a>}}
-\if{latex}{\out{\hypertarget{method-standata}{}}}
+\if{html}{\out{<a id="method-OdeSolver-standata"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeSolver-standata}{}}}
 \subsection{Method \code{standata()}}{
 Create Stan data fields.
 \subsection{Usage}{
@@ -51,8 +51,8 @@ A list.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_string"></a>}}
-\if{latex}{\out{\hypertarget{method-to_string}{}}}
+\if{html}{\out{<a id="method-OdeSolver-to_string"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeSolver-to_string}{}}}
 \subsection{Method \code{to_string()}}{
 String description of the solver.
 \subsection{Usage}{
@@ -64,8 +64,8 @@ A string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OdeSolver-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeSolver-print}{}}}
 \subsection{Method \code{print()}}{
 Print info about the object.
 \subsection{Usage}{
@@ -74,8 +74,8 @@ Print info about the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OdeSolver-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OdeSolver-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -22,14 +22,14 @@ A Stan transformation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{StanTransformation$new()}}
-\item \href{#method-print}{\code{StanTransformation$print()}}
-\item \href{#method-clone}{\code{StanTransformation$clone()}}
+\item \href{#method-StanTransformation-new}{\code{StanTransformation$new()}}
+\item \href{#method-StanTransformation-print}{\code{StanTransformation$print()}}
+\item \href{#method-StanTransformation-clone}{\code{StanTransformation$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-StanTransformation-new"></a>}}
+\if{latex}{\out{\hypertarget{method-StanTransformation-new}{}}}
 \subsection{Method \code{new()}}{
 Create a \link{StanTransformation} object.
 \subsection{Usage}{
@@ -52,8 +52,8 @@ added to the end if it is missing.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-StanTransformation-print"></a>}}
+\if{latex}{\out{\hypertarget{method-StanTransformation-print}{}}}
 \subsection{Method \code{print()}}{
 Print
 \subsection{Usage}{
@@ -62,8 +62,8 @@ Print
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-StanTransformation-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-StanTransformation-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

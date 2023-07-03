@@ -54,6 +54,35 @@ different ODE model simulations and fits.
 }
 }
 
+\section{Importance sampling for reliable and efficient inference in Bayesian ODE models}{
+
+Our proposed workflow is to
+\enumerate{
+\item Select an initial ODE solver M.
+\item Sample the parameter posterior using MCMC with M as the ODE solver.
+\item  Compute certain metrics using a more accurate solver M∗.
+\item Increase the accuracy of M∗ and repeat Step 3 until the metrics converge.
+If the Pareto-k metric converges to a value larger than 0.7, increase the accuracy
+of M and go back to Step 2.
+\item Compute any posterior estimates using final importance weights. See
+Timonen et al. (2022) below.
+}
+The algorithm can be used to validate the reliability, and correct the errors
+of a given method M, which can be for example a software default. On the other hand,
+a smart initial selection of M can provide speed gains
+compared to often rather conservatively set software defaults, while still maintaining
+reliability of the inferences.
+
+We generally recommend selecting M initially so that sampling is as fast as possible.
+For example, for non-adaptive ODE solvers, one can ﬁrst try using the smallest
+sensible number of steps that does not result in immediate failure.
+Selecting a good M is more diﬃcult in the case of adaptive solvers.
+We have
+observed that tolerances on the order of 1e-4 to 1e-3 generally work well.
+
+See the \code{reliability()} method of the \code{\link{OdeModelMCMC}} class.
+}
+
 \section{Tutorial}{
 
 See the tutorial vignette.

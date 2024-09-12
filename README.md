@@ -8,7 +8,7 @@ R-package for building and fitting Bayesian ODE models in Stan. The package migh
 3. once you have fitted a model with it, you can 
 * quickly visualize the ODE solutions without needing to extract them yourself
 * quickly solve and visualize the ODE solutions using a different solver or at a different set of time points without needing to write new Stan code yourself
-* quickly assess whether the solver used during fitting was accurate enough, or if you need to do the fitting again with a more accurate one (see the [Timonen et al. (2023)](https://onlinelibrary.wiley.com/doi/full/10.1002/sta4.614))
+* quickly assess whether the solver used during fitting was accurate enough, or if you need to do the fitting again with a more accurate one ([Timonen et al., 2023](https://onlinelibrary.wiley.com/doi/full/10.1002/sta4.614))
 
 
 ##  Installation

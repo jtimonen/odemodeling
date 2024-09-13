@@ -31,7 +31,7 @@ Other Stan variable declaration functions:
 \code{\link{stan_matrix}()},
 \code{\link{stan_param}()},
 \code{\link{stan_transform}()},
-\code{\link{stan_vector_array}()},
-\code{\link{stan_vector}()}
+\code{\link{stan_vector}()},
+\code{\link{stan_vector_array}()}
 }
 \concept{Stan variable declaration functions}

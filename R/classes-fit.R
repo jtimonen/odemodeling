@@ -539,7 +539,7 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
   #' @param probs The percentile values. A numeric vector where all values
   #' are between 0 and 1.
   #' @param include_y0 Should the initial state be included?
-  #' @param ydim_names Names of the ODE dimensioins. If `NULL`, these
+  #' @param ydim_names Names of the ODE dimensions. If `NULL`, these
   #' are automatically set as `"y1"`, `"y2"`, etc.
   #' @return A `data.frame`.
   extract_odesol_df_dist = function(probs = c(0.1, 0.5, 0.9),
@@ -598,7 +598,10 @@ OdeModelFit <- R6::R6Class("OdeModelFit", list(
     }
     df <- self$extract_odesol_df(draw_inds = draw_inds, ...)
     wf <- as.formula(". ~ ydim")
-    aesth <- aes_string(x = "t", y = "ysol", group = "idx")
+    t_aes <- "t"
+    y_aes <- "ysol"
+    g_aes <- "idx"
+    aesth <- aes(x = !!sym(t_aes), y = !!sym(y_aes), group = !!sym(g_aes))
     ggplot(df, aesth) +
       geom_line(alpha = linealpha, color = linecolor) +
       facet_wrap(wf) +

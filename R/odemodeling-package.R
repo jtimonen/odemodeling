@@ -7,7 +7,6 @@
 #' The package is based on the \code{R6} object oriented system and uses
 #' \code{cmdstanr} as the interface to 'Stan'.
 #'
-#' @docType package
 #' @name odemodeling-package
 #' @aliases odemodeling
 #'
@@ -76,14 +75,14 @@
 #' See the tutorial vignette.
 #' @references
 #' \enumerate{
-#'   \item Timonen, J. et al. (2022).
-#'   \emph{An importance sampling approach for reliable and efficient
-#'   inference in Bayesian ordinary differential equation models}.
-#'   \href{https://arxiv.org/abs/2205.09059}{arXiv}.
+#'   \item Timonen, J., Siccha, N., Bales, B., Lähdesmäki, H., & Vehtari, A.
+#'   (2023). An importance sampling approach for reliable and efficient
+#'   inference in Bayesian ordinary differential equation models.
+#'   Stat, 12(1), e614.
+#'   \url{https://onlinelibrary.wiley.com/doi/full/10.1002/sta4.614}
 #' }
 #'
-NULL
-
+"_PACKAGE"
 
 #' Hudson Bay Company lynx and hare pelt collection data (1900-1920)
 #'

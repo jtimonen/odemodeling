@@ -450,7 +450,7 @@ are between 0 and 1.}
 
 \item{\code{include_y0}}{Should the initial state be included?}
 
-\item{\code{ydim_names}}{Names of the ODE dimensioins. If \code{NULL}, these
+\item{\code{ydim_names}}{Names of the ODE dimensions. If \code{NULL}, these
 are automatically set as \code{"y1"}, \code{"y2"}, etc.}
 }
 \if{html}{\out{</div>}}

@@ -90,9 +90,14 @@ See the tutorial vignette.
 
 \references{
 \enumerate{
-\item Timonen, J. et al. (2022).
-\emph{An importance sampling approach for reliable and efficient
-inference in Bayesian ordinary differential equation models}.
-\href{https://arxiv.org/abs/2205.09059}{arXiv}.
+\item Timonen, J., Siccha, N., Bales, B., Lähdesmäki, H., & Vehtari, A.
+(2023). An importance sampling approach for reliable and efficient
+inference in Bayesian ordinary differential equation models.
+Stat, 12(1), e614.
+\url{https://onlinelibrary.wiley.com/doi/full/10.1002/sta4.614}
 }
+}
+\author{
+\strong{Maintainer}: Juho Timonen \email{juho.timonen@iki.fi} (\href{https://orcid.org/0000-0003-2341-6765}{ORCID})
+
 }

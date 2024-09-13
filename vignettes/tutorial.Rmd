@@ -231,9 +231,9 @@ print(rel$metrics)
 unlink("results")
 ```
 
-The `mad_odesol` and `mad_loglik` are the maximum absolute difference in the ODE solutions and log likelihood, respectively, over all MCMC draws. The former is denoted *MAE* in *Timonen et. al (2022)*. Please refer to that paper in order to interpret the `pareto_k` column. Briefly we note that the Pareto-k values seem to be converging to a value smaller than 0.5, meaning that importance sampling is possible and we don't need to run MCMC again.
+The `mad_odesol` and `mad_loglik` are the maximum absolute difference in the ODE solutions and log likelihood, respectively, over all MCMC draws. The former is denoted *MAE* in *Timonen et. al (2023)*. Please refer to that paper in order to interpret the `pareto_k` column. Briefly we note that the Pareto-k values seem to be converging to a value smaller than 0.5, meaning that importance sampling is possible and we don't need to run MCMC again.
 
 # References
 
-* Timonen et. al (2022). *An importance sampling approach for reliable and efficient inference in Bayesian ordinary differential equation models*. [arXiv](https://arxiv.org/abs/2205.09059)
+*  Timonen, J., Siccha, N., Bales, B., Lähdesmäki, H., & Vehtari, A. (2023). **An importance sampling approach for reliable and efficient inference in Bayesian ordinary differential equation models.** Stat, 12(1), e614. [link](https://onlinelibrary.wiley.com/doi/full/10.1002/sta4.614)
 
